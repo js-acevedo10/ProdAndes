@@ -53,25 +53,25 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                    <form accept-charset="UTF-8" role="form" class="form-signin" action="../registroProdAndes.html" method="get">
+                    <form accept-charset="UTF-8" role="form" class="form-signin" action="../registroProdAndes.html" method="post">
                         <fieldset>
                             <label class="panel-login">
                                 <div class="login_result"></div>
                             </label>
-                            <input class="form-control" placeholder="Nombre" id="nombre" type="text" required>
-                            <input class="form-control" placeholder="Ciudad" id="ciudad" type="text" required>
-                            <input class="form-control" placeholder="Dirección" id="direccion" type="text" required>
-                            <input class="form-control" placeholder="Correo" id="correo" type="email" required>
+                            <input class="form-control" placeholder="Nombre" id="nombre" type="text" name="nombre" required>
+                            <input class="form-control" placeholder="Ciudad" id="ciudad" type="text" name="ciudad" required>
+                            <input class="form-control" placeholder="Dirección" id="direccion" type="text" name="direccion" required>
+                            <input class="form-control" placeholder="Correo" id="correo" type="email" name="correo" required>
                             <div class="input-group" id="input-empresa">
                                 <span class="input-group-addon">
                                     <input type="checkbox" id="check-empresa" aria-label="...">
                                 </span>
                                 <input class="form-control" placeholder="¿Haces parte de una empresa?" aria-label="..." disabled>
-                                <input class="form-control" placeholder="Nombre del representante legal" id="nombre-empresa">
-                                <input class="form-control" placeholder="Identificación del representante" id="id-empresa">
+                                <input class="form-control" placeholder="Nombre del representante legal" id="nombre-empresa"  name="nombre-empresa">
+                                <input class="form-control" placeholder="Identificación del representante" id="id-empresa" name="id-empresa">
                             </div>
-                            <input class="form-control" placeholder="Username" id="username" type="text" required>
-                            <input class="form-control" placeholder="Contraseña" id="contraseña" type="password" required>
+                            <input class="form-control" placeholder="Username" id="username" type="text" name="username" required>
+                            <input class="form-control" placeholder="Contraseña" id="contraseña" type="password" name="password" required>
                             <label for="que-quiere">Selecciona el tipo de usuario que eres:</label>
                             <select class="form-control" id="que-quiere" required>
                                 <option value="Cliente">Cliente</option>
@@ -79,7 +79,7 @@
                                 <option value="Proveedor">Proveedor</option>
                             </select>
                             <br></br>
-                            <button class="btn btn-lg btn-success btn-block" type="submit" id="signup" value="signup">SignUp »</button>
+                            <button class="btn btn-lg btn-success btn-block" type="submit" id="signup" name="registro" value="signup">SignUp »</button>
                         </fieldset>
                     </form>
                     </div>

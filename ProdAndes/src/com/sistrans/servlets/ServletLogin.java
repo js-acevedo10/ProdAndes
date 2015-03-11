@@ -51,23 +51,19 @@ public class ServletLogin extends HttpServlet {
 		printHeader(response, out);
 		
 		String action = request.getParameter("submit");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
 		
-		switch (action) {
-		case "login":
-			
+		if(action.equals("login"))
+		{
 			printHeader(response, out);
-			out.println("<body><h1>Loggeado</h1></body>");
+			out.println("<body><h1>Estas loggeado " + username + ".</h1>"
+					+ "<p>Tu contraseña es " + password + ".</p></body>");
 			
-			break;
-		case "logout":
+		} else if(action.equals("logout"))
+		{
 			
-			break;
-		default:
-			printHeader(response, out);
-			out.println("<h1>Error</h1>");
-			break;
 		}
-		
 	}
 
 	private void printHeader(HttpServletResponse response, PrintWriter out){
