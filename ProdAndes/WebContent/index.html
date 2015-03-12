@@ -2,119 +2,53 @@
 <html>
 <header>
     <meta charset="utf-8">
-    <title>ProdAndes</title>
+    <title>Bienvenido a ProdAndes</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="./style/custom-bootstrap-override.css">
+    <link type="text/css" href="./style/custom-bootstrap-override.css" rel="stylesheet">
+    <link type="text/css" href="./style/login-signup-custom-bootstrap-override.css" rel="stylesheet">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
 </header>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#" id="navBarLink">ProdAndes</a>
+          <a class="navbar-brand" href="./index.html" id="navBarLink">Bienvenido a ProdAndes</a>
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-left">
-            <li class="active"><a href="#" id="navBarLink">Home <span class="sr-only">(current)</span></a></li>
-            <li><a href="#" id="navBarLink">Catalogo</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="./pages/signup.html" id="navBarLink">Registro</a></li>
-            <li><a href="./pages/login.html" id="navBarLink">Login</a></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
     <section>
-        <div class="jumbotron">
-          <div class="container">
-            <h1>Bienvenido a ProdAndes.</h1>
-            <p>Tu fábrica en línea.</p>
-          </div>
+    <div class="container">
+        <div class="row vertical-offset-100">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">                                
+                        <div class="row-fluid user-row">
+                            <img src="http://icons.iconarchive.com/icons/graphicloads/100-flat/128/unlock-icon.png" class="img-responsive" alt="Conxole Admin"/>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <form action="../loginProdAndes.html" method="post" class="form-signin" accept-charset="UTF-8">
+                            <fieldset>
+                                <label class="panel-login">
+                                <div class="login_result"></div>
+                                </label>
+                                <input class="form-control" placeholder="Username" id="username" name="username" type="text" required>
+                                <input class="form-control" placeholder="Password" id="password" name="password" type="password" required>
+                                <br></br>
+                                <input class="btn btn-lg btn-success btn-block" name="submit" type="submit" id="login" value="login">
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="container">
-        <div class="row">
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <img src="..." alt="...">
-              <div class="caption">
-                <h3>Thumbnail label</h3>
-                <p>Esta es la descripción de un objeto</p>
-                <p><a href="#" class="btn btn-primary" role="button">Button</a>
-              </div>
-            </div>
-          </div>
-            <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <img src="..." alt="...">
-              <div class="caption">
-                <h3>Thumbnail label</h3>
-                <p>Esta es la descripción de un objeto</p>
-                <p><a href="loginProdAndes.htm?username=juan&password=me&action=submit" class="btn btn-primary" role="button">Button</a>
-              </div>
-            </div>
-          </div>
-            <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <img src="..." alt="...">
-              <div class="caption">
-                <h3>Thumbnail label</h3>
-                <p>Esta es la descripción de un objeto</p>
-                <p><a href="#" class="btn btn-primary" role="button">Button</a>
-              </div>
-            </div>
-          </div>
-            <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <img src="..." alt="...">
-              <div class="caption">
-                <h3>Thumbnail label</h3>
-                <p>Esta es la descripción de un objeto</p>
-                <p><a href="#" class="btn btn-primary" role="button">Button</a>
-              </div>
-            </div>
-          </div>
-            <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <img src="..." alt="...">
-              <div class="caption">
-                <h3>Thumbnail label</h3>
-                <p>Esta es la descripción de un objeto</p>
-                <p><a href="#" class="btn btn-primary" role="button">Button</a>
-              </div>
-            </div>
-          </div>
-            <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <img src="..." alt="...">
-              <div class="caption">
-                <h3>Thumbnail label</h3>
-                <p>Esta es la descripción de un objeto</p>
-                <p><a href="#" class="btn btn-primary" role="button">Button</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
+    </div>
     </section>
-    <footer class="footer">
-        <div class="container">
-            <p class="text-muted">Created by: Juan Santiago Acevedo and Alejandro Córdoba</p>
-        </div>
-    </footer>
 </body>
 </html>

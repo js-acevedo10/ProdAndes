@@ -56,3 +56,12 @@ body {
 #input-empresa {
     margin-bottom: 2.5px;
     margin-top: 2.5px;
+}
+#login {
+	background-color: BLUEVIOLET;
+	border: none;
+}
+
+#login :hover {
+	background-color: aqua;
+}
