@@ -10,19 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletRegistro
+ * Servlet implementation class LoginServlet
  */
-@WebServlet
-(
-	urlPatterns="/registroProdAndes.html"
-)
-public class ServletRegistro extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletRegistro() {
+    public LoginServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -48,17 +44,23 @@ public class ServletRegistro extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		printHeader(response, out);
 		
+		String action = request.getParameter("submit");
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-				
-		if(username != "" && password != "")
+		
+		if(action.equals("login"))
 		{
-			out.println("<body><h1>Registrado</h1></body></html>");
+			printHeader(response, out);
+			out.println("<body><h1>Estas loggeado " + username + ".</h1>"
+					+ "<p>Tu contraseña es " + password + ".</p></body>");
+			
+		} else if(action.equals("logout"))
+		{
+			
 		}
 	}
 
 	private void printHeader(HttpServletResponse response, PrintWriter out){
-		out.println("<!DOCTYPE html><html><head><title>Hola..</title><style type=\"text/css\">body{color: RED;}</style></head>");
+		out.println("<!DOCTYPE html><html><head></title></head>");
 	}
-
 }

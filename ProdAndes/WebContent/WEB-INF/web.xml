@@ -5,19 +5,11 @@
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
   <servlet>
-  	<servlet-name>ServletLogin</servlet-name>
-  	<servlet-class>com.sistrans.servlets.ServletLogin</servlet-class>
-  </servlet>
-  <servlet>
-  	<servlet-name>ServletRegistro</servlet-name>
-  	<servlet-class>com.sistrans.servlets.ServletRegistro</servlet-class>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<servlet-class>com.sistrans.servlets.LoginServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>ServletLogin</servlet-name>
-  	<url-pattern>/loginProdAndes.html</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>ServletRegistro</servlet-name>
-  	<url-pattern>/registroProdAndes.html</url-pattern>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<url-pattern>/login.html</url-pattern>
   </servlet-mapping>
 </web-app>
