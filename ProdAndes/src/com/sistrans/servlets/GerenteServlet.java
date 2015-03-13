@@ -40,9 +40,7 @@ public class GerenteServlet extends HttpServlet {
 		procesarSolicitud(request, response);
 	}
 	public void procesarSolicitud(HttpServletRequest request, HttpServletResponse response) throws IOException
-	{
-		PrintWriter out = response.getWriter();
-		
+	{		
 		String action = request.getParameter("submit");
 		String[] uri = action.split("-", 2);
 		String requestType = uri[0];

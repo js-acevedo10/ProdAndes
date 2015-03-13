@@ -42,29 +42,55 @@ public class UserServlet extends HttpServlet {
 	
 	public void procesarSolicitud(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		PrintWriter out = response.getWriter();
-		printHeader(response, out);
-		
 		String action = request.getParameter("submit");
 		String[] uri = action.split("-", 2);
 		String requestType = uri[0];
 		String requestDetails = uri[1];
 		
 		if(requestType.equals("consult")) {
-			realizarConsulta(requestDetails, out);			
+			realizarConsulta(requestDetails, response);			
 		} else if(requestType.equals("register")) {
-			realizarRegistro(requestDetails, out);			
+			realizarRegistro(requestDetails, response);			
+		} else if(requestType.equals("cancel")) {
+			realizarCancelacion(requestDetails, response);
 		}
 	}
 	
 	//WORLD METHODS
 	
-	public void realizarConsulta(String consulta, PrintWriter out) {
-		
+	public void realizarConsulta(String consulta, HttpServletResponse response) throws IOException {
+		PrintWriter out = response.getWriter();
+		switch (consulta) {
+		case "exist-mat":
+			break;
+		case "mat-info":
+			break;
+		default:
+			response.sendRedirect("pages/error/404.html");
+			break;
+		}
 	}
 	
-	public void realizarRegistro(String registro, PrintWriter out) {
-		
+	public void realizarRegistro(String registro, HttpServletResponse response) throws IOException {
+		PrintWriter out = response.getWriter();
+		switch (registro) {
+		case "order":
+			break;
+		default:
+			response.sendRedirect("pages/error/404.html");
+			break;
+		}
+	}
+	
+	public void realizarCancelacion(String cancelacion, HttpServletResponse response) throws IOException {
+		PrintWriter out = response.getWriter();
+		switch (cancelacion) {
+			case "order-prod":
+				break;
+			default:
+				response.sendRedirect("pages/error/404.html");
+				break;
+		}
 	}
 	
 	//HTML METHODS

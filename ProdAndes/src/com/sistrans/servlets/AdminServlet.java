@@ -42,29 +42,50 @@ public class AdminServlet extends HttpServlet {
 	
 	public void procesarSolicitud(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		PrintWriter out = response.getWriter();
-		printHeader(response, out);
-		
 		String action = request.getParameter("submit");
 		String[] uri = action.split("-", 2);
 		String requestType = uri[0];
 		String requestDetails = uri[1];
 		
 		if(requestType.equals("consult")) {
-			realizarConsulta(requestDetails, out);			
+			realizarConsulta(requestDetails, response);			
 		} else if(requestType.equals("register")) {
-			realizarRegistro(requestDetails, out);			
+			realizarRegistro(requestDetails, response);			
 		}
 	}
 	
 	//WORLD METHODS
 	
-	public void realizarConsulta(String consulta, PrintWriter out) {
-		out.println("Soy una consulta: " + consulta);
+	public void realizarConsulta(String consulta, HttpServletResponse response) throws IOException{
+		PrintWriter out = response.getWriter();
+		switch (consulta) {
+		case "exist-mat":
+			break;
+		case "stage-more-mov":
+			break;
+		case "mat-info":
+			break;
+		case "oper-more-active":
+			break;
+		default:
+			response.sendRedirect("pages/error/404.html");
+			break;
+		}
 	}
 	
-	public void realizarRegistro(String registro, PrintWriter out) {
-		out.println("Soy un registro: " + registro);
+	public void realizarRegistro(String registro, HttpServletResponse response) throws IOException{
+		PrintWriter out = response.getWriter();
+		switch (registro) {
+		case "client":
+			break;
+		case "proveedor":
+			break;
+		case "operario":
+			break;
+		default:
+			response.sendRedirect("pages/error/404.html");
+			break;
+		}
 	}
 	
 	//HTML METHODS
