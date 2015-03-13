@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class LoginServlet
  */
+@WebServlet("/login.html")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -44,7 +45,6 @@ public class LoginServlet extends HttpServlet {
 		
 		String action = request.getParameter("submit");
 		String username = request.getParameter("username");
-		String password = request.getParameter("password");
 		
 		if(action.equals("login"))
 		{

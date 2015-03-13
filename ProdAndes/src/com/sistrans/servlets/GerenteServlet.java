@@ -42,7 +42,6 @@ public class GerenteServlet extends HttpServlet {
 	public void procesarSolicitud(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		PrintWriter out = response.getWriter();
-		printHeader(response, out);
 		
 		String action = request.getParameter("submit");
 		String[] uri = action.split("-", 2);
@@ -50,20 +49,54 @@ public class GerenteServlet extends HttpServlet {
 		String requestDetails = uri[1];
 		
 		if(requestType.equals("consult")) {
-			realizarConsulta(requestDetails, out);			
+			realizarConsulta(requestDetails, response);			
 		} else if(requestType.equals("register")) {
-			realizarRegistro(requestDetails, out);			
+			realizarRegistro(requestDetails, response);			
 		}
 	}
 	
 	//WORLD METHODS
 	
-	public void realizarConsulta(String consulta, PrintWriter out) {
-		
+	public void realizarConsulta(String consulta, HttpServletResponse response) throws IOException {
+		PrintWriter out = response.getWriter();
+		switch (consulta) {
+		case "exist-mat":
+			break;
+		case "stage-more-mov":
+			break;
+		case "mat-info":
+			break;
+		case "oper-more-active":
+			break;
+		default:
+			response.sendRedirect("pages/error/404.html");
+			break;
+		}
 	}
 	
-	public void realizarRegistro(String registro, PrintWriter out) {
-		
+	public void realizarRegistro(String registro, HttpServletResponse response) throws IOException {
+		PrintWriter out = response.getWriter();
+		switch (registro) {
+		case "order-placed":
+			break;
+		case "catalog-matprima":
+			break;
+		case "new-mat":
+			break;
+		case "component":
+			break;
+		case "prod-place":
+			break;
+		case "prod-stage":
+			break;
+		case "new-prod":
+			break;
+		case "matprima-order":
+			break;
+		default:
+			response.sendRedirect("pages/error/404.html");
+			break;
+		}
 	}
 	
 	//HTML METHODS
