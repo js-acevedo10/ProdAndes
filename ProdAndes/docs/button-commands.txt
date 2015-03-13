@@ -1,4 +1,4 @@
-ID  	|	Descripcion											|	servlet command 			|	servlet-name + Servlet				|
+ID  	|	Descripcion											|	servlet-button-command		|	servlet-name + Servlet				|
 --------|-------------------------------------------------------|-------------------------------|---------------------------------------|
 RFC1	|	Consultar existencia de materiales 					|	consult-exist-mat			|	ConsultarExistencia					|
 RFC2	|	Consultar un material 								|	consult-mat-info			|	ConsultarMaterialServlet			|

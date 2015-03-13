@@ -29,3 +29,7 @@ html body .footer {
 html body .footer .container p {
     margin: 20px 0;
 }
+
+#search-box {
+    padding-top: 15%;
+}
