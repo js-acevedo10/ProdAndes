@@ -45,9 +45,28 @@ public class GerenteServlet extends HttpServlet {
 		printHeader(response, out);
 		
 		String action = request.getParameter("submit");
+		String[] uri = action.split("-", 2);
+		String requestType = uri[0];
+		String requestDetails = uri[1];
 		
-		out.println(action);
+		if(requestType.equals("consult")) {
+			realizarConsulta(requestDetails, out);			
+		} else if(requestType.equals("register")) {
+			realizarRegistro(requestDetails, out);			
+		}
 	}
+	
+	//WORLD METHODS
+	
+	public void realizarConsulta(String consulta, PrintWriter out) {
+		
+	}
+	
+	public void realizarRegistro(String registro, PrintWriter out) {
+		
+	}
+	
+	//HTML METHODS
 
 	private void printHeader(HttpServletResponse response, PrintWriter out){
 		out.println("<!DOCTYPE html><html><head></title></head>");

@@ -41,8 +41,6 @@ public class LoginServlet extends HttpServlet {
 
 	public void procesarSolicitud(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		PrintWriter out = response.getWriter();
-		printHeader(response, out);
 		
 		String action = request.getParameter("submit");
 		String username = request.getParameter("username");
@@ -50,17 +48,28 @@ public class LoginServlet extends HttpServlet {
 		
 		if(action.equals("login"))
 		{
-			printHeader(response, out);
-			out.println("<body><h1>Estas loggeado " + username + ".</h1>"
-					+ "<p>Tu contraseña es " + password + ".</p></body>");
-			
-		} else if(action.equals("logout"))
-		{
-			
+			if(username.contains("admin")) {
+				response.sendRedirect("./pages/welcome/admin.html");
+			} else if(username.contains("gerente")) {
+				response.sendRedirect("./pages/welcome/gerente.html");
+			} else if(username.contains("cliente")) {
+				response.sendRedirect("./pages/welcome/user.html");
+			} else if(username.contains("operario")) {
+				response.sendRedirect("./pages/welcome/operario.html");
+			} else if(username.contains("proveedor")) {
+				response.sendRedirect("./pages/welcome/proveedor.html");
+			} else {
+				PrintWriter out = response.getWriter();
+				out.println("Error, los usuarios temporales disponibles son:");
+				out.println();
+				out.println("			-admin");
+				out.println("			-gerente");
+				out.println("			-cliente");
+				out.println("			-operario");
+				out.println("			-proveedor");
+				out.println();
+				out.println("Recuerde que no es necesaria una contraseña.");
+			}
 		}
-	}
-
-	private void printHeader(HttpServletResponse response, PrintWriter out){
-		out.println("<!DOCTYPE html><html><head></title></head>");
 	}
 }
