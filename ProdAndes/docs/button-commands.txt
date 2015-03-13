@@ -1,27 +1,27 @@
-ID  	|	Descripcion											|	servlet command 			|
---------|-------------------------------------------------------|-------------------------------|------------
-RFC1	|	Consultar existencia de materiales 					|	consult-exist-mat			|
-RFC2	|	Consultar un material 								|	consult-mat-info			|
-RFC3	|	Consultar etapas con más movimiento 				|	consult-stage-more-mov		|
-RFC4	|	Consultar operario mas activo 						|	consult-oper-more-active	|
-
-RF1 	|	Registrar Cliente									|	register-client				|
-RF2 	|	Registrar Proveedor									|	register-proveedor			|
-RF3 	|	Registrar Operario									|	register-operario			|
-RF4 	|	Registrar Usuario									|								|
-RF5 	|	Registrar Materia Prima en el Inventario			|	register-catalog-matprima	|
-RF6 	|	Registrar Componente								|	register-component			|
-RF7 	|	Registrar estacion de produccion					|	register-prod-place			|
-RF8 	|	Registrar etapa de produccion						|	register-prod-stage			|
-RF9 	|	Registrar producto									|	register-new-prod			|
-RF10	|	Registrar ejecucion de nueva etapa de produccion	|	register-exec-stage-prod	|
-RF11	|	Registrar llegada de nuevo material 				|	register-new-mat			|
-RF12	|	Registrar pedido de productos						|	register-order				|
-RF13	|	Cancelar pedido de productos						|	cancel-order-prod			|
-RF14	|	Registrar entrega de pedido a un cliente			|	register-order-placed		|
-RF15	|	Registrar pedido de materias primas / componentes	|	register-matprima-order		|
-RF16	|	
-
+ID  	|	Descripcion											|	servlet command 			|	servlet-name + Servlet				|
+--------|-------------------------------------------------------|-------------------------------|---------------------------------------|
+RFC1	|	Consultar existencia de materiales 					|	consult-exist-mat			|	ConsultarExistencia					|
+RFC2	|	Consultar un material 								|	consult-mat-info			|	ConsultarMaterialServlet			|
+RFC3	|	Consultar etapas con más movimiento 				|	consult-stage-more-mov		|	ConsultarEtapaMayorMovimiento		|
+RFC4	|	Consultar operario mas activo 						|	consult-oper-more-active	|	ConsultarOperarioMasActivo			|
+--------|-------------------------------------------------------|-------------------------------|---------------------------------------|
+RF1 	|	Registrar Cliente									|	register-client				|	RegistroCliente						|
+RF2 	|	Registrar Proveedor									|	register-proveedor			|	RegistroProveedor					|
+RF3 	|	Registrar Operario									|	register-operario			|	RegistroOperario					|
+RF4 	|	Registrar Usuario									|								|										|
+RF5 	|	Registrar Materia Prima en el Inventario			|	register-catalog-matprima	|	RegistroMateriaPrima				|
+RF6 	|	Registrar Componente								|	register-component			|	RegistroComponente					|
+RF7 	|	Registrar estacion de produccion					|	register-prod-place			|	RegistroEstacionProduccion			|
+RF8 	|	Registrar etapa de produccion						|	register-prod-stage			|	RegistroEtapaProduccion				|
+RF9 	|	Registrar producto									|	register-new-prod			|	RegistroProducto					|
+RF10	|	Registrar ejecucion de nueva etapa de produccion	|	register-exec-stage-prod	|	RegistroEjecucionEtapa				|
+RF11	|	Registrar llegada de nuevo material 				|	register-new-mat			|	RegistroLlegadaMaterial				|
+RF12	|	Registrar pedido de productos						|	register-order				|	RegistroPedidoProductosCliente		|
+RF13	|	Cancelar pedido de productos						|	cancel-order-prod			|	CancelacionPedidoProductosCliente	|
+RF14	|	Registrar entrega de pedido a un cliente			|	register-order-placed		|	RegistroEntregaPedidoCliente		|
+RF15	|	Registrar pedido de materias primas / componentes	|	register-matprima-order		|	RegistroPedidoProductosProveedor	|
+RF16	|														|								|										|
+--------|-------------------------------------------------------|–------------------------------|---------------------------------------|
 RNF1	|
 RNF2	|
 RNF3	|
