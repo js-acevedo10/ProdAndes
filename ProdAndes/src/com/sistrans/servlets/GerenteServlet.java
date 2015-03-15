@@ -82,6 +82,7 @@ public class GerenteServlet extends HttpServlet {
 		case "catalog-matprima":
 			break;
 		case "new-mat":
+			response.sendRedirect("pages/gerente/registro/registromaterial.html");
 			break;
 		case "component":
 			break;

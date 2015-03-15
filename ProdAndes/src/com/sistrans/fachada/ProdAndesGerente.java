@@ -65,6 +65,18 @@ public class ProdAndesGerente {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public boolean registrarMateriaPrima(String nombre, String cantidad,
+			String tonelada) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean registrarComponente(String nombre, String cantidad,
+			String unidadMedida) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	//Metodos de casos de uso
 	
