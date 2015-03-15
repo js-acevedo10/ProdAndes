@@ -1,4 +1,5 @@
 package com.sistrans.mundo;
+import java.util.ArrayList;
 import java.util.Set;
 
 
@@ -17,23 +18,23 @@ public class GerentedeProduccion extends Usuario
 	 * @ordered
 	 */
 	
-	public Set<Pedido> pedido;
+	public ArrayList<Pedido> pedido;
 	
 	/**
 	 * @return the pedido
 	 */
-	public Set<Pedido> getPedido() {
+	public ArrayList<Pedido> getPedido() {
 		return pedido;
 	}
 
 	/**
 	 * @param pedido the pedido to set
 	 */
-	public void setPedido(Set<Pedido> pedido) {
+	public void setPedido(ArrayList<Pedido> pedido) {
 		this.pedido = pedido;
 	}
 
-	public GerentedeProduccion(Set<Pedido> pedido) {
+	public GerentedeProduccion(ArrayList<Pedido> pedido) {
 		super();
 		this.pedido = pedido;
 	}

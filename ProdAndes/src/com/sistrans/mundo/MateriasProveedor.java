@@ -1,4 +1,5 @@
 package com.sistrans.mundo;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -74,28 +75,35 @@ public class MateriasProveedor
 	/**
 	 * @return the materiaPrima
 	 */
-	public Set<MateriaPrima> getMateriaPrima() {
+	public ArrayList<MateriaPrima> getMateriaPrima() {
 		return materiaPrima;
+	}
+	public void agregarMateriaPrima(MateriaPrima a)
+	{
+		materiaPrima.add(a);
 	}
 
 	/**
 	 * @param materiaPrima the materiaPrima to set
 	 */
-	public void setMateriaPrima(Set<MateriaPrima> materiaPrima) {
+	public void setMateriaPrima(ArrayList<MateriaPrima> materiaPrima) {
 		this.materiaPrima = materiaPrima;
 	}
-
 	/**
 	 * @return the componente
 	 */
-	public Set<Componente> getComponente() {
+	public ArrayList<Componente> getComponente() {
 		return componente;
+	}
+	public void agregarComponente(Componente a)
+	{
+		componente.add(a);
 	}
 
 	/**
 	 * @param componente the componente to set
 	 */
-	public void setComponente(Set<Componente> componente) {
+	public void setComponente(ArrayList<Componente> componente) {
 		this.componente = componente;
 	}
 
@@ -114,8 +122,8 @@ public class MateriasProveedor
 	}
 
 	public MateriasProveedor(int volMax, int tiempoEntrega,
-			Proveedor proveedor, Set<MateriaPrima> materiaPrima,
-			Set<Componente> componente, Pedido pedido) {
+			Proveedor proveedor, ArrayList<MateriaPrima> materiaPrima,
+			ArrayList<Componente> componente, Pedido pedido) {
 		super();
 		this.volMax = volMax;
 		this.tiempoEntrega = tiempoEntrega;
@@ -141,7 +149,7 @@ public class MateriasProveedor
 	 * @ordered
 	 */
 	
-	public Set<MateriaPrima> materiaPrima;
+	public ArrayList<MateriaPrima> materiaPrima;
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -150,7 +158,7 @@ public class MateriasProveedor
 	 * @ordered
 	 */
 	
-	public Set<Componente> componente;
+	public ArrayList<Componente> componente;
 	
 	/**
 	 * <!-- begin-user-doc -->

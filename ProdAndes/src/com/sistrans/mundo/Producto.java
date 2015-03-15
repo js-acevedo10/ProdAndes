@@ -1,4 +1,5 @@
 package com.sistrans.mundo;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -60,43 +61,55 @@ public class Producto
 	/**
 	 * @return the materiaPrima
 	 */
-	public Set<MateriaPrima> getMateriaPrima() {
+	public ArrayList<MateriaPrima> getMateriaPrima() {
 		return materiaPrima;
 	}
 
 	/**
 	 * @param materiaPrima the materiaPrima to set
 	 */
-	public void setMateriaPrima(Set<MateriaPrima> materiaPrima) {
+	public void setMateriaPrima(ArrayList<MateriaPrima> materiaPrima) {
 		this.materiaPrima = materiaPrima;
+	}
+	public void agregarMateriaPrima(MateriaPrima a)
+	{
+		materiaPrima.add(a);
 	}
 
 	/**
 	 * @return the componente
 	 */
-	public Set<Componente> getComponente() {
+	public ArrayList<Componente> getComponente() {
 		return componente;
 	}
 
 	/**
 	 * @param componente the componente to set
 	 */
-	public void setComponente(Set<Componente> componente) {
+	public void setComponente(ArrayList<Componente> componente) {
 		this.componente = componente;
+	}
+	public void agregarComponente(Componente a)
+	{
+		componente.add(a);
 	}
 
 	/**
 	 * @return the etapadeProduccion
 	 */
-	public Set<EtapadeProduccion> getEtapadeProduccion() {
+	public ArrayList<EtapadeProduccion> getEtapadeProduccion() {
 		return etapadeProduccion;
 	}
 
 	/**
 	 * @param etapadeProduccion the etapadeProduccion to set
 	 */
-	public void setEtapadeProduccion(Set<EtapadeProduccion> etapadeProduccion) {
+	public void setEtapadeProduccion(ArrayList<EtapadeProduccion> etapadeProduccion) {
 		this.etapadeProduccion = etapadeProduccion;
+	}
+	public void agregarEtapaProduccion(EtapadeProduccion a)
+	{
+		etapadeProduccion.add(a);
 	}
 
 	/**
@@ -128,8 +141,8 @@ public class Producto
 	}
 
 	public Producto(String nombre, int costoVenta,
-			Set<MateriaPrima> materiaPrima, Set<Componente> componente,
-			Set<EtapadeProduccion> etapadeProduccion, Pedido pedido,
+			ArrayList<MateriaPrima> materiaPrima, ArrayList<Componente> componente,
+			ArrayList<EtapadeProduccion> etapadeProduccion, Pedido pedido,
 			Inventario inventario) {
 		super();
 		this.nombre = nombre;
@@ -148,7 +161,7 @@ public class Producto
 	 * @ordered
 	 */
 	
-	public Set<MateriaPrima> materiaPrima;
+	public ArrayList<MateriaPrima> materiaPrima;
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -157,7 +170,7 @@ public class Producto
 	 * @ordered
 	 */
 	
-	public Set<Componente> componente;
+	public ArrayList<Componente> componente;
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -166,7 +179,7 @@ public class Producto
 	 * @ordered
 	 */
 	
-	public Set<EtapadeProduccion> etapadeProduccion;
+	public ArrayList<EtapadeProduccion> etapadeProduccion;
 	
 	/**
 	 * <!-- begin-user-doc -->

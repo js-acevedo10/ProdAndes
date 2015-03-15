@@ -1,4 +1,5 @@
 package com.sistrans.mundo;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -18,72 +19,68 @@ public class Inventario
 	 * @ordered
 	 */
 	
-	public Set<MateriaPrima> materiaPrima;
+	public ArrayList<MateriaPrima> materiaPrima;
 	
 	/**
 	 * @return the materiaPrima
 	 */
-	public Set<MateriaPrima> getMateriaPrima() {
+	public ArrayList<MateriaPrima> getMateriaPrima() {
 		return materiaPrima;
 	}
 
 	/**
 	 * @param materiaPrima the materiaPrima to set
 	 */
-	public void setMateriaPrima(Set<MateriaPrima> materiaPrima) {
+	public void setMateriaPrima(ArrayList<MateriaPrima> materiaPrima) {
 		this.materiaPrima = materiaPrima;
+	}
+	public void agregarMateriaPrima(MateriaPrima a)
+	{
+		materiaPrima.add(a);
 	}
 
 	/**
 	 * @return the componente
 	 */
-	public Set<Componente> getComponente() {
+	public ArrayList<Componente> getComponente() {
 		return componente;
 	}
-
+	public void agregarComponente(Componente a)
+	{
+		componente.add(a);
+	}
 	/**
 	 * @param componente the componente to set
 	 */
-	public void setComponente(Set<Componente> componente) {
+	public void setComponente(ArrayList<Componente> componente) {
 		this.componente = componente;
 	}
 
 	/**
 	 * @return the producto
 	 */
-	public Set<Producto> getProducto() {
+	public ArrayList<Producto> getProducto() {
 		return producto;
+	}
+	public void agregarProducto(Producto a)
+	{
+		producto.add(a);
 	}
 
 	/**
 	 * @param producto the producto to set
 	 */
-	public void setProducto(Set<Producto> producto) {
+	public void setProducto(ArrayList<Producto> producto) {
 		this.producto = producto;
 	}
 
-	/**
-	 * @return the administrador
-	 */
-	public Set<Administrador> getAdministrador() {
-		return administrador;
-	}
 
-	/**
-	 * @param administrador the administrador to set
-	 */
-	public void setAdministrador(Set<Administrador> administrador) {
-		this.administrador = administrador;
-	}
-
-	public Inventario(Set<MateriaPrima> materiaPrima,
-			Set<Componente> componente, Set<Producto> producto,
-			Set<Administrador> administrador) {
+	public Inventario(ArrayList<MateriaPrima> materiaPrima,
+			ArrayList<Componente> componente, ArrayList<Producto> producto) {
 		super();
 		this.materiaPrima = materiaPrima;
 		this.componente = componente;
 		this.producto = producto;
-		this.administrador = administrador;
 	}
 
 	/**
@@ -93,7 +90,7 @@ public class Inventario
 	 * @ordered
 	 */
 	
-	public Set<Componente> componente;
+	public ArrayList<Componente> componente;
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -102,7 +99,7 @@ public class Inventario
 	 * @ordered
 	 */
 	
-	public Set<Producto> producto;
+	public ArrayList<Producto> producto;
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -111,7 +108,6 @@ public class Inventario
 	 * @ordered
 	 */
 	
-	public Set<Administrador> administrador;
 	
 	/**
 	 * <!-- begin-user-doc -->

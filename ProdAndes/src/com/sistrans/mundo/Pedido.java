@@ -1,4 +1,5 @@
 package com.sistrans.mundo;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Date;
@@ -108,49 +109,57 @@ public class Pedido
 	/**
 	 * @return the producto
 	 */
-	public Set<Producto> getProducto() {
+	public ArrayList<Producto> getProducto() {
 		return producto;
 	}
 
 	/**
 	 * @param producto the producto to set
 	 */
-	public void setProducto(Set<Producto> producto) {
+	public void setProducto(ArrayList<Producto> producto) {
 		this.producto = producto;
+	}
+	public void agregarProducto(Producto a)
+	{
+		producto.add(a);
 	}
 
 	/**
 	 * @return the materiasProveedor
 	 */
-	public Set<MateriasProveedor> getMateriasProveedor() {
+	public ArrayList<MateriasProveedor> getMateriasProveedor() {
 		return materiasProveedor;
+	}
+	public void agregarMateirasProveedor(MateriasProveedor a)
+	{
+		materiasProveedor.add(a);
 	}
 
 	/**
 	 * @param materiasProveedor the materiasProveedor to set
 	 */
-	public void setMateriasProveedor(Set<MateriasProveedor> materiasProveedor) {
+	public void setMateriasProveedor(ArrayList<MateriasProveedor> materiasProveedor) {
 		this.materiasProveedor = materiasProveedor;
 	}
 
 	/**
 	 * @return the gerentedeProduccion
 	 */
-	public Set<GerentedeProduccion> getGerentedeProduccion() {
+	public GerentedeProduccion getGerentedeProduccion() {
 		return gerentedeProduccion;
 	}
 
 	/**
 	 * @param gerentedeProduccion the gerentedeProduccion to set
 	 */
-	public void setGerentedeProduccion(Set<GerentedeProduccion> gerentedeProduccion) {
+	public void setGerentedeProduccion(GerentedeProduccion gerentedeProduccion) {
 		this.gerentedeProduccion = gerentedeProduccion;
 	}
 
 	public Pedido(String iD, String estadoPago, Date fechaCreacion,
 			String deadline, Date fechaRecibido, Cliente cliente,
-			Set<Producto> producto, Set<MateriasProveedor> materiasProveedor,
-			Set<GerentedeProduccion> gerentedeProduccion) {
+			ArrayList<Producto> producto, ArrayList<MateriasProveedor> materiasProveedor,
+			GerentedeProduccion gerentedeProduccion) {
 		super();
 		this.iD = iD;
 		this.estadoPago = estadoPago;
@@ -215,7 +224,7 @@ public class Pedido
 	 * @ordered
 	 */
 	
-	public Set<Producto> producto;
+	public ArrayList<Producto> producto;
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -224,7 +233,7 @@ public class Pedido
 	 * @ordered
 	 */
 	
-	public Set<MateriasProveedor> materiasProveedor;
+	public ArrayList<MateriasProveedor> materiasProveedor;
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -233,7 +242,7 @@ public class Pedido
 	 * @ordered
 	 */
 	
-	public Set<GerentedeProduccion> gerentedeProduccion;
+	public GerentedeProduccion gerentedeProduccion;
 	
 	/**
 	 * <!-- begin-user-doc -->

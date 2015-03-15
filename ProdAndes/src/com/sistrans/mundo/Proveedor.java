@@ -1,4 +1,5 @@
 package com.sistrans.mundo;
+import java.util.ArrayList;
 import java.util.Set;
 
 
@@ -73,19 +74,22 @@ public class Proveedor extends Usuario
 	/**
 	 * @return the materiasProveedor
 	 */
-	public Set<MateriasProveedor> getMateriasProveedor() {
+	public ArrayList<MateriasProveedor> getMateriasProveedor() {
 		return materiasProveedor;
 	}
-
+	public void agregarMateriaProveedor(MateriasProveedor a)
+	{
+		materiasProveedor.add(a);
+	}
 	/**
 	 * @param materiasProveedor the materiasProveedor to set
 	 */
-	public void setMateriasProveedor(Set<MateriasProveedor> materiasProveedor) {
+	public void setMateriasProveedor(ArrayList<MateriasProveedor> materiasProveedor) {
 		this.materiasProveedor = materiasProveedor;
 	}
 
 	public Proveedor(String rLnombre, String rLtipoDoc, String rLnumDoc,
-			Set<MateriasProveedor> materiasProveedor) {
+			ArrayList<MateriasProveedor> materiasProveedor) {
 		super();
 		this.rLnombre = rLnombre;
 		this.rLtipoDoc = rLtipoDoc;
@@ -109,7 +113,7 @@ public class Proveedor extends Usuario
 	 * @ordered
 	 */
 	
-	public Set<MateriasProveedor> materiasProveedor;
+	public ArrayList<MateriasProveedor> materiasProveedor;
 	
 	/**
 	 * <!-- begin-user-doc -->

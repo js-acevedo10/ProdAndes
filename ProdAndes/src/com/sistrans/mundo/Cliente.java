@@ -1,4 +1,5 @@
 package com.sistrans.mundo;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -79,19 +80,19 @@ public class Cliente extends Usuario
 	/**
 	 * @return the pedido
 	 */
-	public Set<Pedido> getPedido() {
+	public ArrayList<Pedido> getPedido() {
 		return pedido;
 	}
 
 	/**
 	 * @param pedido the pedido to set
 	 */
-	public void setPedido(Set<Pedido> pedido) {
-		this.pedido = pedido;
+	public void setPedido(ArrayList<Pedido> pedidos) {
+		this.pedido = pedidos;
 	}
 
 	public Cliente(int numReg, String rLnombre, String rLtipoDoc,
-			String rLnumDoc, Set<Pedido> pedido) {
+			String rLnumDoc, ArrayList<Pedido> pedido) {
 		super();
 		this.numReg = numReg;
 		this.rLnombre = rLnombre;
@@ -134,7 +135,7 @@ public class Cliente extends Usuario
 	 * @ordered
 	 */
 	
-	public Set<Pedido> pedido;
+	public ArrayList<Pedido> pedido;
 	
 	/**
 	 * <!-- begin-user-doc -->
