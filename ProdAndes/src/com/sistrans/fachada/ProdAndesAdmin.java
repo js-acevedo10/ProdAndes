@@ -68,7 +68,7 @@ public class ProdAndesAdmin {
 		return null;
 	}
 
-	public ArrayList<String> informacionMaterial(String query) {
+	public ArrayList<String> informacionMaterial(String query, String tipo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

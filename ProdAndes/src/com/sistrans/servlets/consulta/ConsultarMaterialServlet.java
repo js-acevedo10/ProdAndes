@@ -81,8 +81,9 @@ public class ConsultarMaterialServlet extends HttpServlet {
 
 	private void solicitudAdmin(String tipo, String query, PrintWriter out) {
 		// TODO Auto-generated method stub
-		ArrayList<String> detalles = ProdAndesAdmin.darInstancia().informacionMaterial(query);
+		ArrayList<String> detalles = ProdAndesAdmin.darInstancia().informacionMaterial(query, tipo);
 		if(detalles.size() != 0) {
+			
 			
 		} else  {
 			out.println("ERROR FATAL");
@@ -91,7 +92,7 @@ public class ConsultarMaterialServlet extends HttpServlet {
 
 	private void solicitudUsuario(String tipo, String query, PrintWriter out) {
 		// TODO Auto-generated method stub
-		ArrayList<String> detalles = ProdAndesUsuario.darInstancia().informacionMaterial(query);
+		ArrayList<String> detalles = ProdAndesUsuario.darInstancia().informacionMaterial(query, tipo);
 		if(detalles.size() != 0) {
 			
 		} else  {
@@ -101,7 +102,7 @@ public class ConsultarMaterialServlet extends HttpServlet {
 
 	private void solicitudOperario(String tipo, String query, PrintWriter out) {
 		// TODO Auto-generated method stub
-		ArrayList<String> detalles = ProdAndesOperario.darInstancia().informacionMaterial(query);
+		ArrayList<String> detalles = ProdAndesOperario.darInstancia().informacionMaterial(query, tipo);
 		if(detalles.size() != 0) {
 			
 		} else  {
@@ -111,7 +112,7 @@ public class ConsultarMaterialServlet extends HttpServlet {
 
 	private void solicitudGerente(String tipo, String query, PrintWriter out) {
 		// TODO Auto-generated method stub
-		ArrayList<String> detalles = ProdAndesGerente.darInstancia().informacionMaterial(query);
+		ArrayList<String> detalles = ProdAndesGerente.darInstancia().informacionMaterial(query, tipo);
 		if(detalles.size() != 0) {
 			
 		} else  {
