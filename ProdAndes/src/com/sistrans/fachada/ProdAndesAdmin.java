@@ -44,11 +44,7 @@ public class ProdAndesAdmin {
 			String existencias, String etapa, String fechaSol,
 			String fechaEntreg) {
 		// TODO Auto-generated method stub
-		ArrayList<MateriaPrima> materias = new ArrayList<MateriaPrima>();
-		for(int i = 0; i < 10; i++) {
-			
-		}
-		return materias;
+		return null;
 	}
 
 	public ArrayList<Componente> consultarExistenciasComp(String tipo,

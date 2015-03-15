@@ -99,11 +99,34 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 	private void solicitudAdmin(String role, String tipo, String existencias,
 			String etapa, String fechaSol, String fechaEntreg, PrintWriter out) {
 		
+		out.println("<thead>"
+				+ "<tr>"
+				+ "<th>ID</th>"
+				+ "<th>Nombre</th>"
+				+ "<th>Tonelada</th>"
+				+ "<th>Materias Proveedor</th>"
+				+ "<th>Producto</th>"
+				+ "</tr>"
+				+ "</thead>"
+				+ "<tbody>");
+		
 		if(tipo.equals("materia-prima")) {
 			ArrayList<MateriaPrima> items = ProdAndesAdmin.darInstancia().consultarExistenciasMatPrima(tipo, existencias, etapa, fechaSol, fechaEntreg);
-			for(MateriaPrima materia : items) {
-				out.println();
+			if(items.size() == 0) {
+				System.out.println("no hay");
+			} else {
+				for(MateriaPrima materia : items) {
+					out.println("<tr>");
+					out.println("<td>"+materia.getNumInventario() + "</td>");
+					out.println("<td>"+materia.getNombre()+"</td>");
+					out.println("<td>"+materia.getTonelada()+"</td>");
+					out.println("<td>"+materia.getMateriasProveedor().getProveedor().getNombre()+"</td>");
+					out.println("<td>"+materia.getProducto().getNombre()+"</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
+			
 		} else if(tipo.equals("componente")) {
 			ArrayList<Componente> items = ProdAndesAdmin.darInstancia().consultarExistenciasComp(tipo, existencias, etapa, fechaSol, fechaEntreg);
 			for(Componente comp : items) {
