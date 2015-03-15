@@ -75,16 +75,11 @@ public class OperarioServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		switch (registro) {
 		case "exec-stage-prod":
+			response.sendRedirect("pages/operario/registro/registroetapa.html");
 			break;
 		default:
 			response.sendRedirect("pages/error/404.html");
 			break;
 		}
-	}
-	
-	//HTML METHODS
-
-	private void printHeader(HttpServletResponse response, PrintWriter out){
-		out.println("<!DOCTYPE html><html><head></title></head>");
 	}
 }

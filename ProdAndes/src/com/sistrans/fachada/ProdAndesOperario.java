@@ -61,7 +61,10 @@ public class ProdAndesOperario {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	//Metodos de casos de uso
-	
+
+	public boolean registrarEjecucionEtapa(String id, String fi, String ft,
+			String cod) {
+		// TODO Auto-generated method stub
+		return false;
+	}	
 }

@@ -56,7 +56,6 @@ public class GerenteServlet extends HttpServlet {
 	//WORLD METHODS
 	
 	public void realizarConsulta(String consulta, HttpServletResponse response) throws IOException {
-		PrintWriter out = response.getWriter();
 		switch (consulta) {
 		case "exist-mat":
 			response.sendRedirect("pages/gerente/search/existencias.html");
