@@ -2,7 +2,7 @@ package com.sistrans.fachada;
 
 import java.util.ArrayList;
 
-import com.sistrans.dao.ConsultaDAO;
+import com.sistrans.dao.ConsultaDAOUsuario;
 import com.sistrans.mundo.Componente;
 import com.sistrans.mundo.EtapadeProduccion;
 import com.sistrans.mundo.MateriaPrima;
@@ -10,7 +10,7 @@ import com.sistrans.mundo.Producto;
 
 public class ProdAndesGerente {
 
-	private ConsultaDAO dao;
+	private ConsultaDAOUsuario dao;
 	
 	//Singleton
 	
@@ -25,7 +25,7 @@ public class ProdAndesGerente {
 	
 	private ProdAndesGerente()
 	{
-		dao = new ConsultaDAO();
+		dao = new ConsultaDAOUsuario();
 	}
 	
 	public void inicializarRuta(String ruta)

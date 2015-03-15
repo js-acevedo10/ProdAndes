@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.sql.*;
 import java.util.Properties;
 
-public class ConsultaDAO {
+public class ConsultaDAOOperario {
 	
 	//Constantes
 	
@@ -22,7 +22,7 @@ public class ConsultaDAO {
 	
 	private String cadenaConexion;
 	
-	public ConsultaDAO()
+	public ConsultaDAOOperario()
 	{
 		
 	}
