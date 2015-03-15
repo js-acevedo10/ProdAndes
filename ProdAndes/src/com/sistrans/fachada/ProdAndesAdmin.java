@@ -2,22 +2,22 @@ package com.sistrans.fachada;
 
 import com.sistrans.dao.ConsultaDAO;
 
-public class ProdAndes {
-	
+public class ProdAndesAdmin {
+
 	private ConsultaDAO dao;
 	
 	//Singleton
 	
-	private static ProdAndes instancia;
+	private static ProdAndesAdmin instancia;
 	
-	public static ProdAndes darInstancia()
+	public static ProdAndesAdmin darInstancia()
 	{
 		if(instancia == null)
-			instancia = new ProdAndes();
+			instancia = new ProdAndesAdmin();
 		return instancia;
 	}
 	
-	private ProdAndes()
+	private ProdAndesAdmin()
 	{
 		dao = new ConsultaDAO();
 	}

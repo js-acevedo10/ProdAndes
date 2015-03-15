@@ -60,8 +60,10 @@ public class OperarioServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		switch (consulta) {
 		case "exist-mat":
+			response.sendRedirect("pages/operario/search/existencias.html");
 			break;
 		case "mat-info":
+			response.sendRedirect("pages/operario/search/material.html");
 			break;
 		default:
 			response.sendRedirect("pages/error/404.html");

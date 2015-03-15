@@ -49,13 +49,13 @@ public class LoginServlet extends HttpServlet {
 		if(action.equals("login"))
 		{
 			if(username.contains("admin")) {
-				response.sendRedirect("./pages/welcome/admin.html");
+				response.sendRedirect("./pages/admin/dashboard.html");
 			} else if(username.contains("gerente")) {
-				response.sendRedirect("./pages/welcome/gerente.html");
+				response.sendRedirect("./pages/gerente/dashboard.html");
 			} else if(username.contains("cliente")) {
-				response.sendRedirect("./pages/welcome/user.html");
+				response.sendRedirect("./pages/user/dashboard.html");
 			} else if(username.contains("operario")) {
-				response.sendRedirect("./pages/welcome/operario.html");
+				response.sendRedirect("./pages/operario/dashboard.html");
 			} else if(username.contains("proveedor")) {
 				response.sendRedirect("./pages/welcome/proveedor.html");
 			} else {
@@ -66,7 +66,6 @@ public class LoginServlet extends HttpServlet {
 				out.println("			-gerente");
 				out.println("			-cliente");
 				out.println("			-operario");
-				out.println("			-proveedor");
 				out.println();
 				out.println("Recuerde que no es necesaria una contraseña.");
 			}

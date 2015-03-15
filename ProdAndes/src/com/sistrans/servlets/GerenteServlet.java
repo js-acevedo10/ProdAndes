@@ -59,10 +59,12 @@ public class GerenteServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		switch (consulta) {
 		case "exist-mat":
+			response.sendRedirect("pages/gerente/search/existencias.html");
 			break;
 		case "stage-more-mov":
 			break;
 		case "mat-info":
+			response.sendRedirect("pages/gerente/search/material.html");
 			break;
 		case "oper-more-active":
 			break;

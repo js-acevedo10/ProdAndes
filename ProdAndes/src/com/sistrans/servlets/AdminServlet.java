@@ -60,10 +60,12 @@ public class AdminServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		switch (consulta) {
 		case "exist-mat":
+			response.sendRedirect("pages/admin/search/existencias.html");
 			break;
 		case "stage-more-mov":
 			break;
 		case "mat-info":
+			response.sendRedirect("pages/admin/search/material.html");
 			break;
 		case "oper-more-active":
 			break;
@@ -86,11 +88,5 @@ public class AdminServlet extends HttpServlet {
 			response.sendRedirect("pages/error/404.html");
 			break;
 		}
-	}
-	
-	//HTML METHODS
-
-	private void printHeader(HttpServletResponse response, PrintWriter out){
-		out.println("<!DOCTYPE html><html><head></title></head>");
 	}
 }

@@ -62,8 +62,10 @@ public class UserServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		switch (consulta) {
 		case "exist-mat":
+			response.sendRedirect("pages/user/search/existencias.html");
 			break;
 		case "mat-info":
+			response.sendRedirect("pages/user/search/material.html");
 			break;
 		default:
 			response.sendRedirect("pages/error/404.html");
