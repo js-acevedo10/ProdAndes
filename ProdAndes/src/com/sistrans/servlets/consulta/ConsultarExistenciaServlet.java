@@ -197,8 +197,9 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<td>" + prod.getNombre() + "</td>");
 					out.println("<td>" + prod.getCostoVenta() + "</td>");
 					out.println("<td>" + prod.getMateriaPrima() + "</td>");
-					out.println("<td>" + prod. + "</td>");
-					out.println("<td>" + prod. + "</td>");
+					out.println("<td>" + prod.getComponente() + "</td>");
+					out.println("<td>" + prod.getEtapadeProduccion() + "</td>");
+					out.println("<td>" + prod.getPedido().getiD() + "</td>");
 					out.println("</tr>");
 				}
 			}
@@ -215,24 +216,88 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		if(tipo.equals("materia-prima")) {
 			ArrayList<MateriaPrima> items = ProdAndesUsuario.darInstancia().consultarExistenciasMatPrima(tipo, existencias);
-			for(MateriaPrima materia : items) {
-				out.println();
+			if(items.size() == 0) {
+
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>ID</th>"
+						+ "<th>Nombre</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(MateriaPrima materia : items) {
+					out.println("<tr>");
+					out.println("<td>"+materia.getNumInventario() + "</td>");
+					out.println("<td>"+materia.getNombre()+"</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("componente")) {
 			ArrayList<Componente> items = ProdAndesUsuario.darInstancia().consultarExistenciasComp(tipo, existencias);
-			for(Componente comp : items) {
+			if(items.size() == 0) {
 				
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>ID</th>"
+						+ "<th>Nombre</th>"
+						+ "<th>UnidadMedida</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(Componente comp : items) {
+					out.println("<tr>");
+					out.println("<td>" + comp.getNumInventario() + "</td>");
+					out.println("<td>" + comp.getNombre() + "</td>");
+					out.println("<td>" + comp.getUnidadMedida() + "</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("etapa-producto")) {
 			ArrayList<EtapadeProduccion> items = ProdAndesUsuario.darInstancia().consultarExistenciasEtapa(tipo, existencias);
-			for(EtapadeProduccion stage : items) {
+			if(items.size() == 0) {
 				
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>ID</th>"
+						+ "<th>Fecha Final</th>"
+						+ "<th>Producto</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(EtapadeProduccion stage : items) {
+					out.println("<tr>");
+					out.println("<td>" + stage.getNum() + "</td>");
+					out.println("<td>" + stage.getFechaFinal() + "</td>");
+					out.println("<td>" + stage.getProducto().getNombre() + "</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("producto")) {
 			ArrayList<Producto> items = ProdAndesUsuario.darInstancia().consultarExistenciasProd(tipo, existencias);
-			for(Producto prod : items) {
+			if(items.size() == 0) {
 				
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>Nombre</th>"
+						+ "<th>Costo</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(Producto prod : items) {
+					out.println("<tr>");
+					out.println("<td>" + prod.getNombre() + "</td>");
+					out.println("<td>" + prod.getCostoVenta() + "</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("all")) {
 				
 		} else {
@@ -245,24 +310,103 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		if(tipo.equals("materia-prima")) {
 			ArrayList<MateriaPrima> items = ProdAndesOperario.darInstancia().consultarExistenciasMatPrima(tipo, existencias, fechaEntreg);
-			for(MateriaPrima materia : items) {
-				out.println();
+			if(items.size() == 0) {
+
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>ID</th>"
+						+ "<th>Nombre</th>"
+						+ "<th>Tonelada</th>"
+						+ "<th>Proveedor</th>"
+						+ "<th>Producto</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(MateriaPrima materia : items) {
+					out.println("<tr>");
+					out.println("<td>"+materia.getNumInventario() + "</td>");
+					out.println("<td>"+materia.getNombre()+"</td>");
+					out.println("<td>"+materia.getTonelada()+"</td>");
+					out.println("<td>"+materia.getMateriasProveedor().getProveedor().getNombre()+"</td>");
+					out.println("<td>"+materia.getProducto().getNombre()+"</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("componente")) {
 			ArrayList<Componente> items = ProdAndesOperario.darInstancia().consultarExistenciasComp(tipo, existencias, fechaEntreg);
-			for(Componente comp : items) {
+			if(items.size() == 0) {
 				
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>ID</th>"
+						+ "<th>Nombre</th>"
+						+ "<th>UnidadMedida</th>"
+						+ "<th>Producto</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(Componente comp : items) {
+					out.println("<tr>");
+					out.println("<td>" + comp.getNumInventario() + "</td>");
+					out.println("<td>" + comp.getNombre() + "</td>");
+					out.println("<td>" + comp.getUnidadMedida() + "</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("etapa-producto")) {
 			ArrayList<EtapadeProduccion> items = ProdAndesOperario.darInstancia().consultarExistenciasEtapa(tipo, existencias, fechaEntreg);
-			for(EtapadeProduccion stage : items) {
+			if(items.size() == 0) {
 				
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>ID</th>"
+						+ "<th>Fecha Inicial</th>"
+						+ "<th>Fecha Final</th>"
+						+ "<th>Estacion</th>"
+						+ "<th>Producto</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(EtapadeProduccion stage : items) {
+					out.println("<tr>");
+					out.println("<td>" + stage.getNum() + "</td>");
+					out.println("<td>" + stage.getFechaInicial() + "</td>");
+					out.println("<td>" + stage.getFechaFinal() + "</td>");
+					out.println("<td>" + stage.getEstaciondeProducto().getCodigo() + "</td>");
+					out.println("<td>" + stage.getProducto().getNombre() + "</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("producto")) {
 			ArrayList<Producto> items = ProdAndesOperario.darInstancia().consultarExistenciasProd(tipo, existencias, fechaEntreg);
-			for(Producto prod : items) {
+			if(items.size() == 0) {
 				
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>Nombre</th>"
+						+ "<th>Materia Prima</th>"
+						+ "<th>Componente</th>"
+						+ "<th>Etapa De Produccion</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(Producto prod : items) {
+					out.println("<tr>");
+					out.println("<td>" + prod.getNombre() + "</td>");
+					out.println("<td>" + prod.getMateriaPrima() + "</td>");
+					out.println("<td>" + prod.getComponente() + "</td>");
+					out.println("<td>" + prod.getEtapadeProduccion() + "</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("all")) {
 				
 		} else {
@@ -275,24 +419,109 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		if(tipo.equals("materia-prima")) {
 			ArrayList<MateriaPrima> items = ProdAndesGerente.darInstancia().consultarExistenciasMatPrima(tipo, existencias, etapa, fechaSol, fechaEntreg);
-			for(MateriaPrima materia : items) {
-				out.println();
+			if(items.size() == 0) {
+
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>ID</th>"
+						+ "<th>Nombre</th>"
+						+ "<th>Tonelada</th>"
+						+ "<th>Proveedor</th>"
+						+ "<th>Producto</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(MateriaPrima materia : items) {
+					out.println("<tr>");
+					out.println("<td>"+materia.getNumInventario() + "</td>");
+					out.println("<td>"+materia.getNombre()+"</td>");
+					out.println("<td>"+materia.getTonelada()+"</td>");
+					out.println("<td>"+materia.getMateriasProveedor().getProveedor().getNombre()+"</td>");
+					out.println("<td>"+materia.getProducto().getNombre()+"</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("componente")) {
 			ArrayList<Componente> items = ProdAndesGerente.darInstancia().consultarExistenciasComp(tipo, existencias, etapa, fechaSol, fechaEntreg);
-			for(Componente comp : items) {
+			if(items.size() == 0) {
 				
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>ID</th>"
+						+ "<th>Nombre</th>"
+						+ "<th>UnidadMedida</th>"
+						+ "<th>Producto</th>"
+						+ "<th>Proveedor</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(Componente comp : items) {
+					out.println("<tr>");
+					out.println("<td>" + comp.getNumInventario() + "</td>");
+					out.println("<td>" + comp.getNombre() + "</td>");
+					out.println("<td>" + comp.getUnidadMedida() + "</td>");
+					out.println("<td>" + comp.getMateriasProveedor().getProveedor().getNombre() + "</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("etapa-producto")) {
 			ArrayList<EtapadeProduccion> items = ProdAndesGerente.darInstancia().consultarExistenciasEtapa(tipo, existencias, etapa, fechaSol, fechaEntreg);
-			for(EtapadeProduccion stage : items) {
+			if(items.size() == 0) {
 				
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>ID</th>"
+						+ "<th>Fecha Inicial</th>"
+						+ "<th>Fecha Final</th>"
+						+ "<th>Estacion</th>"
+						+ "<th>Producto</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(EtapadeProduccion stage : items) {
+					out.println("<tr>");
+					out.println("<td>" + stage.getNum() + "</td>");
+					out.println("<td>" + stage.getFechaInicial() + "</td>");
+					out.println("<td>" + stage.getFechaFinal() + "</td>");
+					out.println("<td>" + stage.getEstaciondeProducto().getCodigo() + "</td>");
+					out.println("<td>" + stage.getProducto().getNombre() + "</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("producto")) {
 			ArrayList<Producto> items = ProdAndesGerente.darInstancia().consultarExistenciasProd(tipo, existencias, etapa, fechaSol, fechaEntreg);
-			for(Producto prod : items) {
+			if(items.size() == 0) {
 				
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>Nombre</th>"
+						+ "<th>Costo</th>"
+						+ "<th>Materia Prima</th>"
+						+ "<th>Componente</th>"
+						+ "<th>Etapa De Produccion</th>"
+						+ "<th>Pedido</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(Producto prod : items) {
+					out.println("<tr>");
+					out.println("<td>" + prod.getNombre() + "</td>");
+					out.println("<td>" + prod.getCostoVenta() + "</td>");
+					out.println("<td>" + prod.getMateriaPrima() + "</td>");
+					out.println("<td>" + prod.getComponente() + "</td>");
+					out.println("<td>" + prod.getEtapadeProduccion() + "</td>");
+					out.println("<td>" + prod.getPedido().getiD() + "</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("all")) {
 				
 		} else {
@@ -370,6 +599,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 	}
 	
 	public void printError(String msg, PrintWriter out) {
-		
+		out.println("ERROR FATAl");
 	}
 }

@@ -67,6 +67,11 @@ public class ProdAndesAdmin {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public ArrayList<String> informacionMaterial(String query) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	//Metodos de casos de uso
 	

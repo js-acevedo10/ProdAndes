@@ -2,12 +2,18 @@ package com.sistrans.servlets.consulta;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.sistrans.fachada.ProdAndesAdmin;
+import com.sistrans.fachada.ProdAndesGerente;
+import com.sistrans.fachada.ProdAndesOperario;
+import com.sistrans.fachada.ProdAndesUsuario;
 
 /**
  * Servlet implementation class MaterialServlet
@@ -42,33 +48,30 @@ public class ConsultarMaterialServlet extends HttpServlet {
 	
 	public void procesarSolicitud(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		PrintWriter out = response.getWriter();
-		String role = request.getParameter("role");
+		String role = request.getParameter("r");
 		String tipo = request.getParameter("t");
-		String existencias = request.getParameter("e");
-		String etapa = "";
-		String fechaSol = "";
-		String fechaEntreg = "";
+		String query = request.getParameter("q");
 		
 		switch(role) {
 			case "admin":
-				etapa = request.getParameter("s");
-				fechaSol = request.getParameter("ds");
-				fechaEntreg = request.getParameter("de");
-				solicitudAdmin(role, tipo, existencias, etapa, fechaSol, fechaEntreg, out);
+				printHeader(out);
+				solicitudAdmin(tipo, query, out);
+				printFooter(out);
 				break;
 			case "user":
-				solicitudUser(role, tipo, existencias, out);
+				printHeader(out);
+				solicitudUsuario(tipo, query, out);
+				printFooter(out);
 				break;
 			case "operario":
-				etapa = request.getParameter("s");
-				fechaEntreg = request.getParameter("de");
-				solicitudOperario(role, tipo, existencias, fechaEntreg, out);
+				printHeader(out);
+				solicitudOperario(tipo, query, out);
+				printFooter(out);
 				break;
 			case "gerente":
-				etapa = request.getParameter("s");
-				fechaSol = request.getParameter("ds");
-				fechaEntreg = request.getParameter("de");
-				solicitudGerente(role, tipo, existencias, etapa, fechaSol, fechaEntreg, out);
+				printHeader(out);
+				solicitudGerente(tipo, query, out);
+				printFooter(out);
 				break;
 			default:
 				response.sendRedirect("/ProdAndes/pages/error/404.html");
@@ -76,27 +79,91 @@ public class ConsultarMaterialServlet extends HttpServlet {
 		}
 	}
 
-	private void solicitudAdmin(String role, String tipo, String existencias,
-			String etapa, String fechaSol, String fechaEntreg, PrintWriter out) {
+	private void solicitudAdmin(String tipo, String query, PrintWriter out) {
 		// TODO Auto-generated method stub
-		
+		ArrayList<String> detalles = ProdAndesAdmin.darInstancia().informacionMaterial(query);
+		if(detalles.size() != 0) {
+			
+		} else  {
+			out.println("ERROR FATAL");
+		}
 	}
 
-	private void solicitudUser(String role, String tipo, String existencias,
-			PrintWriter out) {
+	private void solicitudUsuario(String tipo, String query, PrintWriter out) {
 		// TODO Auto-generated method stub
-		
+		ArrayList<String> detalles = ProdAndesUsuario.darInstancia().informacionMaterial(query);
+		if(detalles.size() != 0) {
+			
+		} else  {
+			out.println("ERROR FATAL");
+		}
 	}
 
-	private void solicitudOperario(String role, String tipo,
-			String existencias, String fechaEntreg, PrintWriter out) {
+	private void solicitudOperario(String tipo, String query, PrintWriter out) {
 		// TODO Auto-generated method stub
-		
+		ArrayList<String> detalles = ProdAndesOperario.darInstancia().informacionMaterial(query);
+		if(detalles.size() != 0) {
+			
+		} else  {
+			out.println("ERROR FATAL");
+		}
 	}
 
-	private void solicitudGerente(String role, String tipo, String existencias,
-			String etapa, String fechaSol, String fechaEntreg, PrintWriter out) {
+	private void solicitudGerente(String tipo, String query, PrintWriter out) {
 		// TODO Auto-generated method stub
-		
+		ArrayList<String> detalles = ProdAndesGerente.darInstancia().informacionMaterial(query);
+		if(detalles.size() != 0) {
+			
+		} else  {
+			out.println("ERROR FATAL");
+		}
+	}
+	
+	//METODOS HTML
+	
+	public void printHeader(PrintWriter salida) {
+		salida.println("<!DOCTYPE html>");
+		salida.println("<html>");
+		salida.println("    <head>");
+		salida.println("        <meta charset=\"utf-8\">");
+		salida.println("        <title>Panel de Administrador ProdAndes</title>");
+		salida.println("        <link href=\"//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css\" rel=\"stylesheet\">");
+		salida.println("        <script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js\"></script>");
+		salida.println("        <script src=\"//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js\"></script>");
+		salida.println("        <link rel=\"stylesheet\" href=\"../../style/bootstrap.min.css\">");
+		salida.println("        <link type=\"text/css\" href=\"../../style/custom-bootstrap-override.css\" rel=\"stylesheet\">");
+		salida.println("        <!--[if lt IE 9]>");
+		salida.println("          <script src=\"https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js\"></script>");
+		salida.println("          <script src=\"https://oss.maxcdn.com/respond/1.4.2/respond.min.js\"></script>");
+		salida.println("        <![endif]-->");
+		salida.println("    </head>");
+		salida.println("    <body>");
+		salida.println("        <nav class=\"navbar navbar-default navbar-fixed-top\">");
+		salida.println("          <div class=\"container-fluid\">");
+		salida.println("            <!-- Brand and toggle get grouped for better mobile display -->");
+		salida.println("            <ul class=\"nav navbar-nav navbar-left\">");
+		salida.println("                 <li>");
+		salida.println("                    <a href=\"\" class=\"navbar-brand\" onclick=\"window.history.back()\" id=\"navBarLink\">");
+		salida.println("                        <span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\"></span>Volver al Dashboard");
+		salida.println("                    </a>");
+		salida.println("                 </li>");
+		salida.println("            </ul>");
+		salida.println("            <ul class=\"nav navbar-nav navbar-right\">");
+		salida.println("                <li><a href=\"../../index.html\">Cerrar Sesión</a></li>");
+		salida.println("            </ul>");
+		salida.println("          </div><!-- /.container-fluid -->");
+		salida.println("        </nav>");
+		salida.println("        <div class=\"container\">");
+		salida.println("            <div class=\"jumbotron\">");
+		salida.println("                <h1>Nombre:</h1>");
+		salida.println("            </div>");
+		salida.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+	}
+	
+	public void printFooter(PrintWriter salida) {
+		salida.println("            </div>");
+		salida.println("        </div>");
+		salida.println("    </body>");
+		salida.println("</html>");
 	}
 }
