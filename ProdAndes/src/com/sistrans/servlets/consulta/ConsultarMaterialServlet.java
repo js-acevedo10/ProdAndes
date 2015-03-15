@@ -83,8 +83,43 @@ public class ConsultarMaterialServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		ArrayList<String> detalles = ProdAndesAdmin.darInstancia().informacionMaterial(query, tipo);
 		if(detalles.size() != 0) {
-			
-			
+			switch(tipo) {
+				case "materia-prima":
+					out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+					out.println("            </div>");
+					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+					out.println("<h3>Toneladas: " + detalles.get(1) + "</h3>");
+					out.println("<h3>Materia Prima: " + detalles.get(2) + "</h3>");
+					break;
+				case "componente":
+					out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+					out.println("            </div>");
+					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+					out.println("<h3>Numero: " + detalles.get(2) + "</h3>");
+					out.println("<h3>Unidad de Medida: " + detalles.get(3) + "</h3>");
+					out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+					break;
+				case "producto":
+					out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+					out.println("            </div>");
+					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+					out.println("<h3>Costo de Venta: " + detalles.get(1) + "</h3>");
+					out.println("<h3>Materia Prima: " + detalles.get(2) + "</h3>");
+					out.println("<h3>Componente: " + detalles.get(3) + "</h3>");
+					out.println("<h3>Etapa de Produccion: " + detalles.get(4) + "</h3>");
+					break;
+				case "etapa-producto":
+					out.println("                <h1>Num: "+ detalles.get(0) +"</h1>");
+					out.println("            </div>");
+					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+					out.println("<h3>Fecha Inicial: " + detalles.get(1) + "</h3>");
+					out.println("<h3>Fecha Final: " + detalles.get(2) + "</h3>");
+					out.println("<h3>Estacion de Produccion: " + detalles.get(3) + "</h3>");
+					out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+					break;
+				default:
+					break;
+			}
 		} else  {
 			out.println("ERROR FATAL");
 		}
@@ -94,7 +129,39 @@ public class ConsultarMaterialServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		ArrayList<String> detalles = ProdAndesUsuario.darInstancia().informacionMaterial(query, tipo);
 		if(detalles.size() != 0) {
-			
+			switch(tipo) {
+			case "materia-prima":
+				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+				out.println("            </div>");
+				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+				out.println("<h3>Toneladas: " + detalles.get(1) + "</h3>");
+				break;
+			case "componente":
+				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+				out.println("            </div>");
+				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+				out.println("<h3>Numero: " + detalles.get(2) + "</h3>");
+				out.println("<h3>Unidad de Medida: " + detalles.get(3) + "</h3>");
+				out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+				break;
+			case "producto":
+				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+				out.println("            </div>");
+				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+				out.println("<h3>Costo de Venta: " + detalles.get(1) + "</h3>");
+				break;
+			case "etapa-producto":
+				out.println("                <h1>Num: "+ detalles.get(0) +"</h1>");
+				out.println("            </div>");
+				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+				out.println("<h3>Fecha Inicial: " + detalles.get(1) + "</h3>");
+				out.println("<h3>Fecha Final: " + detalles.get(2) + "</h3>");
+				out.println("<h3>Estacion de Produccion: " + detalles.get(3) + "</h3>");
+				out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+				break;
+			default:
+				break;
+		}
 		} else  {
 			out.println("ERROR FATAL");
 		}
@@ -104,7 +171,44 @@ public class ConsultarMaterialServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		ArrayList<String> detalles = ProdAndesOperario.darInstancia().informacionMaterial(query, tipo);
 		if(detalles.size() != 0) {
-			
+			switch(tipo) {
+			case "materia-prima":
+				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+				out.println("            </div>");
+				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+				out.println("<h3>Toneladas: " + detalles.get(1) + "</h3>");
+				out.println("<h3>Materia Prima: " + detalles.get(2) + "</h3>");
+				break;
+			case "componente":
+				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+				out.println("            </div>");
+				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+				out.println("<h3>Numero: " + detalles.get(2) + "</h3>");
+				out.println("<h3>Unidad de Medida: " + detalles.get(3) + "</h3>");
+				out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+				break;
+			case "producto":
+				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+				out.println("            </div>");
+				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+				out.println("<h3>Costo de Venta: " + detalles.get(1) + "</h3>");
+				out.println("<h3>Materia Prima: " + detalles.get(2) + "</h3>");
+				out.println("<h3>Componente: " + detalles.get(3) + "</h3>");
+				out.println("<h3>Etapa de Produccion: " + detalles.get(4) + "</h3>");
+				break;
+			case "etapa-producto":
+				out.println("                <h1>Num: "+ detalles.get(0) +"</h1>");
+				out.println("            </div>");
+				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+				out.println("<h3>Fecha Inicial: " + detalles.get(1) + "</h3>");
+				out.println("<h3>Fecha Final: " + detalles.get(2) + "</h3>");
+				out.println("<h3>Estacion de Produccion: " + detalles.get(3) + "</h3>");
+				out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+				break;
+			default:
+				break;
+		}
 		} else  {
 			out.println("ERROR FATAL");
 		}
@@ -114,7 +218,43 @@ public class ConsultarMaterialServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		ArrayList<String> detalles = ProdAndesGerente.darInstancia().informacionMaterial(query, tipo);
 		if(detalles.size() != 0) {
-			
+			switch(tipo) {
+			case "materia-prima":
+				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+				out.println("            </div>");
+				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+				out.println("<h3>Toneladas: " + detalles.get(1) + "</h3>");
+				out.println("<h3>Materia Prima: " + detalles.get(2) + "</h3>");
+				break;
+			case "componente":
+				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+				out.println("            </div>");
+				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+				out.println("<h3>Costo de Venta: " + detalles.get(1) + "</h3>");
+				out.println("<h3>Materia Prima: " + detalles.get(2) + "</h3>");
+				out.println("<h3>Componente: " + detalles.get(3) + "</h3>");
+				out.println("<h3>Etapa de Produccion: " + detalles.get(4) + "</h3>");
+				break;
+			case "producto":
+				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+				out.println("            </div>");
+				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+				out.println("<h3>Numero: " + detalles.get(2) + "</h3>");
+				out.println("<h3>Unidad de Medida: " + detalles.get(3) + "</h3>");
+				out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+				break;
+			case "etapa-producto":
+				out.println("                <h1>Num: "+ detalles.get(0) +"</h1>");
+				out.println("            </div>");
+				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+				out.println("<h3>Fecha Inicial: " + detalles.get(1) + "</h3>");
+				out.println("<h3>Fecha Final: " + detalles.get(2) + "</h3>");
+				out.println("<h3>Estacion de Produccion: " + detalles.get(3) + "</h3>");
+				out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+				break;
+			default:
+				break;
+		}
 		} else  {
 			out.println("ERROR FATAL");
 		}
@@ -156,9 +296,6 @@ public class ConsultarMaterialServlet extends HttpServlet {
 		salida.println("        </nav>");
 		salida.println("        <div class=\"container\">");
 		salida.println("            <div class=\"jumbotron\">");
-		salida.println("                <h1>Nombre:</h1>");
-		salida.println("            </div>");
-		salida.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
 	}
 	
 	public void printFooter(PrintWriter salida) {
