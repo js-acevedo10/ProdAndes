@@ -48,7 +48,7 @@ public class ConsultarMaterialServlet extends HttpServlet {
 	
 	public void procesarSolicitud(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		PrintWriter out = response.getWriter();
-		String role = request.getParameter("r");
+		String role = request.getParameter("role");
 		String tipo = request.getParameter("t");
 		String query = request.getParameter("q");
 		
