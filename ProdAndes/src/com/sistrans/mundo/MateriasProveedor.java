@@ -30,6 +30,102 @@ public class MateriasProveedor
 	private int tiempoEntrega;
 	
 	/**
+	 * @return the volMax
+	 */
+	public int getVolMax() {
+		return volMax;
+	}
+
+	/**
+	 * @param volMax the volMax to set
+	 */
+	public void setVolMax(int volMax) {
+		this.volMax = volMax;
+	}
+
+	/**
+	 * @return the tiempoEntrega
+	 */
+	public int getTiempoEntrega() {
+		return tiempoEntrega;
+	}
+
+	/**
+	 * @param tiempoEntrega the tiempoEntrega to set
+	 */
+	public void setTiempoEntrega(int tiempoEntrega) {
+		this.tiempoEntrega = tiempoEntrega;
+	}
+
+	/**
+	 * @return the proveedor
+	 */
+	public Proveedor getProveedor() {
+		return proveedor;
+	}
+
+	/**
+	 * @param proveedor the proveedor to set
+	 */
+	public void setProveedor(Proveedor proveedor) {
+		this.proveedor = proveedor;
+	}
+
+	/**
+	 * @return the materiaPrima
+	 */
+	public Set<MateriaPrima> getMateriaPrima() {
+		return materiaPrima;
+	}
+
+	/**
+	 * @param materiaPrima the materiaPrima to set
+	 */
+	public void setMateriaPrima(Set<MateriaPrima> materiaPrima) {
+		this.materiaPrima = materiaPrima;
+	}
+
+	/**
+	 * @return the componente
+	 */
+	public Set<Componente> getComponente() {
+		return componente;
+	}
+
+	/**
+	 * @param componente the componente to set
+	 */
+	public void setComponente(Set<Componente> componente) {
+		this.componente = componente;
+	}
+
+	/**
+	 * @return the pedido
+	 */
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	/**
+	 * @param pedido the pedido to set
+	 */
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+
+	public MateriasProveedor(int volMax, int tiempoEntrega,
+			Proveedor proveedor, Set<MateriaPrima> materiaPrima,
+			Set<Componente> componente, Pedido pedido) {
+		super();
+		this.volMax = volMax;
+		this.tiempoEntrega = tiempoEntrega;
+		this.proveedor = proveedor;
+		this.materiaPrima = materiaPrima;
+		this.componente = componente;
+		this.pedido = pedido;
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated

@@ -17,15 +17,27 @@ public class Administrador extends Usuario
 	 */
 	
 	public Inventario inventario;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
-	public Administrador(){
+
+	public Administrador(Inventario inventario) {
 		super();
+		this.inventario = inventario;
 	}
+
+	/**
+	 * @return the inventario
+	 */
+	public Inventario getInventario() {
+		return inventario;
+	}
+
+	/**
+	 * @param inventario the inventario to set
+	 */
+	public void setInventario(Inventario inventario) {
+		this.inventario = inventario;
+	}
+	
+
 
 }
 
