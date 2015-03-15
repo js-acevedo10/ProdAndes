@@ -99,22 +99,21 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 	private void solicitudAdmin(String role, String tipo, String existencias,
 			String etapa, String fechaSol, String fechaEntreg, PrintWriter out) {
 		
-		out.println("<thead>"
-				+ "<tr>"
-				+ "<th>ID</th>"
-				+ "<th>Nombre</th>"
-				+ "<th>Tonelada</th>"
-				+ "<th>Materias Proveedor</th>"
-				+ "<th>Producto</th>"
-				+ "</tr>"
-				+ "</thead>"
-				+ "<tbody>");
-		
 		if(tipo.equals("materia-prima")) {
 			ArrayList<MateriaPrima> items = ProdAndesAdmin.darInstancia().consultarExistenciasMatPrima(tipo, existencias, etapa, fechaSol, fechaEntreg);
 			if(items.size() == 0) {
-				System.out.println("no hay");
+
 			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>ID</th>"
+						+ "<th>Nombre</th>"
+						+ "<th>Tonelada</th>"
+						+ "<th>Proveedor</th>"
+						+ "<th>Producto</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
 				for(MateriaPrima materia : items) {
 					out.println("<tr>");
 					out.println("<td>"+materia.getNumInventario() + "</td>");
@@ -126,22 +125,84 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 				}
 			}
 			out.println("</tbody>");
-			
 		} else if(tipo.equals("componente")) {
 			ArrayList<Componente> items = ProdAndesAdmin.darInstancia().consultarExistenciasComp(tipo, existencias, etapa, fechaSol, fechaEntreg);
-			for(Componente comp : items) {
+			if(items.size() == 0) {
 				
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>ID</th>"
+						+ "<th>Nombre</th>"
+						+ "<th>UnidadMedida</th>"
+						+ "<th>Producto</th>"
+						+ "<th>Proveedor</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(Componente comp : items) {
+					out.println("<tr>");
+					out.println("<td>" + comp.getNumInventario() + "</td>");
+					out.println("<td>" + comp.getNombre() + "</td>");
+					out.println("<td>" + comp.getUnidadMedida() + "</td>");
+					out.println("<td>" + comp.getMateriasProveedor().getProveedor().getNombre() + "</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("etapa-producto")) {
 			ArrayList<EtapadeProduccion> items = ProdAndesAdmin.darInstancia().consultarExistenciasEtapa(tipo, existencias, etapa, fechaSol, fechaEntreg);
-			for(EtapadeProduccion stage : items) {
+			if(items.size() == 0) {
 				
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>ID</th>"
+						+ "<th>Fecha Inicial</th>"
+						+ "<th>Fecha Final</th>"
+						+ "<th>Estacion</th>"
+						+ "<th>Producto</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(EtapadeProduccion stage : items) {
+					out.println("<tr>");
+					out.println("<td>" + stage.getNum() + "</td>");
+					out.println("<td>" + stage.getFechaInicial() + "</td>");
+					out.println("<td>" + stage.getFechaFinal() + "</td>");
+					out.println("<td>" + stage.getEstaciondeProducto().getCodigo() + "</td>");
+					out.println("<td>" + stage.getProducto().getNombre() + "</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("producto")) {
 			ArrayList<Producto> items = ProdAndesAdmin.darInstancia().consultarExistenciasProd(tipo, existencias, etapa, fechaSol, fechaEntreg);
-			for(Producto prod : items) {
+			if(items.size() == 0) {
 				
+			} else {
+				out.println("<thead>"
+						+ "<tr>"
+						+ "<th>Nombre</th>"
+						+ "<th>Costo</th>"
+						+ "<th>Materia Prima</th>"
+						+ "<th>Componente</th>"
+						+ "<th>Etapa De Produccion</th>"
+						+ "<th>Pedido</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>");
+				for(Producto prod : items) {
+					out.println("<tr>");
+					out.println("<td>" + prod.getNombre() + "</td>");
+					out.println("<td>" + prod.getCostoVenta() + "</td>");
+					out.println("<td>" + prod.getMateriaPrima() + "</td>");
+					out.println("<td>" + prod. + "</td>");
+					out.println("<td>" + prod. + "</td>");
+					out.println("</tr>");
+				}
 			}
+			out.println("</tbody>");
 		} else if(tipo.equals("all")) {
 				
 		} else {

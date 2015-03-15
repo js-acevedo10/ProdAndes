@@ -66,14 +66,14 @@ public class EtapadeProduccion
 	/**
 	 * @return the estaciondeProducto
 	 */
-	public Set<EstaciondeProducto> getEstaciondeProducto() {
+	public EstaciondeProducto getEstaciondeProducto() {
 		return estaciondeProducto;
 	}
 
 	/**
 	 * @param estaciondeProducto the estaciondeProducto to set
 	 */
-	public void setEstaciondeProducto(Set<EstaciondeProducto> estaciondeProducto) {
+	public void setEstaciondeProducto(EstaciondeProducto estaciondeProducto) {
 		this.estaciondeProducto = estaciondeProducto;
 	}
 
@@ -92,7 +92,7 @@ public class EtapadeProduccion
 	}
 
 	public EtapadeProduccion(String num, Date fechaInicial, Date fechaFinal,
-			Set<EstaciondeProducto> estaciondeProducto, Producto producto) {
+			EstaciondeProducto estaciondeProducto, Producto producto) {
 		super();
 		this.num = num;
 		this.fechaInicial = fechaInicial;
@@ -126,7 +126,7 @@ public class EtapadeProduccion
 	 * @ordered
 	 */
 	
-	public Set<EstaciondeProducto> estaciondeProducto;
+	public EstaciondeProducto estaciondeProducto;
 	
 	/**
 	 * <!-- begin-user-doc -->
