@@ -71,10 +71,6 @@ public class MateriaPrima
 		this.tipo = tipo;
 	}
 
-
-
-
-
 	public MateriaPrima(String nombre, int numInventario, int tonelada, String tipo) {
 		super();
 		this.nombre = nombre;
