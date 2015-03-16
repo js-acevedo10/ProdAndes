@@ -9,16 +9,12 @@ package com.sistrans.mundo;
 
 public class Componente
 {
-	public Componente(String nombre, int numInventario, String unidadMedida,
-			Producto producto, MateriasProveedor materiasProveedor,
-			Inventario inventario) {
+	public Componente(String nombre, int numInventario, String unidadMedida, String tipo) {
 		super();
 		this.nombre = nombre;
 		this.numInventario = numInventario;
 		this.unidadMedida = unidadMedida;
-		this.producto = producto;
-		this.materiasProveedor = materiasProveedor;
-		this.inventario = inventario;
+		this.tipo = tipo;
 	}
 
 	/**
@@ -62,48 +58,18 @@ public class Componente
 	public void setUnidadMedida(String unidadMedida) {
 		this.unidadMedida = unidadMedida;
 	}
-
-	/**
-	 * @return the producto
-	 */
-	public Producto getProducto() {
-		return producto;
+	
+	public String getTipo() {
+		return tipo;
 	}
 
 	/**
-	 * @param producto the producto to set
+	 * @param unidadMedida the unidadMedida to set
 	 */
-	public void setProducto(Producto producto) {
-		this.producto = producto;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
-	/**
-	 * @return the materiasProveedor
-	 */
-	public MateriasProveedor getMateriasProveedor() {
-		return materiasProveedor;
-	}
-
-	/**
-	 * @param materiasProveedor the materiasProveedor to set
-	 */
-	public void setMateriasProveedor(MateriasProveedor materiasProveedor) {
-		this.materiasProveedor = materiasProveedor;
-	}
-
-	/**
-	 * @return the inventario
-	 */
-	public Inventario getInventario() {
-		return inventario;
-	}
-
-	/**
-	 * @param inventario the inventario to set
-	 */
-	public void setInventario(Inventario inventario) {
-		this.inventario = inventario;
-	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -132,33 +98,8 @@ public class Componente
 	
 	private String unidadMedida;
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Producto producto;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public MateriasProveedor materiasProveedor;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Inventario inventario;
-	
+
+	private String tipo;
 
 }
 

@@ -115,43 +115,40 @@ public class Producto
 	/**
 	 * @return the pedido
 	 */
-	public Pedido getPedido() {
-		return pedido;
+	public int getnumInventario() {
+		return numInventario;
 	}
 
 	/**
 	 * @param pedido the pedido to set
 	 */
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
+	public void setNuminventairo(int num) {
+		this.numInventario = num;
 	}
 
 	/**
 	 * @return the inventario
 	 */
-	public Inventario getInventario() {
-		return inventario;
+	public String getTipo() {
+		return tipo;
 	}
 
 	/**
 	 * @param inventario the inventario to set
 	 */
-	public void setInventario(Inventario inventario) {
-		this.inventario = inventario;
+	public void settipo(String tipo) {
+		this.tipo=tipo;
 	}
 
-	public Producto(String nombre, int costoVenta,
-			ArrayList<MateriaPrima> materiaPrima, ArrayList<Componente> componente,
-			ArrayList<EtapadeProduccion> etapadeProduccion, Pedido pedido,
-			Inventario inventario) {
+	public Producto(String nombre, int costoVenta, int numInventario, String tipo) {
 		super();
 		this.nombre = nombre;
 		this.costoVenta = costoVenta;
-		this.materiaPrima = materiaPrima;
-		this.componente = componente;
-		this.etapadeProduccion = etapadeProduccion;
-		this.pedido = pedido;
-		this.inventario = inventario;
+		this.materiaPrima = new ArrayList<>();
+		this.componente = new ArrayList<>();
+		this.etapadeProduccion = new ArrayList<>();
+		this.numInventario = numInventario;
+		this.tipo= tipo;
 	}
 
 	/**
@@ -181,23 +178,8 @@ public class Producto
 	
 	public ArrayList<EtapadeProduccion> etapadeProduccion;
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Pedido pedido;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Inventario inventario;
+	private int numInventario;
+	private String tipo;
 	
 	/**
 	 * <!-- begin-user-doc -->

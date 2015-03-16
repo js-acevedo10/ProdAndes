@@ -1,5 +1,8 @@
 package com.sistrans.fachada;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.sistrans.dao.ConsultaDAOUsuario;
@@ -102,7 +105,46 @@ public class ProdAndesGerente {
 		{
 			query="SELECT * FROM ProdAndes.materiaprima";
 		}
-		return null;
+		ArrayList<MateriaPrima> resultado = new ArrayList<>();
+		PreparedStatement a = null;
+		try 
+		{
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next())
+			{
+				String nombreT = b.getString("nombre");
+				int numInventarioT = b.getInt("numInventario");
+				int toneladasT = b.getInt("toneladas");
+				String tipoT = b.getString("tipo");
+				MateriaPrima z = new MateriaPrima(nombreT, numInventarioT, toneladasT, tipoT);
+				resultado.add(z);
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return resultado;
 	}
 
 	public ArrayList<Componente> consultarExistenciasComp(String tipo,
@@ -174,7 +216,46 @@ public class ProdAndesGerente {
 		{
 			query="SELECT * FROM ProdAndes.componente";
 		}
-		return null;
+		ArrayList<Componente> resultado = new ArrayList<>();
+		PreparedStatement a = null;
+		try 
+		{
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next())
+			{
+				String nombreT = b.getString("nombre");
+				int numInventarioT = b.getInt("numInventario");
+				String toneladasT = b.getString("unidadMedida");
+				String tipoT = b.getString("tipo");
+				Componente z = new Componente(nombreT, numInventarioT, toneladasT, tipoT);
+				resultado.add(z);
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return resultado;
 	}
 
 	public ArrayList<EtapadeProduccion> consultarExistenciasEtapa(String tipo,
@@ -215,7 +296,46 @@ public class ProdAndesGerente {
 		{
 			query="SELECT * FROM ProdAndes.EtapaDeProduccion";
 		}
-		return null;
+		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
+		PreparedStatement a = null;
+		try 
+		{
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next())
+			{
+				String nombreT = b.getString("id");
+				int num = b.getInt("num");
+				String fechainicial = b.getString("fechaInicial");
+				String fechaFinal = b.getString("fechaFinal");
+				EtapadeProduccion z = new EtapadeProduccion(num, fechainicial, fechaFinal, nombreT);
+				resultado.add(z);
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return resultado;
 	}
 
 	public ArrayList<Producto> consultarExistenciasProd(String tipo,
@@ -286,11 +406,52 @@ public class ProdAndesGerente {
 		{
 			query="SELECT * FROM ProdAndes.Producto";
 		}
-		return null;
+
+		ArrayList<Producto> resultado = new ArrayList<>();
+		PreparedStatement a = null;
+		try 
+		{
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next())
+			{
+				String nombreT = b.getString("nombre");
+				int numInventarioT = b.getInt("numInventario");
+				int costoVenta = b.getInt("costoVenta");
+				String tipoT = b.getString("tipo");
+				Producto z = new Producto(nombreT, costoVenta, numInventarioT, tipoT);
+				resultado.add(z);
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return resultado;
 	}
 
-	public ArrayList<String> informacionMaterial(String query, String tipo) {
-		// TODO Auto-generated method stub
+	public ArrayList<String> informacionMaterial(String query, String tipo) 
+	{
+		String querRy = "SELECT* FROM ((SELECT* FROM PRODANDES.COMPONENTE WHERE tipo='"+tipo+"') dataone LEFT JOIN PRODANDES.MateriaPrima datatwo on dataone.tipo = datatwo.tipo) LEFTJOIN PRODANDES.Producto datathree on dataone.tipo = datathree.tipo";
 		return null;
 	}
 
@@ -298,19 +459,107 @@ public class ProdAndesGerente {
 			String tonelada) {
 		// TODO Auto-generated method stub
 		String query = "INSERT INTO ProdAndes.MateriaPrima (nombre, numInventario, toneladas, id, tipo)VALUES ('"+nombre+"','"+cantidad+"','"+tonelada+"','"+nombre+cantidad+tonelada+"','no tipo');";
-		return false;
+		PreparedStatement a = null;
+		try 
+		{
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return true;
 	}
 
 	public boolean registrarComponente(String nombre, String cantidad,
 			String unidadMedida) {
 		// TODO Auto-generated method stub
 		String query = "INSERT INTO ProdAndes.Componente (nombre, numInventario, unidadMedida, id, tipo)VALUES ('"+nombre+"','"+cantidad+"','"+unidadMedida+"','"+nombre+cantidad+unidadMedida+"','no tipo');";
-		return false;
+		PreparedStatement a = null;
+		try 
+		{
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return true;
 	}
 
 	public boolean registrarEntregaPedido(String id, String fechaFinal) {
 		// TODO Auto-generated method stub
-		return false;
+		String query = "UPDATE ProdAndes.Pedido SET fechaRecibido='"+fechaFinal+"' WHERE id='"+id+"'";
+		PreparedStatement a = null;
+		try 
+		{
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return true;
 	}
 	
 	//Metodos de casos de uso

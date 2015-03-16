@@ -19,86 +19,69 @@ public class EtapadeProduccion
 	 * @ordered
 	 */
 	
-	private String num;
+	private int num;
 	
 	/**
 	 * @return the num
 	 */
-	public String getNum() {
+	public int getNum() {
 		return num;
 	}
 
 	/**
 	 * @param num the num to set
 	 */
-	public void setNum(String num) {
+	public void setNum(int num) {
 		this.num = num;
 	}
 
 	/**
 	 * @return the fechaInicial
 	 */
-	public Date getFechaInicial() {
+	public String getFechaInicial() {
 		return fechaInicial;
 	}
 
 	/**
 	 * @param fechaInicial the fechaInicial to set
 	 */
-	public void setFechaInicial(Date fechaInicial) {
+	public void setFechaInicial(String fechaInicial) {
 		this.fechaInicial = fechaInicial;
 	}
 
 	/**
 	 * @return the fechaFinal
 	 */
-	public Date getFechaFinal() {
+	public String getFechaFinal() {
 		return fechaFinal;
 	}
 
 	/**
 	 * @param fechaFinal the fechaFinal to set
 	 */
-	public void setFechaFinal(Date fechaFinal) {
+	public void setFechaFinal(String fechaFinal) {
 		this.fechaFinal = fechaFinal;
 	}
 
 	/**
 	 * @return the estaciondeProducto
 	 */
-	public EstaciondeProducto getEstaciondeProducto() {
-		return estaciondeProducto;
+	public String getNombre() {
+		return nombre;
 	}
 
 	/**
 	 * @param estaciondeProducto the estaciondeProducto to set
 	 */
-	public void setEstaciondeProducto(EstaciondeProducto estaciondeProducto) {
-		this.estaciondeProducto = estaciondeProducto;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
-
-	/**
-	 * @return the producto
-	 */
-	public Producto getProducto() {
-		return producto;
-	}
-
-	/**
-	 * @param producto the producto to set
-	 */
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
-
-	public EtapadeProduccion(String num, Date fechaInicial, Date fechaFinal,
-			EstaciondeProducto estaciondeProducto, Producto producto) {
+	public EtapadeProduccion(int num, String fechaInicial, String fechaFinal, String nombre) {
 		super();
 		this.num = num;
 		this.fechaInicial = fechaInicial;
 		this.fechaFinal = fechaFinal;
-		this.estaciondeProducto = estaciondeProducto;
-		this.producto = producto;
+		this.nombre = nombre;
 	}
 
 	/**
@@ -108,7 +91,7 @@ public class EtapadeProduccion
 	 * @ordered
 	 */
 	
-	private Date fechaInicial;
+	private String fechaInicial;
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -117,25 +100,9 @@ public class EtapadeProduccion
 	 * @ordered
 	 */
 	
-	private Date fechaFinal;
+	private String fechaFinal;
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public EstaciondeProducto estaciondeProducto;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Producto producto;
+private String nombre;
 	
 	/**
 	 * <!-- begin-user-doc -->
