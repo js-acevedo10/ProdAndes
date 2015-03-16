@@ -77,6 +77,7 @@ public class GerenteServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		switch (registro) {
 		case "order-placed":
+			response.sendRedirect("pages/gerente/registro/registroentregacliente.html");
 			break;
 		case "catalog-matprima":
 			break;
