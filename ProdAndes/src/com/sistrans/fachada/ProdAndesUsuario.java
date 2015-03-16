@@ -36,25 +36,86 @@ public class ProdAndesUsuario {
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
 			String existencias) {
 		// TODO Auto-generated method stub
+		String query="SELECT * FROM ProdAndes.materiaprima WHERE ";
+		if(tipo!="")
+		{
+			query =  query + "tipo = '" + tipo + "'" ; 
+			if(existencias!="")
+			{
+				query = query + " AND numInventario = '" + existencias +"'";
+			}
+		}
+		else if (existencias !="")
+		{
+			query = query + " numInventario = '" + existencias +"'";
+		}
+		else
+		{
+			query="SELECT * FROM ProdAndes.materiaprima";
+		}
 		return null;
 	}
 
 	public ArrayList<Componente> consultarExistenciasComp(String tipo,
 			String existencias) {
 		// TODO Auto-generated method stub
+		String query="SELECT * FROM ProdAndes.componente WHERE ";
+		if(tipo!="")
+		{
+			query =  query + "tipo = '" + tipo + "'" ; 
+			if(existencias!="")
+			{
+				query = query + " AND numInventario = '" + existencias +"'";
+			}
+		}
+		else if (existencias !="")
+		{
+			query = query + " numInventario = '" + existencias +"'";
+		}
+		else
+		{
+			query="SELECT * FROM ProdAndes.componente";
+		}
 		return null;
 	}
 
 	public ArrayList<EtapadeProduccion> consultarExistenciasEtapa(String tipo,
 			String existencias) {
 		// TODO Auto-generated method stub
+		String query="SELECT * FROM ProdAndes.Producto WHERE ";
+		if(tipo!="")
+		{
+			query= "SELECT* FROM ((SELECT* FROM PRODANDES.PRODUCTO WHERE tipo='" + tipo + "') DATAONE LEFT JOIN PRODANDES.ETAPAPRODUCTO DATATWO ON DATAONE.ID = DATATWO.PRODUCTOID) DATATHREE LEFT JOIN PRODANDES.ETAPADEPRODUCCION DATAFOURTH ON DATATHREE.ETAPAID = DATAFOURTH.ID";
+		}
+		else
+		{
+			query="SELECT * FROM ProdAndes.EtapaDeProduccion";
+		}
 		return null;
 	}
 
 	public ArrayList<Producto> consultarExistenciasProd(String tipo,
 			String existencias) {
 		// TODO Auto-generated method stub
+		String query="SELECT * FROM ProdAndes.producto WHERE ";
+		if(tipo!="")
+		{
+			query =  query + "tipo = '" + tipo + "'" ; 
+			if(existencias!="")
+			{
+				query = query + " AND numInventario = '" + existencias +"'";
+			}
+		}
+		else if (existencias !="")
+		{
+			query = query + " numInventario = '" + existencias +"'";
+		}
+		else
+		{
+			query="SELECT * FROM ProdAndes.producto";
+		}
 		return null;
+
 	}
 
 	public ArrayList<String> informacionMaterial(String query, String tipo) {
