@@ -286,7 +286,37 @@ public class ProdAndesUsuario {
 	public boolean registrarPedido(String id1, String id2, String id3,
 			String id32, String id4) {
 		// TODO Auto-generated method stub
-		return false;
+		String query = "INSERT INTO ProdAndes.Pedido (id, estadodepago, fechacreacion, deadline, fecharecibido)VALUES ('"+id1+"','"+id2+"','"+id3+"','"+id32+"','"+id4+"')";
+		PreparedStatement a = null;
+		try 
+		{
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return true;
 	}
 	
 	//Metodos de casos de uso

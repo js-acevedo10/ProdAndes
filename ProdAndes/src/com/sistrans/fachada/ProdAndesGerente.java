@@ -494,7 +494,7 @@ public class ProdAndesGerente {
 	public boolean registrarComponente(String nombre, String cantidad,
 			String unidadMedida) {
 		// TODO Auto-generated method stub
-		String query = "INSERT INTO ProdAndes.Componente (nombre, numInventario, unidadMedida, id, tipo)VALUES ('"+nombre+"','"+cantidad+"','"+unidadMedida+"','"+nombre+cantidad+unidadMedida+"','no tipo');";
+		String query = "INSERT INTO ProdAndes.Componente (nombre, numInventario, unidadMedida, id, tipo)VALUES ('"+nombre+"','"+cantidad+"','"+unidadMedida+"','"+nombre+cantidad+unidadMedida+"','no tipo')";
 		PreparedStatement a = null;
 		try 
 		{
