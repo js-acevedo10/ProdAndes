@@ -59,59 +59,28 @@ public class MateriaPrima
 	public void setTonelada(int tonelada) {
 		this.tonelada = tonelada;
 	}
-
-	/**
-	 * @return the materiasProveedor
-	 */
-	public MateriasProveedor getMateriasProveedor() {
-		return materiasProveedor;
+	
+	public String getTipo() {
+		return tipo;
 	}
 
 	/**
-	 * @param materiasProveedor the materiasProveedor to set
+	 * @param tonelada the Tipo to set
 	 */
-	public void setMateriasProveedor(MateriasProveedor materiasProveedor) {
-		this.materiasProveedor = materiasProveedor;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
-	/**
-	 * @return the producto
-	 */
-	public Producto getProducto() {
-		return producto;
-	}
 
-	/**
-	 * @param producto the producto to set
-	 */
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
 
-	/**
-	 * @return the inventario
-	 */
-	public Inventario getInventario() {
-		return inventario;
-	}
 
-	/**
-	 * @param inventario the inventario to set
-	 */
-	public void setInventario(Inventario inventario) {
-		this.inventario = inventario;
-	}
 
-	public MateriaPrima(String nombre, int numInventario, int tonelada,
-			MateriasProveedor materiasProveedor, Producto producto,
-			Inventario inventario) {
+	public MateriaPrima(String nombre, int numInventario, int tonelada, String tipo) {
 		super();
 		this.nombre = nombre;
 		this.numInventario = numInventario;
 		this.tonelada = tonelada;
-		this.materiasProveedor = materiasProveedor;
-		this.producto = producto;
-		this.inventario = inventario;
+		this.tipo = tipo;
 	}
 
 	/**
@@ -139,25 +108,8 @@ public class MateriaPrima
 	 * @ordered
 	 */
 	
-	public MateriasProveedor materiasProveedor;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Producto producto;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Inventario inventario;
+	private String tipo;
+
 	
 	/**
 	 * <!-- begin-user-doc -->

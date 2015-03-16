@@ -1,7 +1,11 @@
 package com.sistrans.fachada;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.sistrans.dao.ConsultaDAOAdmin;
 import com.sistrans.dao.ConsultaDAOUsuario;
 import com.sistrans.mundo.Componente;
 import com.sistrans.mundo.EtapadeProduccion;
@@ -110,8 +114,46 @@ public class ProdAndesAdmin {
 		{
 			query="SELECT * FROM ProdAndes.materiaprima";
 		}
-		
-		return null;
+		ArrayList<MateriaPrima> resultado = new ArrayList<>();
+		PreparedStatement a = null;
+		try 
+		{
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next())
+			{
+				String nombreT = b.getString("nombre");
+				int numInventarioT = b.getInt("numInventario");
+				int toneladasT = b.getInt("toneladas");
+				String tipoT = b.getString("tipo");
+				MateriaPrima z = new MateriaPrima(nombreT, numInventarioT, toneladasT, tipoT);
+				resultado.add(z);
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return resultado;
 	}
 
 	public ArrayList<Componente> consultarExistenciasComp(String tipo,
