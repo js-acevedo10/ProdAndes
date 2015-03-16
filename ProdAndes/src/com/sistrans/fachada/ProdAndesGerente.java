@@ -307,6 +307,11 @@ public class ProdAndesGerente {
 		String query = "INSERT INTO ProdAndes.Componente (nombre, numInventario, unidadMedida, id, tipo)VALUES ('"+nombre+"','"+cantidad+"','"+unidadMedida+"','"+nombre+cantidad+unidadMedida+"','no tipo');";
 		return false;
 	}
+
+	public boolean registrarEntregaPedido(String id, String fechaFinal) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	//Metodos de casos de uso
 	
