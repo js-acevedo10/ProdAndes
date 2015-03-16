@@ -61,6 +61,12 @@ public class ProdAndesUsuario {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public boolean registrarPedido(String id1, String id2, String id3,
+			String id32, String id4) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	//Metodos de casos de uso
 	

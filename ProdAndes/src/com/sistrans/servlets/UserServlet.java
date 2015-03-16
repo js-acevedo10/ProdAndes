@@ -77,6 +77,7 @@ public class UserServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		switch (registro) {
 		case "order":
+			response.sendRedirect("pages/user/registro/pedido.html");
 			break;
 		default:
 			response.sendRedirect("pages/error/404.html");
@@ -93,11 +94,5 @@ public class UserServlet extends HttpServlet {
 				response.sendRedirect("pages/error/404.html");
 				break;
 		}
-	}
-	
-	//HTML METHODS
-
-	private void printHeader(HttpServletResponse response, PrintWriter out){
-		out.println("<!DOCTYPE html><html><head></title></head>");
 	}
 }
