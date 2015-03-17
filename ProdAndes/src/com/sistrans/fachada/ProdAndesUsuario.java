@@ -68,8 +68,7 @@ public class ProdAndesUsuario {
 				String nombreT = b.getString("nombre");
 				int numInventarioT = b.getInt("numInventario");
 				int toneladasT = b.getInt("toneladas");
-				String tipoT = b.getString("tipo");
-				MateriaPrima z = new MateriaPrima(nombreT, toneladasT, tipoT);
+				MateriaPrima z = new MateriaPrima(nombreT, toneladasT);
 				resultado.add(z);
 			}
 		} 
@@ -115,8 +114,7 @@ public class ProdAndesUsuario {
 				String nombreT = b.getString("nombre");
 				int numInventarioT = b.getInt("numInventario");
 				String toneladasT = b.getString("unidadMedida");
-				String tipoT = b.getString("tipo");
-				Componente z = new Componente(nombreT, numInventarioT, toneladasT, tipoT);
+				Componente z = new Componente(nombreT, numInventarioT, toneladasT);
 				resultado.add(z);
 			}
 		} 
@@ -159,11 +157,9 @@ public class ProdAndesUsuario {
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
-				String nombreT = b.getString("id");
-				int num = b.getInt("num");
-				String fechainicial = b.getString("fechaInicial");
-				String fechaFinal = b.getString("fechaFinal");
-				EtapadeProduccion z = new EtapadeProduccion(num, fechainicial, fechaFinal, nombreT);
+				String nombreT = b.getString("ID");
+				int num = b.getInt("NUM");
+				EtapadeProduccion z = new EtapadeProduccion(num, nombreT);
 				resultado.add(z);
 			}
 		} 
@@ -209,8 +205,7 @@ public class ProdAndesUsuario {
 				String nombreT = b.getString("nombre");
 				int numInventarioT = b.getInt("numInventario");
 				int costoVenta = b.getInt("costoVenta");
-				String tipoT = b.getString("tipo");
-				Producto z = new Producto(nombreT, costoVenta, numInventarioT, tipoT);
+				Producto z = new Producto(nombreT, costoVenta, numInventarioT);
 				resultado.add(z);
 			}
 		} 

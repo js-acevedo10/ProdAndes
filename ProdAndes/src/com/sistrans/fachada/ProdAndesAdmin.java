@@ -50,15 +50,15 @@ public class ProdAndesAdmin {
 		// TODO Auto-generated method stub
 		String query="SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ";
 		String queryExisTipo="";
-		if(tipo!=null&&existencias!=null)
+		if(tipo!=""&&existencias!="")
 		{
 			queryExisTipo =  "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo";
 		}
-		else if (tipo!=null)
+		else if (tipo!="")
 		{
 			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"') datatwo";
 		}
-		else if (existencias!=null)
+		else if (existencias!="")
 		{
 			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>="+existencias+") datatwo";
 		}
@@ -66,7 +66,7 @@ public class ProdAndesAdmin {
 		{
 			queryExisTipo = "(SELECT* FROM MATERIAPRIMA) datatwo";
 		}
-		if (etapa!=null)
+		if (etapa!="")
 		{
 			query = query + "((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN" + queryExisTipo + " on dataone.IDMATERIAPRIMA=datatwo.ID)";
 		}
@@ -74,15 +74,15 @@ public class ProdAndesAdmin {
 		{
 			query = query + queryExisTipo;
 		}
-		if (fechaSol!=null&fechaEntreg!=null)
+		if (fechaSol!=""&fechaEntreg!="")
 		{
 			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('"+fechaSol+"','MM-DD-YYYY') AND PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
 		}
-		else if(fechaSol !=null)
+		else if(fechaSol !="")
 		{
 			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('"+fechaSol+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
 		}
-		else if(fechaEntreg !=null)
+		else if(fechaEntreg !="")
 		{
 			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
 		}
@@ -98,9 +98,8 @@ public class ProdAndesAdmin {
 			{
 				String nombreT = b.getString("NOMBRE");
 				int toneladasT = b.getInt("TONELADAS");
-				String tipoT = b.getString("TIPO");
 
-				MateriaPrima z = new MateriaPrima(nombreT, toneladasT, tipoT);
+				MateriaPrima z = new MateriaPrima(nombreT, toneladasT);
 				resultado.add(z);
 			}
 		} 
@@ -136,70 +135,6 @@ public class ProdAndesAdmin {
 			String fechaEntreg) {
 		// TODO Auto-generated method stub
 		String query="SELECT * FROM componente";
-		if(tipo!="")
-		{
-			query =  query + "tipo = '" + tipo + "'" ; 
-			if(existencias!="")
-			{
-				query = query + " AND numInventario = '" + existencias +"'";
-				if (fechaSol!=""&&fechaEntreg!="")
-				{
-					query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "' AND fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN Pedidocomponente dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM componente WHERE tipo = '" + tipo + "' AND numInventario = '" + existencias +"') dataFourth on dataThree.componenteID = dataFourth.ID";
-				}
-				else if(fechaSol !="")
-				{
-					query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "') dataOne LEFT JOIN Pedidocomponente dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN  (SELECT* FROM componente WHERE tipo = '" + tipo + "' AND numInventario = '" + existencias +"') dataFourth on dataThree.componenteID = dataFourth.ID";
-				}
-				else if(fechaEntreg!="")
-				{
-					query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN Pedidocomponente dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN  (SELECT* FROM componente WHERE tipo = '" + tipo + "' AND numInventario = '" + existencias +"') dataFourth on dataThree.componenteID = dataFourth.ID";
-				}
-			}
-			else if (fechaSol!=""&&fechaEntreg!="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "' AND fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN Pedidocomponente dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM componente WHERE tipo = '" + tipo + "') dataFourth on dataThree.componenteID = dataFourth.ID";
-			}
-			else if(fechaSol !="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "') dataOne LEFT JOIN Pedidocomponente dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN  (SELECT* FROM componente WHERE tipo = '" + tipo + "') dataFourth on dataThree.componenteID = dataFourth.ID";
-			}
-			else if(fechaEntreg!="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN Pedidocomponente dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN  (SELECT* FROM componente WHERE tipo = '" + tipo + "') dataFourth on dataThree.componenteID = dataFourth.ID";
-			}
-		}
-		else if (existencias !="")
-		{
-			query = query + " numInventario = '" + existencias +"'";
-			if (fechaSol!=""&&fechaEntreg!="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "' AND fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN Pedidocomponente dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM componente WHERE numInventario = '" + existencias +"') dataFourth on dataThree.componenteID = dataFourth.ID";
-			}
-			else if(fechaSol !="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "') dataOne LEFT JOIN Pedidocomponente dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM componente WHERE numInventario = '" + existencias +"') dataFourth on dataThree.componenteID = dataFourth.ID";
-			}
-			else if(fechaEntreg!="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN Pedidocomponente dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM componente WHERE numInventario = '" + existencias +"') dataFourth on dataThree.componenteID = dataFourth.ID";
-			}
-		}
-		else 	if (fechaSol!=""&&fechaEntreg!="")
-		{
-			query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "' AND fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN Pedidocomponente dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN componente dataFourth on dataThree.componenteID = dataFourth.ID";
-		}
-		else if(fechaSol !="")
-		{
-			query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "') dataOne LEFT JOIN Pedidocomponente dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN Componente dataFourth on dataThree.componenteID = dataFourth.ID";
-		}
-		else if(fechaEntreg!="")
-		{
-			query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN Pedidocomponente dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN componente dataFourth on dataThree.componenteID = dataFourth.ID";
-		}
-		else
-		{
-			query="SELECT * FROM componente";
-		}
 		
 		ArrayList<Componente> resultado = new ArrayList<>();
 		PreparedStatement a = null;
@@ -210,11 +145,11 @@ public class ProdAndesAdmin {
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
-				String nombreT = b.getString("nombre");
-				int numInventarioT = b.getInt("numInventario");
-				String toneladasT = b.getString("unidadMedida");
-				String tipoT = b.getString("tipo");
-				Componente z = new Componente(nombreT, numInventarioT, toneladasT, tipoT);
+				String nombreT = b.getString("NOMBRE");
+				String toneladasT = b.getString("UNIDADMEDIDA");
+				int numInventarioT = b.getInt("NUMINVENTARIO");
+
+				Componente z = new Componente(nombreT, numInventarioT, toneladasT);
 				resultado.add(z);
 			}
 		} 
@@ -292,11 +227,9 @@ public class ProdAndesAdmin {
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
-				String nombreT = b.getString("id");
-				int num = b.getInt("num");
-				String fechainicial = b.getString("fechaInicial");
-				String fechaFinal = b.getString("fechaFinal");
-				EtapadeProduccion z = new EtapadeProduccion(num, fechainicial, fechaFinal, nombreT);
+				String nombreT = b.getString("ID");
+				int num = b.getInt("NUM");
+				EtapadeProduccion z = new EtapadeProduccion(num, nombreT);
 				resultado.add(z);
 			}
 		} 
@@ -408,8 +341,7 @@ public class ProdAndesAdmin {
 				String nombreT = b.getString("nombre");
 				int numInventarioT = b.getInt("numInventario");
 				int costoVenta = b.getInt("costoVenta");
-				String tipoT = b.getString("tipo");
-				Producto z = new Producto(nombreT, costoVenta, numInventarioT, tipoT);
+				Producto z = new Producto(nombreT, costoVenta, numInventarioT);
 				resultado.add(z);
 			}
 		} 

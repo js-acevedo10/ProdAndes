@@ -126,21 +126,8 @@ public class Producto
 		this.numInventario = num;
 	}
 
-	/**
-	 * @return the inventario
-	 */
-	public String getTipo() {
-		return tipo;
-	}
 
-	/**
-	 * @param inventario the inventario to set
-	 */
-	public void settipo(String tipo) {
-		this.tipo=tipo;
-	}
-
-	public Producto(String nombre, int costoVenta, int numInventario, String tipo) {
+	public Producto(String nombre, int costoVenta, int numInventario) {
 		super();
 		this.nombre = nombre;
 		this.costoVenta = costoVenta;
@@ -148,7 +135,6 @@ public class Producto
 		this.componente = new ArrayList<>();
 		this.etapadeProduccion = new ArrayList<>();
 		this.numInventario = numInventario;
-		this.tipo= tipo;
 	}
 
 	/**
@@ -179,7 +165,6 @@ public class Producto
 	public ArrayList<EtapadeProduccion> etapadeProduccion;
 	
 	private int numInventario;
-	private String tipo;
 	
 	/**
 	 * <!-- begin-user-doc -->

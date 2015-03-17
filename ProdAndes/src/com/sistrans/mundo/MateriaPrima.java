@@ -47,26 +47,16 @@ public class MateriaPrima
 		this.tonelada = tonelada;
 	}
 	
-	public String getTipo() {
-		return tipo;
-	}
-
-	/**
-	 * @param tonelada the Tipo to set
-	 */
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
 
 
 
 
 
-	public MateriaPrima(String nombre, int tonelada, String tipo) {
+
+	public MateriaPrima(String nombre, int tonelada) {
 		super();
 		this.nombre = nombre;
 		this.tonelada = tonelada;
-		this.tipo = tipo;
 	}
 
 	
@@ -79,14 +69,7 @@ public class MateriaPrima
 	
 	private int tonelada;
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private String tipo;
+
 
 	
 	/**

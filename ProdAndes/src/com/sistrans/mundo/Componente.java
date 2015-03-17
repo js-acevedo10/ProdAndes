@@ -9,12 +9,11 @@ package com.sistrans.mundo;
 
 public class Componente
 {
-	public Componente(String nombre, int numInventario, String unidadMedida, String tipo) {
+	public Componente(String nombre, int numInventario, String unidadMedida) {
 		super();
 		this.nombre = nombre;
 		this.numInventario = numInventario;
 		this.unidadMedida = unidadMedida;
-		this.tipo = tipo;
 	}
 
 	/**
@@ -59,16 +58,6 @@ public class Componente
 		this.unidadMedida = unidadMedida;
 	}
 	
-	public String getTipo() {
-		return tipo;
-	}
-
-	/**
-	 * @param unidadMedida the unidadMedida to set
-	 */
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
 
 
 	/**
@@ -99,7 +88,6 @@ public class Componente
 	private String unidadMedida;
 	
 
-	private String tipo;
 
 }
 
