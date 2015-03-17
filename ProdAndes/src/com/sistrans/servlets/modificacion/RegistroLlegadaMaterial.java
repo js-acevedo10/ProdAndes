@@ -48,12 +48,12 @@ public class RegistroLlegadaMaterial extends HttpServlet {
 		String tipo = request.getParameter("t");
 		String nombre = request.getParameter("n");
 		String cantidad = request.getParameter("c");
+		String id = request.getParameter("i");
 		
 		
 		switch(tipo) {
 			case "materia-prima":
-				String tonelada = request.getParameter("u");
-				registrarMateriaPrima(nombre, cantidad, tonelada, response);
+				registrarMateriaPrima(id, nombre, cantidad, response);
 				break;
 			case "componente":
 				String unidadMedida = request.getParameter("u");
@@ -64,10 +64,10 @@ public class RegistroLlegadaMaterial extends HttpServlet {
 		}
 	}
 
-	private void registrarMateriaPrima(String nombre, String cantidad,
-			String tonelada, HttpServletResponse resp) throws IOException {
+	private void registrarMateriaPrima(String id, String nombre,
+			String cantidad, HttpServletResponse resp) throws IOException {
 		// TODO Auto-generated method stub
-		boolean reg = ProdAndesGerente.darInstancia().registrarMateriaPrima(nombre, cantidad, tonelada);
+		boolean reg = ProdAndesGerente.darInstancia().registrarMateriaPrima(id, nombre, cantidad);
 		if(reg) {
 			resp.sendRedirect("/ProdAndes/pages/gerente/success/registromateriaprima.html");
 		} else {

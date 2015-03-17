@@ -465,16 +465,16 @@ public class ProdAndesGerente {
 		}
 	}
 
-	public boolean registrarMateriaPrima(String nombre, String cantidad,
-			String tonelada) {
+	public boolean registrarMateriaPrima(String id, String nombre,
+			String cantidad) {
 		// TODO Auto-generated method stub
-		String query = "INSERT INTO MATERIAPRIMA (ID, NOMBRE, TONELADAS) VALUES ('"+ nombre + tonelada + "', '" + nombre + "','" + tonelada + "')";
+		String query = "INSERT INTO MATERIAPRIMA (ID, NOMBRE, TONELADAS) VALUES ('"+ id + "', '" + nombre + "'," + cantidad + ")";
 		PreparedStatement a = null;
 		try 
 		{
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
-			ResultSet b = a.executeQuery();
+			a.executeQuery();
 		} 
 		catch (SQLException e) 
 		{
@@ -488,13 +488,8 @@ public class ProdAndesGerente {
 				try {
 					a.close();
 				} catch (SQLException exception) {
-					
-					try {
-						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					exception.printStackTrace();
+					return false;
 				}
 			}
 

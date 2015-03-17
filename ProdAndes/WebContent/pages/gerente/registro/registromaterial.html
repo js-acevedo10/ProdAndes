@@ -32,17 +32,17 @@
         <div class="container">
             <div class="jumbotron">
                 <form class="form" action="/ProdAndes/registro/llegadamaterial.html" method="get">
+                <div class="form-group">
+                        <label for="c" class="sr-only">Load</label>
+                        <input class="form-control" type="text" name="i" placeholder="ID en el Sistema" required>
+                    </div>
                     <div class="form-group">
                         <label for="n" class="sr-only">Name</label>
                         <input class="form-control" type="text" name="n" placeholder="Nombre" required>
                     </div>
                     <div class="form-group">
                         <label for="c" class="sr-only">Cantidad</label>
-                        <input class="form-control" type="number" name="c" placeholder="Cantidad" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="c" class="sr-only">Load</label>
-                        <input class="form-control" type="number" name="u" placeholder="Load" required>
+                        <input class="form-control" type="number" name="c" placeholder="Cantidad en toneladas" required>
                     </div>
                     <div class="form-group">
                         <select name="t" id="" class="form-control" required>
