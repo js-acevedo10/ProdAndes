@@ -380,8 +380,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 	}
 
 	private void solicitudGerente(String role, String tipo, String existenciasMin,
-			String existenciasMax, String estacion, PrintWriter out) {		
-		// TODO Auto-generated method stub
+			String existenciasMax, String estacion, PrintWriter out) {	
 		if(tipo.equals("materia-prima")) {
 			ArrayList<MateriaPrima> items = ProdAndesGerente.darInstancia().consultarExistenciasMatPrima(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
@@ -479,6 +478,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 	
 	public void printEstaciones(PrintWriter out) {
 		ArrayList<String> estaciones = ProdAndesGerente.darInstancia().darEstaciones();
+		System.out.println(estaciones.size());
 		for(String x : estaciones) {
 			out.println("								<option value=\""+ x.toLowerCase() +"\">" + x + "</option>");
 		}
@@ -526,7 +526,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		salida.println("                    <div class=\"form-group\">");
 		salida.println("                        <div class=\"col-md-3\">");
 		salida.println("                            <select class=\"form-control input-lg\" id=\"search-input\" name=\"t\" required>");
-		salida.println("                                <option value=\"cualquiera\" selected disabled style=\"display: none\">Categoria</option>");
 		salida.println("                                <option value=\"materia-prima\">Materia Prima</option>");
 		salida.println("                                <option value=\"componente\">Componente</option>");
 		salida.println("                                <option value=\"producto\">Producto</option>");

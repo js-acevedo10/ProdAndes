@@ -39,7 +39,7 @@ public class ProdAndesGerente {
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
-		String query="SELECT dataTwo.nombre, datatwo.toneladas FROM ";
+		String query="SELECT datatwo.nombre, datatwo.toneladas FROM ";
 		String queryExisTipo="";
 		if ((existenciasMin!=null&&existenciasMin!="")&&(existenciasMax!=null&&existenciasMax!=""))
 		{
@@ -109,7 +109,7 @@ public class ProdAndesGerente {
 	public ArrayList<Componente> consultarExistenciasComp(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
-		String query="SELECT dataTwo.nombre, datatwo.NUMINVENTARIO FROM ";
+		String query="SELECT dataTwo.nombre, datatwo.NUMINVENTARIO, datatwo.UNIDADMEDIDA FROM ";
 		String queryExisTipo="";
 		if ((existenciasMin!=null&&existenciasMin!="")&&(existenciasMax!=null&&existenciasMax!=""))
 		{
@@ -250,17 +250,17 @@ public class ProdAndesGerente {
 
 	public ArrayList<Producto> consultarExistenciasProd(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
-		String query="SELECT datatwo.NOMBRE, datatwo.NUMINVENTARIO FROM ";
+		String query="SELECT dataTwo.nombre, datatwo.NUMINVENTARIO FROM ";
 		String queryExisTipo="";
-		if (existenciasMin!= null&&existenciasMax!= null&&existenciasMin!=""&&existenciasMax!="")
+		if (existenciasMin!=""&&existenciasMax!="")
 		{
 			queryExisTipo = "(SELECT* FROM PRODUCTO WHERE PRODUCTO.NUMINVENTARIO>="+existenciasMin+" AND PRODUCTO.NUMINVENTARIO<="+existenciasMax+") datatwo";
 		}
-		else if (existenciasMin!= null && existenciasMin!="")
+		else if (existenciasMin!="")
 		{
 			queryExisTipo = "(SELECT* FROM PRODUCTO WHERE PRODUCTO.NUMINVENTARIO>="+existenciasMin+") datatwo";
 		}
-		else if (existenciasMax != null && existenciasMax!="")
+		else if (existenciasMax!="")
 		{
 			queryExisTipo = "(SELECT* FROM PRODUCTO WHERE PRODUCTO.NUMINVENTARIO<="+existenciasMax+") datatwo";
 		}
@@ -268,7 +268,7 @@ public class ProdAndesGerente {
 		{
 			queryExisTipo = "(SELECT* FROM PRODUCTO) datatwo";
 		}
-		if (estacion != null && estacion!="")
+		if (estacion!="")
 		{
 			query = query + "((SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDPRODUCTO is not null AND ESTACIONDEPRODUCCION.CODIGO='"+estacion+"') dataone INNER JOIN " + queryExisTipo + " on dataone.IDPRODUCTO=datatwo.ID)";
 		}
@@ -276,7 +276,6 @@ public class ProdAndesGerente {
 		{
 			query = query + queryExisTipo;
 		}
-		System.out.println(query);
 
 		ArrayList<Producto> resultado = new ArrayList<>();
 		PreparedStatement a = null;
@@ -679,7 +678,6 @@ public class ProdAndesGerente {
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next()) {
-				System.out.println(b.getString("ESTACION"));
 				estaciones.add(b.getString("ESTACION"));
 			}
 		} 
