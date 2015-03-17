@@ -10,6 +10,7 @@ import com.sistrans.mundo.Componente;
 import com.sistrans.mundo.EtapadeProduccion;
 import com.sistrans.mundo.MateriaPrima;
 import com.sistrans.mundo.Producto;
+import com.sistrans.mundo.Usuario;
 
 public class ProdAndesAdmin {
 
@@ -568,5 +569,114 @@ public class ProdAndesAdmin {
 	}
 	
 	//Metodos de casos de uso
+	public ArrayList<Usuario> operarioMasActivo(String idEtapa, String numOperaciones)
+	{
+		ArrayList<Usuario> resultado = new ArrayList<>();
+		if(idEtapa!=null&&idEtapa!="")
+		{
+			String query="SELECT IDETAPA, IDOPERARIO, count(*) FROM ETAPAOPERARIO  WHERE IDETAPA='"+idEtapa+"'group by IDETAPA, IDOPERARIO order by count(*) DESC;";
+			PreparedStatement a = null;
+			try 
+			{
+				dao.inicializar();
+				a = dao.conexion.prepareStatement(query);
+				ResultSet b = a.executeQuery();
+				while(b.next())
+				{
+					String login = b.getString("LOGIN");
+					String clave = b.getString("CLAVE");
+					String tipoDoc = b.getString("TIPODOC");
+					int numDoc = b.getInt("NUMDOC");
+					String nombre = b.getString("NOMBRE");
+					String direccion = b.getString("DIRECCION");
+					String nacionalidad = b.getString("NACIONALIDAD");
+					String email = b.getString("EMAIL");
+					int telefono = b.getInt("TELEFONO");
+					String ciudad = b.getString("CIUDAD");
+					String departamento = b.getString("DEPARTAMENTO");
+					int codPostal = b.getInt("CODPOSTAL");
+					
+					Usuario z = new Usuario(login, clave, tipoDoc, numDoc, nombre, direccion, nacionalidad, email, telefono, ciudad, departamento, codPostal);
+					resultado.add(z);
+				}
+			} 
+			catch (SQLException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			finally 
+			{
+				if (a != null) 
+				{
+					try {
+						a.close();
+					} catch (SQLException exception) {
+						
+						try {
+							throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+
+			}
+		}
+		else
+		{
+			String query="SELECT* FROM USUARIO WHERE OPERACIONESHECHAS is not null AND OPERACIONESHECHAS>="+numOperaciones;
+			PreparedStatement a = null;
+			try 
+			{
+				dao.inicializar();
+				a = dao.conexion.prepareStatement(query);
+				ResultSet b = a.executeQuery();
+				while(b.next())
+				{
+					String login = b.getString("LOGIN");
+					String clave = b.getString("CLAVE");
+					String tipoDoc = b.getString("TIPODOC");
+					int numDoc = b.getInt("NUMDOC");
+					String nombre = b.getString("NOMBRE");
+					String direccion = b.getString("DIRECCION");
+					String nacionalidad = b.getString("NACIONALIDAD");
+					String email = b.getString("EMAIL");
+					int telefono = b.getInt("TELEFONO");
+					String ciudad = b.getString("CIUDAD");
+					String departamento = b.getString("DEPARTAMENTO");
+					int codPostal = b.getInt("CODPOSTAL");
+					
+					Usuario z = new Usuario(login, clave, tipoDoc, numDoc, nombre, direccion, nacionalidad, email, telefono, ciudad, departamento, codPostal);
+					resultado.add(z);
+				}
+			} 
+			catch (SQLException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			finally 
+			{
+				if (a != null) 
+				{
+					try {
+						a.close();
+					} catch (SQLException exception) {
+						
+						try {
+							throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+
+			}
+		}
+		return resultado;
+	}
 	
 }

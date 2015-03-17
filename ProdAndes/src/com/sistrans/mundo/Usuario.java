@@ -72,14 +72,14 @@ public class Usuario
 	/**
 	 * @return the numDoc
 	 */
-	public String getNumDoc() {
+	public int getNumDoc() {
 		return numDoc;
 	}
 
 	/**
 	 * @param numDoc the numDoc to set
 	 */
-	public void setNumDoc(String numDoc) {
+	public void setNumDoc(int numDoc) {
 		this.numDoc = numDoc;
 	}
 
@@ -184,20 +184,20 @@ public class Usuario
 	/**
 	 * @return the codPostal
 	 */
-	public String getCodPostal() {
+	public int getCodPostal() {
 		return codPostal;
 	}
 
 	/**
 	 * @param codPostal the codPostal to set
 	 */
-	public void setCodPostal(String codPostal) {
+	public void setCodPostal(int codPostal) {
 		this.codPostal = codPostal;
 	}
 
-	public Usuario(String login, String clave, String tipoDoc, String numDoc,
+	public Usuario(String login, String clave, String tipoDoc, int numDoc,
 			String nombre, String direccion, String nacionalidad, String email,
-			int telefono, String ciudad, String departamento, String codPostal) {
+			int telefono, String ciudad, String departamento, int codPostal) {
 		super();
 		this.login = login;
 		this.clave = clave;
@@ -229,7 +229,7 @@ public class Usuario
 	 * @ordered
 	 */
 	
-	private String numDoc;
+	private int numDoc;
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -301,7 +301,7 @@ public class Usuario
 	 * @ordered
 	 */
 	
-	private String codPostal;
+	private int codPostal;
 	
 	/**
 	 * <!-- begin-user-doc -->

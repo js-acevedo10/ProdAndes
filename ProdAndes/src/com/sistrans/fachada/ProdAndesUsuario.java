@@ -469,10 +469,10 @@ public class ProdAndesUsuario {
 		// TODO Auto-generated method stub
 		String idProducto = id1;
 		String idCliente = id2;
-		DateFormat df = new SimpleDateFormat("YYYY-MM-DD");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateCreacion = new Date();
 		String fechaCreacion = df.format(dateCreacion);
-		String deadline = id3;
+		String deadline = id3.replace("/", "-");
 		int cantidadRequerida = Integer.parseInt(id32);
 		String query ="SELECT* FROM PRODUCTO WHERE PRODUCTO.ID='"+idProducto+"'";
 		PreparedStatement a = null;
