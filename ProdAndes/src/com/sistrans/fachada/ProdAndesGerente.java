@@ -132,7 +132,7 @@ public class ProdAndesGerente {
 	public ArrayList<EtapadeProduccion> consultarExistenciasEtapa(String tipo,
 			String existencias, String etapa, String fechaSol,
 			String fechaEntreg) {
-		String query="SELECT * FROM ETAPAPRODUCCION ";
+		String query="SELECT * FROM ETAPAPRODUCCION";
 		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
 		PreparedStatement a = null;
 		try 
@@ -500,7 +500,7 @@ public class ProdAndesGerente {
 	public boolean registrarComponente(String nombre, String cantidad,
 			String unidadMedida) {
 		// TODO Auto-generated method stub
-		String query = "INSERT INTO COMPONENTE (ID, NOMBRE, NUMINVENTARIO, UNIDADMEDIDA)VALUES ('"+nombre+cantidad+"', '"+nombre+"','"+cantidad+"', '"+unidadMedida+"');";
+		String query = "INSERT INTO COMPONENTE (ID, NOMBRE, NUMINVENTARIO, UNIDADMEDIDA)VALUES ('"+nombre+cantidad+"', '"+nombre+"','"+cantidad+"', '"+unidadMedida+"')";
 		PreparedStatement a = null;
 		try 
 		{
