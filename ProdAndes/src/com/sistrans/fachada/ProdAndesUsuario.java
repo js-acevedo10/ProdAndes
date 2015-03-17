@@ -484,10 +484,7 @@ public class ProdAndesUsuario {
 			int numInventarioT = b.getInt("NUMINVENTARIO");
 			if(numInventarioT>cantidadRequerida)
 			{
-				String query2 ="UPDATE PRODUCTO SET NUMINVENTARIO=NUMINVENTARIO-"+cantidadRequerida+" WHERE ID='"+idProducto+"'";
 				String query3 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE)VALUES ('"+id1+"','3','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'))";
-				a = dao.conexion.prepareStatement(query2);
-				a.executeQuery();
 				a = dao.conexion.prepareStatement(query3);
 				a.executeQuery();
 				flag = true;
@@ -551,6 +548,13 @@ public class ProdAndesUsuario {
 					{
 						flag = true;
 						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE)VALUES ('"+id1+"','3','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'))";
+						a = dao.conexion.prepareStatement(query6);
+						a.executeQuery();
+					}
+					if(!flag2)
+					{
+						flag = true;
+						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, ANOTACIONES)VALUES ('"+id1+"','3','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'), 'No se tienen los materiales necesarios')";
 						a = dao.conexion.prepareStatement(query6);
 						a.executeQuery();
 					}

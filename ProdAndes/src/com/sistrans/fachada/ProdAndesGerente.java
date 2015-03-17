@@ -250,17 +250,17 @@ public class ProdAndesGerente {
 
 	public ArrayList<Producto> consultarExistenciasProd(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
-		String query="SELECT dataTwo.nombre, datatwo.NUMINVENTARIO FROM ";
+		String query="SELECT datatwo.NOMBRE, datatwo.NUMINVENTARIO FROM ";
 		String queryExisTipo="";
-		if (existenciasMin!=""&&existenciasMax!="")
+		if (existenciasMin!= null&&existenciasMax!= null&&existenciasMin!=""&&existenciasMax!="")
 		{
 			queryExisTipo = "(SELECT* FROM PRODUCTO WHERE PRODUCTO.NUMINVENTARIO>="+existenciasMin+" AND PRODUCTO.NUMINVENTARIO<="+existenciasMax+") datatwo";
 		}
-		else if (existenciasMin!="")
+		else if (existenciasMin!= null && existenciasMin!="")
 		{
 			queryExisTipo = "(SELECT* FROM PRODUCTO WHERE PRODUCTO.NUMINVENTARIO>="+existenciasMin+") datatwo";
 		}
-		else if (existenciasMax!="")
+		else if (existenciasMax != null && existenciasMax!="")
 		{
 			queryExisTipo = "(SELECT* FROM PRODUCTO WHERE PRODUCTO.NUMINVENTARIO<="+existenciasMax+") datatwo";
 		}
@@ -268,7 +268,7 @@ public class ProdAndesGerente {
 		{
 			queryExisTipo = "(SELECT* FROM PRODUCTO) datatwo";
 		}
-		if (estacion!="")
+		if (estacion != null && estacion!="")
 		{
 			query = query + "((SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDPRODUCTO is not null AND ESTACIONDEPRODUCCION.CODIGO='"+estacion+"') dataone INNER JOIN " + queryExisTipo + " on dataone.IDPRODUCTO=datatwo.ID)";
 		}
