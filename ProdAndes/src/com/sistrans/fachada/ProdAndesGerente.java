@@ -179,7 +179,32 @@ public class ProdAndesGerente {
 
 	public ArrayList<EtapadeProduccion> consultarExistenciasEtapa(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
-		String query="SELECT * FROM ETAPAPRODUCCION";
+		String query="SELECT dataTwo.ID, datatwo.NUM FROM ";
+		String queryExisTipo="";
+		if (existenciasMin!=""&&existenciasMax!="")
+		{
+			queryExisTipo = "(SELECT* FROM ETAPAPRODUCCION WHERE ETAPAPRODUCCION.NUMINVENTARIO>="+existenciasMin+" AND ETAPAPRODUCCION.NUMINVENTARIO<="+existenciasMax+") datatwo";
+		}
+		else if (existenciasMin!="")
+		{
+			queryExisTipo = "(SELECT* FROM ETAPAPRODUCCION WHERE ETAPAPRODUCCION.NUMINVENTARIO>="+existenciasMin+") datatwo";
+		}
+		else if (existenciasMax!="")
+		{
+			queryExisTipo = "(SELECT* FROM ETAPAPRODUCCION WHERE ETAPAPRODUCCION.NUMINVENTARIO<="+existenciasMax+") datatwo";
+		}
+		else
+		{
+			queryExisTipo = "(SELECT* FROM ETAPAPRODUCCION) datatwo";
+		}
+		if (estacion!="")
+		{
+			query = query + "((SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDETAPAPRODUCCION is not null AND ESTACIONDEPRODUCCION.CODIGO='"+estacion+"') dataone INNER JOIN " + queryExisTipo + " on dataone.IDETAPAPRODUCCION=datatwo.ID)";
+		}
+		else
+		{
+			query = query + queryExisTipo;
+		}
 		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
 		PreparedStatement a = null;
 		try 
@@ -223,7 +248,32 @@ public class ProdAndesGerente {
 
 	public ArrayList<Producto> consultarExistenciasProd(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
-		String query="SELECT * FROM PRODUCTO";
+		String query="SELECT dataTwo.nombre, datatwo.NUMINVENTARIO FROM ";
+		String queryExisTipo="";
+		if (existenciasMin!=""&&existenciasMax!="")
+		{
+			queryExisTipo = "(SELECT* FROM PRODUCTO WHERE PRODUCTO.NUMINVENTARIO>="+existenciasMin+" AND PRODUCTO.NUMINVENTARIO<="+existenciasMax+") datatwo";
+		}
+		else if (existenciasMin!="")
+		{
+			queryExisTipo = "(SELECT* FROM PRODUCTO WHERE PRODUCTO.NUMINVENTARIO>="+existenciasMin+") datatwo";
+		}
+		else if (existenciasMax!="")
+		{
+			queryExisTipo = "(SELECT* FROM PRODUCTO WHERE PRODUCTO.NUMINVENTARIO<="+existenciasMax+") datatwo";
+		}
+		else
+		{
+			queryExisTipo = "(SELECT* FROM PRODUCTO) datatwo";
+		}
+		if (estacion!="")
+		{
+			query = query + "((SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDPRODUCTO is not null AND ESTACIONDEPRODUCCION.CODIGO='"+estacion+"') dataone INNER JOIN " + queryExisTipo + " on dataone.IDPRODUCTO=datatwo.ID)";
+		}
+		else
+		{
+			query = query + queryExisTipo;
+		}
 
 		ArrayList<Producto> resultado = new ArrayList<>();
 		PreparedStatement a = null;
