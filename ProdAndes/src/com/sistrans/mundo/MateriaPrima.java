@@ -32,19 +32,6 @@ public class MateriaPrima
 		this.nombre = nombre;
 	}
 
-	/**
-	 * @return the numInventario
-	 */
-	public int getNumInventario() {
-		return numInventario;
-	}
-
-	/**
-	 * @param numInventario the numInventario to set
-	 */
-	public void setNumInventario(int numInventario) {
-		this.numInventario = numInventario;
-	}
 
 	/**
 	 * @return the tonelada
@@ -75,22 +62,13 @@ public class MateriaPrima
 
 
 
-	public MateriaPrima(String nombre, int numInventario, int tonelada, String tipo) {
+	public MateriaPrima(String nombre, int toneladas, String tipo) {
 		super();
 		this.nombre = nombre;
-		this.numInventario = numInventario;
 		this.tonelada = tonelada;
 		this.tipo = tipo;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private int numInventario;
 	
 	/**
 	 * <!-- begin-user-doc -->

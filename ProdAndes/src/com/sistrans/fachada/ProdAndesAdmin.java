@@ -49,70 +49,89 @@ public class ProdAndesAdmin {
 			String existencias, String etapa, String fechaSol,
 			String fechaEntreg) {
 		// TODO Auto-generated method stub
-		String query="SELECT * FROM ProdAndes.materiaprima WHERE ";
-		if(tipo!="")
+		String query="";
+		if(etapa!="")
 		{
-			query =  query + "tipo = '" + tipo + "'" ; 
-			if(existencias!="")
+			if(tipo!="")
 			{
-				query = query + " AND numInventario = '" + existencias +"'";
-				if (fechaSol!=""&&fechaEntreg!="")
+				if(existencias!="")
 				{
-					query = "SELECT* FROM ((SELECT* FROM ProdAndes.Pedido WHERE fechacreacion= '"+ fechaSol + "' AND fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN ProdAndes.Pedidomateriaprima dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM ProdAndes.materiaprima WHERE tipo = '" + tipo + "' AND numInventario = '" + existencias +"') dataFourth on dataThree.materiaprimaID = dataFourth.ID";
+					if(fechaSol!="")
+					{
+						if(fechaEntreg!="")
+						{
+							query= "SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN (SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo on dataone.IDMATERIAPRIMA=datatwo.ID)INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('"+fechaSol+"','MM-DD-YYYY') AND PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID;";
+						}
+						else
+						{
+							query= "SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN (SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo on dataone.IDMATERIAPRIMA=datatwo.ID)INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('"+fechaSol+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID;";
+						}
+						
+					}
+					else if(fechaEntreg!="")
+					{
+						query= "SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN (SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo on dataone.IDMATERIAPRIMA=datatwo.ID)INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID;";
+					}
+					else
+					{
+						query= "SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN (SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo on dataone.IDMATERIAPRIMA=datatwo.ID);";
+					}
 				}
-				else if(fechaSol !="")
+				else if(fechaSol!="")
 				{
-					query = "SELECT* FROM ((SELECT* FROM ProdAndes.Pedido WHERE fechacreacion= '"+ fechaSol + "') dataOne LEFT JOIN ProdAndes.Pedidomateriaprima dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN  (SELECT* FROM ProdAndes.materiaprima WHERE tipo = '" + tipo + "' AND numInventario = '" + existencias +"') dataFourth on dataThree.materiaprimaID = dataFourth.ID";
+					if(fechaEntreg!="")
+					{
+						query= "SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN (SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo on dataone.IDMATERIAPRIMA=datatwo.ID)INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('"+fechaSol+"','MM-DD-YYYY') AND PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID; ";
+					}
+					else
+					{
+						query= "SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN (SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo on dataone.IDMATERIAPRIMA=datatwo.ID)INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('"+fechaSol+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID; ";
+					}
+					
 				}
 				else if(fechaEntreg!="")
 				{
-					query = "SELECT* FROM ((SELECT* FROM ProdAndes.Pedido WHERE fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN ProdAndes.Pedidomateriaprima dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN  (SELECT* FROM ProdAndes.materiaprima WHERE tipo = '" + tipo + "' AND numInventario = '" + existencias +"') dataFourth on dataThree.materiaprimaID = dataFourth.ID";
+					query= "SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN (SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo on dataone.IDMATERIAPRIMA=datatwo.ID)INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID; ";
 				}
 			}
-			else if (fechaSol!=""&&fechaEntreg!="")
+		}
+		else if(tipo!="")
+		{
+			if(existencias!="")
 			{
-				query = "SELECT* FROM ((SELECT* FROM ProdAndes.Pedido WHERE fechacreacion= '"+ fechaSol + "' AND fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN ProdAndes.Pedidomateriaprima dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM ProdAndes.materiaprima WHERE tipo = '" + tipo + "') dataFourth on dataThree.materiaprimaID = dataFourth.ID";
-			}
-			else if(fechaSol !="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM ProdAndes.Pedido WHERE fechacreacion= '"+ fechaSol + "') dataOne LEFT JOIN ProdAndes.Pedidomateriaprima dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN  (SELECT* FROM ProdAndes.materiaprima WHERE tipo = '" + tipo + "') dataFourth on dataThree.materiaprimaID = dataFourth.ID";
-			}
-			else if(fechaEntreg!="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM ProdAndes.Pedido WHERE fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN ProdAndes.Pedidomateriaprima dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN  (SELECT* FROM ProdAndes.materiaprima WHERE tipo = '" + tipo + "') dataFourth on dataThree.materiaprimaID = dataFourth.ID";
+				if(fechaSol!="")
+				{
+					if(fechaEntreg!="")
+					{
+						
+					}
+				}
 			}
 		}
-		else if (existencias !="")
+		else if(existencias!="")
 		{
-			query = query + " numInventario = '" + existencias +"'";
-			if (fechaSol!=""&&fechaEntreg!="")
+			if(fechaSol!="")
 			{
-				query = "SELECT* FROM ((SELECT* FROM ProdAndes.Pedido WHERE fechacreacion= '"+ fechaSol + "' AND fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN ProdAndes.Pedidomateriaprima dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM ProdAndes.materiaprima WHERE numInventario = '" + existencias +"') dataFourth on dataThree.materiaprimaID = dataFourth.ID";
-			}
-			else if(fechaSol !="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM ProdAndes.Pedido WHERE fechacreacion= '"+ fechaSol + "') dataOne LEFT JOIN ProdAndes.Pedidomateriaprima dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM ProdAndes.materiaprima WHERE numInventario = '" + existencias +"') dataFourth on dataThree.materiaprimaID = dataFourth.ID";
-			}
-			else if(fechaEntreg!="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM ProdAndes.Pedido WHERE fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN ProdAndes.Pedidomateriaprima dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM ProdAndes.materiaprima WHERE numInventario = '" + existencias +"') dataFourth on dataThree.materiaprimaID = dataFourth.ID";
+				if(fechaEntreg!="")
+				{
+					
+				}
 			}
 		}
-		else 	if (fechaSol!=""&&fechaEntreg!="")
+		else if(fechaSol!="")
 		{
-			query = "SELECT* FROM ((SELECT* FROM ProdAndes.Pedido WHERE fechacreacion= '"+ fechaSol + "' AND fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN ProdAndes.Pedidomateriaprima dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN ProdAndes.materiaprima dataFourth on dataThree.materiaprimaID = dataFourth.ID";
-		}
-		else if(fechaSol !="")
-		{
-			query = "SELECT* FROM ((SELECT* FROM ProdAndes.Pedido WHERE fechacreacion= '"+ fechaSol + "') dataOne LEFT JOIN ProdAndes.Pedidomateriaprima dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN ProdAndes.Componente dataFourth on dataThree.materiaprimaID = dataFourth.ID";
+			if(fechaEntreg!="")
+			{
+				
+			}
 		}
 		else if(fechaEntreg!="")
 		{
-			query = "SELECT* FROM ((SELECT* FROM ProdAndes.Pedido WHERE fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN ProdAndes.Pedidomateriaprima dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN ProdAndes.materiaprima dataFourth on dataThree.materiaprimaID = dataFourth.ID";
+			
 		}
 		else
 		{
-			query="SELECT * FROM ProdAndes.materiaprima";
+			
 		}
 		ArrayList<MateriaPrima> resultado = new ArrayList<>();
 		PreparedStatement a = null;
