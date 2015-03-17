@@ -160,8 +160,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 				for(EtapadeProduccion stage : items) {
 					out.println("<tr>");
 					out.println("<td>" + stage.getNum() + "</td>");
-					out.println("<td>" + stage.getFechaInicial() + "</td>");
-					out.println("<td>" + stage.getFechaFinal() + "</td>");
+					out.println("<td>" + stage.getNombre() + "</td>");
 					out.println("</tr>");
 				}
 			}
@@ -254,14 +253,14 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 				out.println("<thead>"
 						+ "<tr>"
 						+ "<th>ID</th>"
-						+ "<th>Fecha Final</th>"
+						+ "<th>Nombre</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
 				for(EtapadeProduccion stage : items) {
 					out.println("<tr>");
 					out.println("<td>" + stage.getNum() + "</td>");
-					out.println("<td>" + stage.getFechaFinal() + "</td>");
+					out.println("<td>" + stage.getNombre() + "</td>");
 					out.println("</tr>");
 				}
 			}
@@ -351,16 +350,14 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 				out.println("<thead>"
 						+ "<tr>"
 						+ "<th>ID</th>"
-						+ "<th>Fecha Inicial</th>"
-						+ "<th>Fecha Final</th>"
+						+ "<th>Nombre</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
 				for(EtapadeProduccion stage : items) {
 					out.println("<tr>");
 					out.println("<td>" + stage.getNum() + "</td>");
-					out.println("<td>" + stage.getFechaInicial() + "</td>");
-					out.println("<td>" + stage.getFechaFinal() + "</td>");
+					out.println("<td>" + stage.getNombre()+ "</td>");
 					out.println("</tr>");
 				}
 			}
@@ -453,16 +450,14 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 				out.println("<thead>"
 						+ "<tr>"
 						+ "<th>ID</th>"
-						+ "<th>Fecha Inicial</th>"
-						+ "<th>Fecha Final</th>"
+						+ "<th>Nombre</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
 				for(EtapadeProduccion stage : items) {
 					out.println("<tr>");
 					out.println("<td>" + stage.getNum() + "</td>");
-					out.println("<td>" + stage.getFechaInicial() + "</td>");
-					out.println("<td>" + stage.getFechaFinal() + "</td>");
+					out.println("<td>" + stage.getNombre()+ "</td>");
 					out.println("</tr>");
 				}
 			}

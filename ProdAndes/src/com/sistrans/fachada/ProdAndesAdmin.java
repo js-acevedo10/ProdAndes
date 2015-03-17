@@ -85,6 +85,7 @@ public class ProdAndesAdmin {
 		{
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
+			System.out.println(query + "-----------------------------");
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
