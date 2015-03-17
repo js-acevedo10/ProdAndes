@@ -500,11 +500,8 @@ public class ProdAndesGerente {
 	public boolean registrarComponente(String nombre, String cantidad,
 			String unidadMedida) {
 		// TODO Auto-generated method stub
-<<<<<<< Updated upstream
+
 		String query = "INSERT INTO COMPONENTE (ID, NOMBRE, NUMINVENTARIO, UNIDADMEDIDA)VALUES ('"+nombre+cantidad+"', '"+nombre+"','"+cantidad+"', '"+unidadMedida+"')";
-=======
-		String query = "INSERT INTO COMPONENTE (ID, NOMBRE, NUMINVENTARIO, UNIDADMEDIDA) VALUES ('"+nombre+cantidad+"', '"+nombre+"','"+cantidad+"', '"+unidadMedida+"');";
->>>>>>> Stashed changes
 		PreparedStatement a = null;
 		try 
 		{

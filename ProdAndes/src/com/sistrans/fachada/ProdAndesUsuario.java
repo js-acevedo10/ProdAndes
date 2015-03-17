@@ -514,7 +514,50 @@ public class ProdAndesUsuario {
 				try { deadlineDate = df.parse(deadline); } catch (Exception e) {e.printStackTrace();}
 				if(c.before(deadlineDate))
 				{
-					
+					boolean flag2 = true;
+					String query3 = "SELECT dataRight.NOMBRE, dataRight.TONELADAS, dataLeft.NUMMATERIAPRIMA FROM (SELECT dataTwo.IDMATERIAPRIMA, dataTwo.NUMMATERIAPRIMA FROM (SELECT* FROM ETAPAPRODUCCION WHERE ETAPAPRODUCCION.IDPRODUCTO ='"+idProducto+"') dataOne INNER JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDMATERIAPRIMA is not null) dataTwo on dataOne.ID = dataTwo.IDETAPAPRODUCCION) dataLeft INNER JOIN MATERIAPRIMA dataRight on dataLeft.IDMATERIAPRIMA=dataRight.ID";
+					a = dao.conexion.prepareStatement(query3);
+					b = a.executeQuery();
+					while(b.next()&&flag2)
+					{
+						int disponibles=b.getInt("TONELADAS");
+						int requeridas=b.getInt("NUMMATERIAPRIMA");
+						if(requeridas>disponibles)
+						{
+							flag2=false;
+						}
+					}
+					String query4 = "SELECT dataRight.NOMBRE, dataRight.NUMINVENTARIO, dataLeft.NUMCOMPONENTE FROM (SELECT dataTwo.IDCOMPONENTE, dataTwo.NUMCOMPONENTE FROM (SELECT* FROM ETAPAPRODUCCION WHERE ETAPAPRODUCCION.IDPRODUCTO ='"+idProducto+"') dataOne INNER JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDCOMPONENTE is not null) dataTwo on dataOne.ID = dataTwo.IDETAPAPRODUCCION) dataLeft INNER JOIN COMPONENTE dataRight on dataLeft.IDCOMPONENTE=dataRight.ID";
+					a = dao.conexion.prepareStatement(query4);
+					b = a.executeQuery();
+					while(b.next()&&flag2)
+					{
+						int disponibles=b.getInt("NUMINVENTARIO");
+						int requeridas=b.getInt("NUMCOMPONENTE");
+						if(requeridas>disponibles)
+						{
+							flag2=false;
+						}
+					}
+					String query5 = "SELECT dataRight.NOMBRE, dataRight.NUMINVENTARIO, dataLeft.NUMPRODUCTO FROM (SELECT dataTwo.IDPRODUCTO, dataTwo.NUMPRODUCTO FROM (SELECT* FROM ETAPAPRODUCCION WHERE ETAPAPRODUCCION.IDPRODUCTO ='"+idProducto+"') dataOne INNER JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDPRODUCTO is not null) dataTwo on dataOne.ID = dataTwo.IDETAPAPRODUCCION) dataLeft INNER JOIN PRODUCTO dataRight on dataLeft.IDPRODUCTO=dataRight.ID";
+					a = dao.conexion.prepareStatement(query5);
+					b = a.executeQuery();
+					while(b.next()&&flag2)
+					{
+						int disponibles=b.getInt("NUMINVENTARIO");
+						int requeridas=b.getInt("NUMCOMPONENTE");
+						if(requeridas>disponibles)
+						{
+							flag2=false;
+						}
+					}
+					if(flag2)
+					{
+						flag = true;
+						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE)VALUES ('"+id1+"','3','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'))";
+						a = dao.conexion.prepareStatement(query6);
+						a.executeQuery();
+					}
 				}
 				
 			}
