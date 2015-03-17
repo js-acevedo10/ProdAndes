@@ -3,7 +3,11 @@ package com.sistrans.fachada;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import com.sistrans.dao.ConsultaDAOUsuario;
 import com.sistrans.mundo.Componente;
@@ -466,13 +470,54 @@ public class ProdAndesUsuario {
 	public boolean registrarPedido(String id1, String id2, String id3,
 			String id32, String id4) {
 		// TODO Auto-generated method stub
-		String query = "INSERT INTO PEDIDO (ID, IDCLIENTE, FECHACREACION)VALUES ('"+id1+"','"+id2+"','"+id3+"')";
+		String idProducto = id1;
+		String idCliente = id2;
+		DateFormat df = new SimpleDateFormat("MM-DD-YYYY");
+		Date dateCreacion = new Date();
+		String fechaCreacion = df.format(dateCreacion);
+		String deadline = id3;
+		int cantidadRequerida = Integer.parseInt(id32);
+		String query ="SELECT* FROM PRODUCTO WHERE PRODUCTO.ID='"+idProducto+"'";
 		PreparedStatement a = null;
+		boolean flag = false;
 		try 
 		{
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
+			int numInventarioT = b.getInt("NUMINVENTARIO");
+			if(numInventarioT>cantidadRequerida)
+			{
+				String query2 ="UPDATE PRODUCTO SET NUMINVENTARIO=NUMINVENTARIO-"+cantidadRequerida+" WHERE ID='"+idProducto+"'";
+				String query3 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE)VALUES ('"+id1+"','3','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'))";
+				a = dao.conexion.prepareStatement(query2);
+				a.executeQuery();
+				a = dao.conexion.prepareStatement(query3);
+				a.executeQuery();
+				flag = true;
+			}
+			else
+			{
+				int numRequerido = cantidadRequerida-numInventarioT;
+				String query2 = "SELECT dataTwo.TIEMPOREALIZACION, dataTwo.CODIGO FROM (SELECT* FROM ETAPAPRODUCCION WHERE ETAPAPRODUCCION.IDPRODUCTO ='"+idProducto+"') dataOne INNER JOIN ESTACIONDEPRODUCCCION dataTwo on dataOne.ID = dataTwo.IDETAPAPRODUCCION";
+				a = dao.conexion.prepareStatement(query2);
+				b = a.executeQuery();
+				int dias =0;
+				while(b.next())
+				{
+					dias+=b.getInt("TIEMPOREALIZACION");					
+				}
+				Calendar c = Calendar.getInstance();
+				c.setTime(dateCreacion);
+				c.add(Calendar.DATE, dias);
+				Date deadlineDate = null;
+				try { deadlineDate = df.parse(deadline); } catch (Exception e) {e.printStackTrace();}
+				if(c.before(deadlineDate))
+				{
+					
+				}
+				
+			}
 		} 
 		catch (SQLException e) 
 		{
@@ -497,7 +542,7 @@ public class ProdAndesUsuario {
 			}
 
 		}		
-		return true;
+		return flag;
 	}
 	
 	//Metodos de casos de uso
