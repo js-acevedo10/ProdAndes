@@ -165,9 +165,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "<tr>"
 						+ "<th>Nombre</th>"
 						+ "<th>Costo</th>"
-						+ "<th>Materia Prima</th>"
-						+ "<th>Componente</th>"
-						+ "<th>Etapa De Produccion</th>"
+						+ "<th>Existencias</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
@@ -175,9 +173,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<tr>");
 					out.println("<td>" + prod.getNombre() + "</td>");
 					out.println("<td>" + prod.getCostoVenta() + "</td>");
-					out.println("<td>" + prod.getMateriaPrima() + "</td>");
-					out.println("<td>" + prod.getComponente() + "</td>");
-					out.println("<td>" + prod.getEtapadeProduccion() + "</td>");
+					out.println("<td>" + prod.getnumInventario() + "</td>");
 					out.println("</tr>");
 				}
 			}
@@ -264,6 +260,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "<tr>"
 						+ "<th>Nombre</th>"
 						+ "<th>Costo</th>"
+						+ "<th>Existencias</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
@@ -271,6 +268,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<tr>");
 					out.println("<td>" + prod.getNombre() + "</td>");
 					out.println("<td>" + prod.getCostoVenta() + "</td>");
+					out.println("<td>" + prod.getnumInventario() + "</td>");
 					out.println("</tr>");
 				}
 			}
@@ -360,18 +358,16 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 				out.println("<thead>"
 						+ "<tr>"
 						+ "<th>Nombre</th>"
-						+ "<th>Materia Prima</th>"
-						+ "<th>Componente</th>"
-						+ "<th>Etapa De Produccion</th>"
+						+ "<th>Costo</th>"
+						+ "<th>Existencias</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
 				for(Producto prod : items) {
 					out.println("<tr>");
 					out.println("<td>" + prod.getNombre() + "</td>");
-					out.println("<td>" + prod.getMateriaPrima() + "</td>");
-					out.println("<td>" + prod.getComponente() + "</td>");
-					out.println("<td>" + prod.getEtapadeProduccion() + "</td>");
+					out.println("<td>" + prod.getCostoVenta() + "</td>");
+					out.println("<td>" + prod.getnumInventario() + "</td>");
 					out.println("</tr>");
 				}
 			}
@@ -461,9 +457,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "<tr>"
 						+ "<th>Nombre</th>"
 						+ "<th>Costo</th>"
-						+ "<th>Materia Prima</th>"
-						+ "<th>Componente</th>"
-						+ "<th>Etapa De Produccion</th>"
+						+ "<th>Existencias</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
@@ -471,9 +465,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<tr>");
 					out.println("<td>" + prod.getNombre() + "</td>");
 					out.println("<td>" + prod.getCostoVenta() + "</td>");
-					out.println("<td>" + prod.getMateriaPrima() + "</td>");
-					out.println("<td>" + prod.getComponente() + "</td>");
-					out.println("<td>" + prod.getEtapadeProduccion() + "</td>");
+					out.println("<td>" + prod.getnumInventario() + "</td>");
 					out.println("</tr>");
 				}
 			}
