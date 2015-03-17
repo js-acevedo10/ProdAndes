@@ -289,7 +289,7 @@ public class ProdAndesOperario {
 			{
 				String nombreT = b.getString("NOMBRE");
 				int costoVenta = b.getInt("COSTOVENTA");
-				int costoVenta = Integer.parseInt(b.getString("COSTOVENTA"));
+				int numInventarioT = b.getInt("NUMINVENTARIO");
 				Producto z = new Producto(nombreT, costoVenta, numInventarioT);
 				resultado.add(z);
 			}
@@ -566,139 +566,7 @@ public class ProdAndesOperario {
 
 	public boolean registrarEjecucionEtapa(String id, String fi, String ft,
 			String cod) {
-		String idEtapa = id;
-		String idOperairo = fi;
-		String fechaFinal = ft;
-		String fechaInicial = cod;
-		PreparedStatement a = null;
-		boolean flag = true;
-		try 
-		{
-			String query = "SELECT* FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION ='"+id+"' AND IDMATERIAPRIMA is not null";
-			dao.inicializar();
-			a = dao.conexion.prepareStatement(query);
-			ResultSet b = a.executeQuery();
-			while(b.next()&&flag)
-			{
-				int numero = b.getInt("NUMMATERIAPRIMA");
-				String idMP = b.getString("IDMATERIAPRIMA");
-				String query2 = "SELECT* FROM MATERIAPRIMA WHERE ID='"+idMP+"'";
-				a = dao.conexion.prepareStatement(query2);
-				ResultSet c = a.executeQuery();
-				while(c.next())
-				{
-					int numInventario = c.getInt("TONELADAS");
-					if(numInventario<numero)
-					{
-						flag = false;
-					}
-				}
-			}
-			query = "SELECT* FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION ='"+id+"' AND IDCOMPONENTE is not null";
-			a = dao.conexion.prepareStatement(query);
-			b = a.executeQuery();
-			while(b.next()&&flag)
-			{
-				int numero = b.getInt("NUMCOMPONENTE");
-				String idMP = b.getString("IDCOMPONENTE");
-				String query2 = "SELECT* FROM COMPONENTE WHERE ID='"+idMP+"'";
-				a = dao.conexion.prepareStatement(query2);
-				ResultSet c = a.executeQuery();
-				while(c.next())
-				{
-					int numInventario = c.getInt("NUMINVENTARIO");
-					if(numInventario<numero)
-					{
-						flag = false;
-					}
-				}
-			}
-			query = "SELECT* FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION ='"+id+"' AND IDPRODUCTO is not null";
-			a = dao.conexion.prepareStatement(query);
-			b = a.executeQuery();
-			while(b.next()&&flag)
-			{
-				int numero = b.getInt("NUMPRODUCTO");
-				String idMP = b.getString("IDPRODUCTO");
-				String query2 = "SELECT* FROM PRODUCTO WHERE ID='"+idMP+"'";
-				a = dao.conexion.prepareStatement(query2);
-				ResultSet c = a.executeQuery();
-				while(c.next())
-				{
-					int numInventario = c.getInt("NUMINVENTARIO");
-					if(numInventario<numero)
-					{
-						flag = false;
-					}
-				}
-			}
-			
-			if (flag)
-			{
-				query = "SELECT* FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION ='"+id+"' AND IDMATERIAPRIMA is not null";
-				a = dao.conexion.prepareStatement(query);
-				b = a.executeQuery();
-				while(b.next())
-				{
-					int numero = b.getInt("NUMMATERIAPRIMA");
-					String idMP = b.getString("IDMATERIAPRIMA");
-					String queryMP="UPDATE MATERIAPRIMA SET TONELADAS=TONELADAS-"+numero+" WHERE ID='"+idMP+"'";
-					a = dao.conexion.prepareStatement(queryMP);
-					a.executeQuery();
-				}
-				query = "SELECT* FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION ='"+id+"' AND IDCOMPONENTE is not null";
-				a = dao.conexion.prepareStatement(query);
-				b = a.executeQuery();
-				while(b.next())
-				{
-					int numero = b.getInt("NUMCOMPONENTE");
-					String idMP = b.getString("IDCOMPONENTE");
-					String queryCP="UPDATE COMPONENTE SET NUMINVENTARIO=NUMINVENTARIO-"+numero+" WHERE ID='"+idMP+"'";
-					a = dao.conexion.prepareStatement(queryCP);
-					a.executeQuery();
-				}
-				query = "SELECT* FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION ='"+id+"' AND IDPRODUCTO is not null";
-				a = dao.conexion.prepareStatement(query);
-				b = a.executeQuery();
-				while(b.next())
-				{
-					int numero = b.getInt("NUMPRODUCTO");
-					String idMP = b.getString("IDPRODUCTO");
-					String queryPR="UPDATE PRODUCTO SET NUMINVENTARIO=NUMINVENTARIO-"+numero+" WHERE ID='"+idMP+"'";
-					a = dao.conexion.prepareStatement(queryPR);
-					a.executeQuery();
-				}
-				
-				query = "UPDATE USUARIO SET OPERACIONESHECHAS=OPERACIONESHECHAS+1 WHERE LOGIN='"+fi+"'";
-				a = dao.conexion.prepareStatement(query);
-				b = a.executeQuery();
-				query = "INSERT INTO ETAPAOPERARIO (IDETAPA, IDOPERARIO, FECHAINICIAL, FECHAFINAL) VALUES ('"+ id + "', '" + fi + "', to_date('"+cod+"','MM-DD-YYYY'), to_date('"+ft+"','MM-DD-YYYY'))";
-			}
-			
-		} 
-		catch (SQLException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally 
-		{
-			if (a != null) 
-			{
-				try {
-					a.close();
-				} catch (SQLException exception) {
-					
-					try {
-						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-
-		}		
-		return flag;
+		// TODO Auto-generated method stub
+		return false;
 	}	
 }
