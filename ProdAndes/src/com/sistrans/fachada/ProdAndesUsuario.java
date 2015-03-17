@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -476,18 +477,31 @@ public class ProdAndesUsuario {
 		String query ="SELECT* FROM PRODUCTO WHERE PRODUCTO.ID='"+idProducto+"'";
 		PreparedStatement a = null;
 		boolean flag = false;
+		Date fechaEntrega=null;
+		try {
+			fechaEntrega = df.parse(deadline);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try 
 		{
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
+			b.next();
 			int numInventarioT = b.getInt("NUMINVENTARIO");
 			if(numInventarioT>cantidadRequerida)
 			{
-				String query3 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE)VALUES ('"+id1+"','3','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'))";
+				String query3 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+id1+id2+fechaCreacion+"','"+id2+"','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'), '"+id1+"', '"+id32+"')";
+				String query4 = "INSERT INTO ";
 				a = dao.conexion.prepareStatement(query3);
 				a.executeQuery();
 				flag = true;
+			}
+			else if(fechaEntrega!=null&&dateCreacion.after(fechaEntrega))
+			{
+				
 			}
 			else
 			{
@@ -547,14 +561,14 @@ public class ProdAndesUsuario {
 					if(flag2)
 					{
 						flag = true;
-						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE)VALUES ('"+id1+"','3','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'))";
+						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+id1+"','3','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'), '"+id1+"', '"+id32+"')";
 						a = dao.conexion.prepareStatement(query6);
 						a.executeQuery();
 					}
 					if(!flag2)
 					{
 						flag = true;
-						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, ANOTACIONES)VALUES ('"+id1+"','3','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'), 'No se tienen los materiales necesarios')";
+						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, ANOTACIONES, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+id1+"','3','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'), 'No se tienen los materiales necesarios', '"+id1+"', '"+id32+"')";
 						a = dao.conexion.prepareStatement(query6);
 						a.executeQuery();
 					}
