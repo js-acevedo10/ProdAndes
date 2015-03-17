@@ -72,6 +72,7 @@ public class ProdAndesOperario {
 		PreparedStatement a = null;
 		try 
 		{
+			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next())
@@ -80,7 +81,7 @@ public class ProdAndesOperario {
 				int numInventarioT = b.getInt("numInventario");
 				int toneladasT = b.getInt("toneladas");
 				String tipoT = b.getString("tipo");
-				MateriaPrima z = new MateriaPrima(nombreT, numInventarioT, toneladasT, tipoT);
+				MateriaPrima z = new MateriaPrima(nombreT, toneladasT, tipoT);
 				resultado.add(z);
 			}
 		} 
@@ -146,6 +147,7 @@ public class ProdAndesOperario {
 		PreparedStatement a = null;
 		try 
 		{
+			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next())
@@ -208,6 +210,7 @@ public class ProdAndesOperario {
 		PreparedStatement a = null;
 		try 
 		{
+			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next())
@@ -282,6 +285,7 @@ public class ProdAndesOperario {
 		PreparedStatement a = null;
 		try 
 		{
+			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next())
@@ -330,6 +334,7 @@ public class ProdAndesOperario {
 			PreparedStatement a = null;
 			try 
 			{
+				dao.inicializar();
 				a = dao.conexion.prepareStatement(queer);
 				ResultSet b = a.executeQuery();
 				while(b.next())
@@ -372,6 +377,7 @@ public class ProdAndesOperario {
 			PreparedStatement a = null;
 			try 
 			{
+				dao.inicializar();
 				a = dao.conexion.prepareStatement(queer);
 				ResultSet b = a.executeQuery();
 				while(b.next())
@@ -418,6 +424,7 @@ public class ProdAndesOperario {
 			PreparedStatement a = null;
 			try 
 			{
+				dao.inicializar();
 				a = dao.conexion.prepareStatement(queer);
 				ResultSet b = a.executeQuery();
 				while(b.next())
@@ -465,6 +472,7 @@ public class ProdAndesOperario {
 			PreparedStatement a = null;
 			try 
 			{
+				dao.inicializar();
 				a = dao.conexion.prepareStatement(queer);
 				ResultSet b = a.executeQuery();
 				while(b.next())

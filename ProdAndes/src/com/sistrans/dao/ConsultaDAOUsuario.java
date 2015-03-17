@@ -1,16 +1,9 @@
 package com.sistrans.dao;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.sql.*;
-import java.util.Properties;
 
 public class ConsultaDAOUsuario {
-	
-	//Constantes
-	
-	private static final String ARCHIVO_CONEXION = "/conexion.properties";
-	
+		
 	//Consultas
 	//Atributos
 	
@@ -33,11 +26,11 @@ public class ConsultaDAOUsuario {
 	{
 		try {			
 			cadenaConexion = "jdbc:oracle:thin:@prod.oracle.virtual.uniandes.edu.co:1531:prod";
-			
 			usuario = "ISIS2304171510";
 			clave = "mmoefacet";
 			final String driver = "oracle.jdbc.driver.OracleDriver";
 			Class.forName(driver);
+			establecer();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -65,4 +58,8 @@ public class ConsultaDAOUsuario {
 			throw new Exception("ERROR: ConsultaDAO: closeConnection() = cerrando una conexión.");
 		}
 	}
+	public void establecer() throws Exception
+    {
+    	establecerConexion(cadenaConexion, usuario, clave);
+    }
 }

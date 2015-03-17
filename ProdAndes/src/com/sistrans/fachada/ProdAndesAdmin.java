@@ -146,7 +146,7 @@ public class ProdAndesAdmin {
 				int numInventarioT = b.getInt("numInventario");
 				int toneladasT = b.getInt("toneladas");
 				String tipoT = b.getString("tipo");
-				MateriaPrima z = new MateriaPrima(nombreT, numInventarioT, toneladasT, tipoT);
+				MateriaPrima z = new MateriaPrima(nombreT, toneladasT, tipoT);
 				resultado.add(z);
 			}
 		} 
@@ -250,6 +250,7 @@ public class ProdAndesAdmin {
 		PreparedStatement a = null;
 		try 
 		{
+			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next())
@@ -331,6 +332,7 @@ public class ProdAndesAdmin {
 		PreparedStatement a = null;
 		try 
 		{
+			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next())
@@ -374,6 +376,7 @@ public class ProdAndesAdmin {
 			String fechaEntreg) {
 		// TODO Auto-generated method stub
 		String query="SELECT * FROM ProdAndes.Producto WHERE ";
+		System.out.println(tipo);
 		if(tipo!="")
 		{
 			query =  query + "tipo = '" + tipo + "'" ; 
@@ -442,6 +445,7 @@ public class ProdAndesAdmin {
 		PreparedStatement a = null;
 		try 
 		{
+			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next())
@@ -489,6 +493,7 @@ public class ProdAndesAdmin {
 			PreparedStatement a = null;
 			try 
 			{
+				dao.inicializar();
 				a = dao.conexion.prepareStatement(queer);
 				ResultSet b = a.executeQuery();
 				while(b.next())
@@ -531,6 +536,7 @@ public class ProdAndesAdmin {
 			PreparedStatement a = null;
 			try 
 			{
+				dao.inicializar();
 				a = dao.conexion.prepareStatement(queer);
 				ResultSet b = a.executeQuery();
 				while(b.next())
@@ -572,11 +578,13 @@ public class ProdAndesAdmin {
 		}
 		else if(tipo == "producto")
 		{
-			queer = "SELECT* FROM ProdAndes.producto";
+			queer = "SELECT* FROM PRODUCTO WHERE PRODUCTO.ID ="+query;
+			System.out.println(queer);
 			ArrayList<String> resultado = new ArrayList<>();
 			PreparedStatement a = null;
 			try 
 			{
+				dao.inicializar();
 				a = dao.conexion.prepareStatement(queer);
 				ResultSet b = a.executeQuery();
 				while(b.next())
@@ -624,6 +632,7 @@ public class ProdAndesAdmin {
 			PreparedStatement a = null;
 			try 
 			{
+				dao.inicializar();
 				a = dao.conexion.prepareStatement(queer);
 				ResultSet b = a.executeQuery();
 				while(b.next())

@@ -60,6 +60,7 @@ public class ProdAndesUsuario {
 		PreparedStatement a = null;
 		try 
 		{
+			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next())
@@ -68,7 +69,7 @@ public class ProdAndesUsuario {
 				int numInventarioT = b.getInt("numInventario");
 				int toneladasT = b.getInt("toneladas");
 				String tipoT = b.getString("tipo");
-				MateriaPrima z = new MateriaPrima(nombreT, numInventarioT, toneladasT, tipoT);
+				MateriaPrima z = new MateriaPrima(nombreT, toneladasT, tipoT);
 				resultado.add(z);
 			}
 		} 
@@ -101,27 +102,12 @@ public class ProdAndesUsuario {
 	public ArrayList<Componente> consultarExistenciasComp(String tipo,
 			String existencias) {
 		// TODO Auto-generated method stub
-		String query="SELECT * FROM ProdAndes.componente WHERE ";
-		if(tipo!="")
-		{
-			query =  query + "tipo = '" + tipo + "'" ; 
-			if(existencias!="")
-			{
-				query = query + " AND numInventario = '" + existencias +"'";
-			}
-		}
-		else if (existencias !="")
-		{
-			query = query + " numInventario = '" + existencias +"'";
-		}
-		else
-		{
-			query="SELECT * FROM ProdAndes.componente";
-		}
+		String query="SELECT * FROM componente";
 		ArrayList<Componente> resultado = new ArrayList<>();
 		PreparedStatement a = null;
 		try 
 		{
+			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next())
@@ -170,13 +156,15 @@ public class ProdAndesUsuario {
 		}
 		else
 		{
-			query="SELECT * FROM ProdAndes.EtapaDeProduccion";
+			query="SELECT * FROM EtapaDeProduccion";
 		}
+		System.out.println(query + "------------apoingapodisngapodnfaosnfopasndoasnfpoansdpfoinaposdifn");
 
 		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
 		PreparedStatement a = null;
 		try 
 		{
+			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next())
@@ -239,6 +227,7 @@ public class ProdAndesUsuario {
 		PreparedStatement a = null;
 		try 
 		{
+			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next())
@@ -287,6 +276,7 @@ public class ProdAndesUsuario {
 			PreparedStatement a = null;
 			try 
 			{
+				dao.inicializar();
 				a = dao.conexion.prepareStatement(queer);
 				ResultSet b = a.executeQuery();
 				while(b.next())
@@ -329,6 +319,7 @@ public class ProdAndesUsuario {
 			PreparedStatement a = null;
 			try 
 			{
+				dao.inicializar();
 				a = dao.conexion.prepareStatement(queer);
 				ResultSet b = a.executeQuery();
 				while(b.next())
@@ -375,6 +366,7 @@ public class ProdAndesUsuario {
 			PreparedStatement a = null;
 			try 
 			{
+				dao.inicializar();
 				a = dao.conexion.prepareStatement(queer);
 				ResultSet b = a.executeQuery();
 				while(b.next())
@@ -422,6 +414,7 @@ public class ProdAndesUsuario {
 			PreparedStatement a = null;
 			try 
 			{
+				dao.inicializar();
 				a = dao.conexion.prepareStatement(queer);
 				ResultSet b = a.executeQuery();
 				while(b.next())
@@ -471,6 +464,7 @@ public class ProdAndesUsuario {
 		PreparedStatement a = null;
 		try 
 		{
+			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 		} 

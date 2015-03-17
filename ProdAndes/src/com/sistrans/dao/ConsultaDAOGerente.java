@@ -38,6 +38,7 @@ public class ConsultaDAOGerente {
 			clave = "mmoefacet";
 			final String driver = "oracle.jdbc.driver.OracleDriver";
 			Class.forName(driver);
+			establecer();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -65,4 +66,8 @@ public class ConsultaDAOGerente {
 			throw new Exception("ERROR: ConsultaDAO: closeConnection() = cerrando una conexión.");
 		}
 	}
+	public void establecer() throws Exception
+    {
+    	establecerConexion(cadenaConexion, usuario, clave);
+    }
 }

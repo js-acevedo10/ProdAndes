@@ -62,7 +62,7 @@ public class MateriaPrima
 
 
 
-	public MateriaPrima(String nombre, int toneladas, String tipo) {
+	public MateriaPrima(String nombre, int tonelada, String tipo) {
 		super();
 		this.nombre = nombre;
 		this.tonelada = tonelada;

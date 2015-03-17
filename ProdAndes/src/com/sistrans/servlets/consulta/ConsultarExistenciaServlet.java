@@ -111,12 +111,14 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
+				int i = 0;
 				for(MateriaPrima materia : items) {
 					out.println("<tr>");
-					out.println("<td>"+materia.getNumInventario() + "</td>");
+					out.println("<td>"+i+"</td>");
 					out.println("<td>"+materia.getNombre()+"</td>");
 					out.println("<td>"+materia.getTonelada()+"</td>");
 					out.println("</tr>");
+					i++;
 				}
 			}
 			out.println("</tbody>");
@@ -212,11 +214,13 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
+				int i = 0;
 				for(MateriaPrima materia : items) {
 					out.println("<tr>");
-					out.println("<td>"+materia.getNumInventario() + "</td>");
+					out.println("<td>"+i+ "</td>");
 					out.println("<td>"+materia.getNombre()+"</td>");
 					out.println("</tr>");
+					i++;
 				}
 			}
 			out.println("</tbody>");
@@ -305,12 +309,14 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
+				int i = 0;
 				for(MateriaPrima materia : items) {
 					out.println("<tr>");
-					out.println("<td>"+materia.getNumInventario() + "</td>");
+					out.println("<td>"+i+"</td>");
 					out.println("<td>"+materia.getNombre()+"</td>");
 					out.println("<td>"+materia.getTonelada()+"</td>");
 					out.println("</tr>");
+					i++;
 				}
 			}
 			out.println("</tbody>");
@@ -406,12 +412,14 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
+				int i = 0;
 				for(MateriaPrima materia : items) {
 					out.println("<tr>");
-					out.println("<td>"+materia.getNumInventario() + "</td>");
+					out.println("<td>"+i+"</td>");
 					out.println("<td>"+materia.getNombre()+"</td>");
 					out.println("<td>"+materia.getTonelada()+"</td>");
 					out.println("</tr>");
+					i++;
 				}
 			}
 			out.println("</tbody>");
