@@ -634,13 +634,47 @@ public class ProdAndesGerente {
 
 	public boolean registrarEntregaPedido(String id, String fechaFinal) {
 		// TODO Auto-generated method stub
-		String query = "UPDATE PEDIDO SET fechaRecibido='"+fechaFinal+"' WHERE id='"+id+"'";
+		String query = "UPDATE PEDIDO SET fechaRecibido=to_date('"+fechaFinal+"','MM-DD-YYYY') WHERE ID='"+id+"'";
 		PreparedStatement a = null;
 		try 
 		{
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
+			String query2 = "SELECT* FROM PEDIDO WHERE ID='"+id+"' AND IDMATERIAPRIMA is not null";
+			a = dao.conexion.prepareStatement(query2);
+			b = a.executeQuery();
+			while(b.next())
+			{
+				int numero = b.getInt("NUMMATERIAPRIMA");
+				String idMP = b.getString("IDMATERIAPRIMA");
+				String queryMP="UPDATE MATERIAPRIMA SET TONELADAS=TONELADAS-"+numero+" WHERE ID='"+idMP+"'";
+				a = dao.conexion.prepareStatement(queryMP);
+				a.executeQuery();
+			}
+			String query3 = "SELECT* FROM PEDIDO WHERE ID='"+id+"' AND IDCOMPONENTE is not null";
+			a = dao.conexion.prepareStatement(query3);
+			b = a.executeQuery();
+			while(b.next())
+			{
+				int numero = b.getInt("NUMCOMPONENTE");
+				String idMP = b.getString("IDCOMPONENTE");
+				String queryCP="UPDATE COMPONENTE SET NUMINVENTARIO=NUMINVENTARIO-"+numero+" WHERE ID='"+idMP+"'";
+				a = dao.conexion.prepareStatement(queryCP);
+				a.executeQuery();
+			}
+			String query4 = "SELECT* FROM PEDIDO WHERE ID='"+id+"' AND IDPRODUCTO is not null";
+			a = dao.conexion.prepareStatement(query4);
+			b = a.executeQuery();
+			while(b.next())
+			{
+				int numero = b.getInt("NUMPRODUCTO");
+				String idMP = b.getString("IDPRODUCTO");
+				String queryPR="UPDATE PRODUCTO SET NUMINVENTARIO=NUMINVENTARIO-"+numero+" WHERE ID='"+idMP+"'";
+				a = dao.conexion.prepareStatement(queryPR);
+				a.executeQuery();
+			}
+			
 		} 
 		catch (SQLException e) 
 		{
