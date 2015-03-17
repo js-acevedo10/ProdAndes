@@ -293,7 +293,7 @@ public class ProdAndesAdmin {
 			{
 				String nombreT = b.getString("nombre");
 				int numInventarioT = b.getInt("numInventario");
-				int costoVenta = b.getInt("costoVenta");
+				int costoVenta = Integer.parseInt(b.getString("COSTOVENTA"));
 				Producto z = new Producto(nombreT, costoVenta, numInventarioT);
 				resultado.add(z);
 			}

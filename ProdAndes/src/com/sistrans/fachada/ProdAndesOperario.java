@@ -289,7 +289,7 @@ public class ProdAndesOperario {
 			{
 				String nombreT = b.getString("NOMBRE");
 				int costoVenta = b.getInt("COSTOVENTA");
-				int numInventarioT = b.getInt("NUMINVENTARIO");
+				int costoVenta = Integer.parseInt(b.getString("COSTOVENTA"));
 				Producto z = new Producto(nombreT, costoVenta, numInventarioT);
 				resultado.add(z);
 			}

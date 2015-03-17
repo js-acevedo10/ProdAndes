@@ -187,7 +187,7 @@ public class ProdAndesUsuario {
 			while(b.next())
 			{
 				String nombreT = b.getString("NOMBRE");
-				int costoVenta = b.getInt("COSTOVENTA");
+				int costoVenta = Integer.parseInt(b.getString("COSTOVENTA"));
 				int numInventarioT = b.getInt("NUMINVENTARIO");
 				Producto z = new Producto(nombreT, costoVenta, numInventarioT);
 				resultado.add(z);
