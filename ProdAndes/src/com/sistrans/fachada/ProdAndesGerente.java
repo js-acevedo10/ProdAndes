@@ -41,15 +41,15 @@ public class ProdAndesGerente {
 		// TODO Auto-generated method stub
 		String query="SELECT dataTwo.nombre, datatwo.toneladas FROM ";
 		String queryExisTipo="";
-		if (existenciasMin!=""&&existenciasMax!="")
+		if ((existenciasMin!=null&&existenciasMin!="")&&(existenciasMax!=null&&existenciasMax!=""))
 		{
 			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>='"+existenciasMin+"' AND MATERIAPRIMA.TONELADAS<='"+existenciasMax+"') datatwo";
 		}
-		else if (existenciasMin!="")
+		else if (existenciasMin!=null&&existenciasMin!="")
 		{
 			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>='"+existenciasMin+"') datatwo";
 		}
-		else if (existenciasMax!="")
+		else if (existenciasMax!=null&&existenciasMax!="")
 		{
 			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS<='"+existenciasMax+"') datatwo";
 		}
@@ -57,7 +57,7 @@ public class ProdAndesGerente {
 		{
 			queryExisTipo = "(SELECT* FROM MATERIAPRIMA) datatwo";
 		}
-		if (estacion!="")
+		if (estacion!=null&&estacion!="")
 		{
 			query = query + "((SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDMATERIAPRIMA is not null AND ESTACIONDEPRODUCCION.CODIGO='"+estacion+"') dataone INNER JOIN " + queryExisTipo + " on dataone.IDMATERIAPRIMA=datatwo.ID)";
 		}
@@ -111,15 +111,15 @@ public class ProdAndesGerente {
 		// TODO Auto-generated method stub
 		String query="SELECT dataTwo.nombre, datatwo.NUMINVENTARIO FROM ";
 		String queryExisTipo="";
-		if (existenciasMin!=""&&existenciasMax!="")
+		if ((existenciasMin!=null&&existenciasMin!="")&&(existenciasMax!=null&&existenciasMax!=""))
 		{
 			queryExisTipo = "(SELECT* FROM COMPONENTE WHERE COMPONENTE.NUMINVENTARIO>="+existenciasMin+" AND COMPONENTE.NUMINVENTARIO<="+existenciasMax+") datatwo";
 		}
-		else if (existenciasMin!="")
+		else if (existenciasMin!=null&&existenciasMin!="")
 		{
 			queryExisTipo = "(SELECT* FROM COMPONENTE WHERE COMPONENTE.NUMINVENTARIO>="+existenciasMin+") datatwo";
 		}
-		else if (existenciasMax!="")
+		else if (existenciasMax!=null&&existenciasMax!="")
 		{
 			queryExisTipo = "(SELECT* FROM COMPONENTE WHERE COMPONENTE.NUMINVENTARIO<="+existenciasMax+") datatwo";
 		}
@@ -127,7 +127,7 @@ public class ProdAndesGerente {
 		{
 			queryExisTipo = "(SELECT* FROM COMPONENTE) datatwo";
 		}
-		if (estacion!="")
+		if (estacion!=null&&estacion!="")
 		{
 			query = query + "((SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDCOMPONENTE is not null AND ESTACIONDEPRODUCCION.CODIGO='"+estacion+"') dataone INNER JOIN " + queryExisTipo + " on dataone.IDCOMPONENTE=datatwo.ID)";
 		}
