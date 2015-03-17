@@ -62,7 +62,6 @@ public class UserServlet extends HttpServlet {
 	//WORLD METHODS
 	
 	public void realizarConsulta(String consulta, HttpServletResponse response) throws IOException {
-		PrintWriter out = response.getWriter();
 		switch (consulta) {
 		case "exist-mat":
 			response.sendRedirect("pages/user/search/existencias.html");
@@ -141,26 +140,37 @@ public class UserServlet extends HttpServlet {
 		salida.println("        </nav>");
 		salida.println("        <div class=\"container\">");
 		salida.println("            <div class=\"jumbotron\">");
-		salida.println("                <form class=\"form\" action=\"/ProdAndes/registro/pedido/usuario.html\" method=\"get\">");
+		salida.println("				<h1>Realiza un pedido:</h1>");
+		salida.println("                <form class=\"form-horizontal\" action=\"/ProdAndes/registro/pedido/usuario.html\" method=\"get\">");
+		salida.println("                    <div class=\"form-group\">");
 	}
 	
 	public void printProductos(PrintWriter salida, int indice) {
 		ArrayList<String> prods = ProdAndesGerente.darInstancia().darProductos();
 		String required = "";
 		if(indice == 0) required = "required";
-		salida.println("                    <div class=\"form-group\">");
-		salida.println("                        <select class=\"form-control input-lg\" id=\"search-input\" name=\"prod" + (indice+1) + "\"" + required + ">");
-		salida.println("                                <option value=\"\" selected disabled style=\"display: none\">Selecciona el Producto " + (indice+1) + "</option>");
+		
+		salida.println("						<div class=\"col-md-9\">");
+		salida.println("                        	<select class=\"form-control input-lg\" id=\"search-input\" name=\"prod" + (indice+1) + "\"" + required + ">");
+		salida.println("                                	<option value=\"\" selected disabled style=\"display: none\">Selecciona el Producto " + (indice+1) + "</option>");
 		for(int i = 0; i < 100; i++) {
 			String prod = prods.get(i);
 			salida.println("                                <option value=\"" + prod.toLowerCase().replaceAll(" ", "") +  "\">" + prod + "</option>");
 		}
-		salida.println("                        </select><br>");
-		salida.println("                    </div>");
+		salida.println("                        	</select><br>");
+		salida.println("						</div>");
+		salida.println("						<div class=\"col-md-3\">");
+		salida.println("							<input type=\"number\" class=\"form-control input-lg\" name=\"c"+(indice+1)+"\" placeholder=\"Cantidad\"" +required + ">");
+		salida.println("                    	</div>");
 	}
 	
 	public void printPedidoFooter(PrintWriter salida) {
-		salida.println("                    <button class=\"btn btn-default btn-large\" name=\"submit\" type=\"submit\" value=\"producto\">Pedir</button>");
+		salida.println("						<div class=\"col-md-12\">");
+		salida.println("                        	<label for=\"ff\">Fecha de entrega</label>");
+		salida.println("                        	<input type=\"date\" id=\"ff\" class=\"form-control\" name=\"ff\" placeholder=\"Fecha de Entrega\"><br>");
+		salida.println("                    		<button class=\"btn btn-default btn-lg\" name=\"submit\" type=\"submit\" value=\"producto\">Pedir</button>");
+		salida.println("                    	</div>");
+		salida.println("                    </div>");	
 		salida.println("                </form>");
 		salida.println("            </div>");
 		salida.println("        </div>");
