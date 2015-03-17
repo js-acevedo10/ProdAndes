@@ -655,7 +655,7 @@ public class ProdAndesGerente {
 	}
 
 	public ArrayList<String> darProductos() {
-		String query = "SELECT E.NOMBRE FORM PRODUCTO E";
+		String query = "SELECT E.NOMBRE FROM PRODUCTO E";
 		PreparedStatement a = null;
 		ArrayList<String> productos = new ArrayList<String>();
 		try 

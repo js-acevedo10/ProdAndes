@@ -547,7 +547,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		salida.println("                    		<input type=\"number\" class=\"form-control input-lg\" name=\"eMax\" placeholder=\"Existencias maximas\">");
 		salida.println("                    	</div>");
 		salida.println("                    	<div class=\"col-md-3\">");
-		salida.println("                            <select class=\"form-control input-lg\" id=\"search-input\" name=\"estacion\" required>");
+		salida.println("                            <select class=\"form-control input-lg\" id=\"search-input\" name=\"estacion\">");
 		salida.println("                                <option value=\"\" selected disabled style=\"display: none\">Estacion</option>");
 		
 		printEstaciones(salida);

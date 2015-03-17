@@ -49,7 +49,14 @@ public class RegistroPedidoProductosCliente extends HttpServlet {
 		String id3 = request.getParameter("prod3");
 		String id4 = request.getParameter("prod4");
 		
-		boolean x = ProdAndesUsuario.darInstancia().registrarPedido(id1, id2, id3, id3, id4);
+		boolean x = true;
+		
+		for(int i = 0; i < 4; i++) {
+			if(i == 1) id1 = id2;
+			if(i == 2) id1 = id3;
+			if(i == 3) id1 = id4;
+			x = ProdAndesUsuario.darInstancia().registrarPedido(id1, id2, id3, id3, id4);
+		}
 		
 		if(x) {
 			response.sendRedirect("/ProdAndes/pages/user/success/pedido.html");
