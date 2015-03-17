@@ -489,7 +489,9 @@ public class ProdAndesUsuario {
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
+			System.out.println("aca");
 			b.next();
+			System.out.println("ahora");
 			int numInventarioT = b.getInt("NUMINVENTARIO");
 			if(numInventarioT>cantidadRequerida)
 			{

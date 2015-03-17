@@ -788,7 +788,7 @@ public class ProdAndesGerente {
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next()) {
-				String x = "Pedido no." + b.getString("ID") + " del cliente " + b.getString("LOGIN");
+				String x = "Pedido no. *" + b.getString("ID") + "* del cliente " + b.getString("LOGIN");
 				pedidos.add(x);
 			}
 		} 

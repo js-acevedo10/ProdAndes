@@ -31,17 +31,17 @@
         </nav>
         <div class="container">
             <div class="jumbotron">
+            	<h1>Registre la Entrega de un Pedido:</h1>
                 <form class="form" action="/ProdAndes/registro/entregapedidocliente.html" method="get">
                 <div class="form-group">
                 		<label for="pedido">Pedido entregado:</label>
                         <select name="pedido" id="pedido" class="form-control" required>
                             <option value="componente">Componente</option>
-                            <option value="materia-prima">Materia Prima</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="date-final">Fecha de entrega</label>
-                        <input type="date" class="form-control" name="ff" placeholder="Fecha de Entrega">
+                        <label for="ff">Fecha de entrega</label>
+                        <input type="date" class="form-control" name="ff" placeholder="Fecha de Entrega" required>
                     </div>
                     <button class="btn btn-default" name="submit" type="submit" value="estacion">Registrar Entrega</button>
                 </form>
