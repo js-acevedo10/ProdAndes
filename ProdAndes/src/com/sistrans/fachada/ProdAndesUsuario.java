@@ -469,7 +469,7 @@ public class ProdAndesUsuario {
 		// TODO Auto-generated method stub
 		String idProducto = id1;
 		String idCliente = id2;
-		DateFormat df = new SimpleDateFormat("MM-DD-YYYY");
+		DateFormat df = new SimpleDateFormat("YYYY-MM-DD");
 		Date dateCreacion = new Date();
 		String fechaCreacion = df.format(dateCreacion);
 		String deadline = id3;
