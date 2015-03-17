@@ -53,15 +53,15 @@ public class ProdAndesAdmin {
 		String queryExisTipo="";
 		if(tipo!=null&&existencias!=null)
 		{
-			queryExisTipo =  "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='eclipse.tipo'AND MATERIAPRIMA.TONELADAS>='eclipse.existencias') datatwo";
+			queryExisTipo =  "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo";
 		}
 		else if (tipo!=null)
 		{
-			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='eclipse.tipo') datatwo";
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"') datatwo";
 		}
 		else if (existencias!=null)
 		{
-			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>='eclipse.existencias') datatwo";
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>="+existencias+") datatwo";
 		}
 		else
 		{
@@ -69,7 +69,7 @@ public class ProdAndesAdmin {
 		}
 		if (etapa!=null)
 		{
-			query = query + "((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='eclipse.estapa') dataone INNER JOIN" + queryExisTipo + " on dataone.IDMATERIAPRIMA=datatwo.ID)";
+			query = query + "((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN" + queryExisTipo + " on dataone.IDMATERIAPRIMA=datatwo.ID)";
 		}
 		else
 		{
@@ -77,15 +77,15 @@ public class ProdAndesAdmin {
 		}
 		if (fechaSol!=null&fechaEntreg!=null)
 		{
-			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('eclipse.fechasol','MM-DD-YYYY') AND PEDIDO.FECHARECIBIDO>=to_date('eclipse.fechaEntreg','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
+			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('"+fechaSol+"','MM-DD-YYYY') AND PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
 		}
 		else if(fechaSol !=null)
 		{
-			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('eclipse.fechasol','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
+			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('"+fechaSol+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
 		}
 		else if(fechaEntreg !=null)
 		{
-			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHARECIBIDO>=to_date('eclipse.fechaEntreg','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
+			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
 		}
 		query = query+";";
 		ArrayList<MateriaPrima> resultado = new ArrayList<>();
@@ -97,16 +97,10 @@ public class ProdAndesAdmin {
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
-<<<<<<< Updated upstream
-				String nombreT = b.getString("nombre");
-				int numInventarioT = b.getInt("numInventario");
-				int toneladasT = b.getInt("toneladas");
-				String tipoT = b.getString("tipo");
-=======
 				String nombreT = b.getString("NOMBRE");
 				int toneladasT = b.getInt("TONELADAS");
 				String tipoT = b.getString("TIPO");
->>>>>>> Stashed changes
+
 				MateriaPrima z = new MateriaPrima(nombreT, toneladasT, tipoT);
 				resultado.add(z);
 			}
