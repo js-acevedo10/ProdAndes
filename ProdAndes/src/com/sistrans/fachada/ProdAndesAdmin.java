@@ -43,15 +43,15 @@ public class ProdAndesAdmin {
 		String queryExisTipo="";
 		if (existenciasMin!=""&&existenciasMax!="")
 		{
-			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>='"+existenciasMin+"' AND MATERIAPRIMA.TONELADAS<='"+existenciasMax+"') datatwo";
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>="+existenciasMin+" AND MATERIAPRIMA.TONELADAS<="+existenciasMax+") datatwo";
 		}
 		else if (existenciasMin!="")
 		{
-			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>='"+existenciasMin+"') datatwo";
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>="+existenciasMin+") datatwo";
 		}
 		else if (existenciasMax!="")
 		{
-			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS<='"+existenciasMax+"') datatwo";
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS<="+existenciasMax+") datatwo";
 		}
 		else
 		{
@@ -112,7 +112,32 @@ public class ProdAndesAdmin {
 	public ArrayList<Componente> consultarExistenciasComp(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
-		String query="SELECT * FROM COMPONENTE";
+		String query="SELECT dataTwo.nombre, datatwo.NUMINVENTARIO FROM ";
+		String queryExisTipo="";
+		if (existenciasMin!=""&&existenciasMax!="")
+		{
+			queryExisTipo = "(SELECT* FROM COMPONENTE WHERE COMPONENTE.NUMINVENTARIO>="+existenciasMin+" AND COMPONENTE.NUMINVENTARIO<="+existenciasMax+") datatwo";
+		}
+		else if (existenciasMin!="")
+		{
+			queryExisTipo = "(SELECT* FROM COMPONENTE WHERE COMPONENTE.NUMINVENTARIO>="+existenciasMin+") datatwo";
+		}
+		else if (existenciasMax!="")
+		{
+			queryExisTipo = "(SELECT* FROM COMPONENTE WHERE COMPONENTE.NUMINVENTARIO<="+existenciasMax+") datatwo";
+		}
+		else
+		{
+			queryExisTipo = "(SELECT* FROM COMPONENTE) datatwo";
+		}
+		if (estacion!="")
+		{
+			query = query + "((SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDCOMPONENTE is not null AND ESTACIONDEPRODUCCION.CODIGO='"+estacion+"') dataone INNER JOIN " + queryExisTipo + " on dataone.IDCOMPONENTE=datatwo.ID)";
+		}
+		else
+		{
+			query = query + queryExisTipo;
+		}
 		
 		ArrayList<Componente> resultado = new ArrayList<>();
 		PreparedStatement a = null;
