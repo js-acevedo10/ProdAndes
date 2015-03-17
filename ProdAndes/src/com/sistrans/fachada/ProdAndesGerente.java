@@ -250,7 +250,7 @@ public class ProdAndesGerente {
 
 	public ArrayList<Producto> consultarExistenciasProd(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
-		String query="SELECT datatwo.NOMBRE, datatwo.NUMINVENTARIO FROM ";
+		String query="SELECT datatwo.NOMBRE, datatwo.NUMINVENTARIO, datatwo.COSTOVENTA FROM ";
 		String queryExisTipo="";
 		if (existenciasMin!= null&&existenciasMax!= null&&existenciasMin!=""&&existenciasMax!="")
 		{
@@ -779,7 +779,7 @@ public class ProdAndesGerente {
 	}
 	
 	public ArrayList<String> darPedidos() {
-		String query = "SELECT E.ID, C.LOGIN FROM PEDIDO E JOIN USUARIO C ON E.ID = C.LOGIN";
+		String query = "SELECT E.ID, C.NOMBRE FROM PEDIDO E JOIN USUARIO C ON E.ID = C.LOGIN AND E.FECHARECIBIDO IS NULL";
 		PreparedStatement a = null;
 		ArrayList<String> pedidos = new ArrayList<String>();
 		try 
@@ -788,7 +788,7 @@ public class ProdAndesGerente {
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next()) {
-				String x = "Pedido no. *" + b.getString("ID") + "* del cliente " + b.getString("LOGIN");
+				String x = "Pedido con id.&" + b.getString("ID") + "& del cliente " + b.getString("NOMBRE");
 				pedidos.add(x);
 			}
 		} 

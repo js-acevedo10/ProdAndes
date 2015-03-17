@@ -154,9 +154,10 @@ public class GerenteServlet extends HttpServlet {
 		ArrayList<String> pedidos = ProdAndesGerente.darInstancia().darPedidos();
 		
 		for(String pedido : pedidos) {
-			String[] abc = pedido.split("*");
+			System.out.println(pedido);
+			String[] abc = pedido.split("&");
 			String imp = abc[1];			
-			salida.println("                            <option value=\"" + imp + "\">" + pedido.replaceAll("*", "") + "</option>");
+			salida.println("                            <option value=\"" + imp + "\">" + pedido.replaceAll("&", "") + "</option>");
 		}
 	}
 	
