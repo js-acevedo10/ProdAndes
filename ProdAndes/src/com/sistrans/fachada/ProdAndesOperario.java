@@ -109,7 +109,7 @@ public class ProdAndesOperario {
 	public ArrayList<Componente> consultarExistenciasComp(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
-		String query="SELECT dataTwo.nombre, datatwo.NUMINVENTARIO FROM ";
+		String query="SELECT dataTwo.nombre, datatwo.NUMINVENTARIO, datatwo.UNIDADMEDIDA FROM ";
 		String queryExisTipo="";
 		if ((existenciasMin!=null&&existenciasMin!="")&&(existenciasMax!=null&&existenciasMax!=""))
 		{
@@ -252,7 +252,7 @@ public class ProdAndesOperario {
 	public ArrayList<Producto> consultarExistenciasProd(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
-		String query="SELECT datatwo.NOMBRE, datatwo.NUMINVENTARIO FROM ";
+		String query="SELECT datatwo.NOMBRE, datatwo.NUMINVENTARIO, datatwo.COSTOVENTA FROM ";
 		String queryExisTipo="";
 		if (existenciasMin!= null&&existenciasMax!= null&&existenciasMin!=""&&existenciasMax!="")
 		{
