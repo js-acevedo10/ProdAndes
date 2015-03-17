@@ -287,8 +287,8 @@ public class ProdAndesOperario {
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
-				String nombreT = b.getString("NOMBRE");
-				int costoVenta = b.getInt("COSTOVENTA");
+				String nombreT = b.getString("nombre");
+				int numInventarioT = b.getInt("numInventario");
 				int costoVenta = Integer.parseInt(b.getString("COSTOVENTA"));
 				Producto z = new Producto(nombreT, costoVenta, numInventarioT);
 				resultado.add(z);
