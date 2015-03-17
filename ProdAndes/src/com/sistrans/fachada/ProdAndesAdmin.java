@@ -50,15 +50,7 @@ public class ProdAndesAdmin {
 		// TODO Auto-generated method stub
 		String query="SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ";
 		String queryExisTipo="";
-		if(tipo!=""&&existencias!="")
-		{
-			queryExisTipo =  "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo";
-		}
-		else if (tipo!="")
-		{
-			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"') datatwo";
-		}
-		else if (existencias!="")
+		if (existencias!="")
 		{
 			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>="+existencias+") datatwo";
 		}
