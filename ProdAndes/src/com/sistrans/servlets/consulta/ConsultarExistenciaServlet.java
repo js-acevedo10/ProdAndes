@@ -1,6 +1,5 @@
 package com.sistrans.servlets.consulta;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import com.sistrans.mundo.MateriaPrima;
 import com.sistrans.mundo.Producto;
 
 /**
- * Servlet implementation class ExistenciaServlet
+ * Servlet implementation class ExistenciaServletΩ
  */
 @WebServlet("/consultar/existencias.html")
 public class ConsultarExistenciaServlet extends HttpServlet {
@@ -98,8 +97,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 	//LOGIC METHODS
 
 	private void solicitudAdmin(String role, String tipo, String existencias,
-			String etapa, String fechaSol, String fechaEntreg, PrintWriter out) {
-		
+			String etapa, String fechaSol, String fechaEntreg, PrintWriter out) {		
 		if(tipo.equals("materia-prima")) {
 			ArrayList<MateriaPrima> items = ProdAndesAdmin.darInstancia().consultarExistenciasMatPrima(tipo, existencias, etapa, fechaSol, fechaEntreg);
 			if(items.size() == 0) {
@@ -110,8 +108,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "<th>ID</th>"
 						+ "<th>Nombre</th>"
 						+ "<th>Tonelada</th>"
-						+ "<th>Proveedor</th>"
-						+ "<th>Producto</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
@@ -120,8 +116,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<td>"+materia.getNumInventario() + "</td>");
 					out.println("<td>"+materia.getNombre()+"</td>");
 					out.println("<td>"+materia.getTonelada()+"</td>");
-					out.println("<td>"+materia.getMateriasProveedor().getProveedor().getNombre()+"</td>");
-					out.println("<td>"+materia.getProducto().getNombre()+"</td>");
 					out.println("</tr>");
 				}
 			}
@@ -136,8 +130,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "<th>ID</th>"
 						+ "<th>Nombre</th>"
 						+ "<th>UnidadMedida</th>"
-						+ "<th>Producto</th>"
-						+ "<th>Proveedor</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
@@ -146,7 +138,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<td>" + comp.getNumInventario() + "</td>");
 					out.println("<td>" + comp.getNombre() + "</td>");
 					out.println("<td>" + comp.getUnidadMedida() + "</td>");
-					out.println("<td>" + comp.getMateriasProveedor().getProveedor().getNombre() + "</td>");
 					out.println("</tr>");
 				}
 			}
@@ -161,8 +152,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "<th>ID</th>"
 						+ "<th>Fecha Inicial</th>"
 						+ "<th>Fecha Final</th>"
-						+ "<th>Estacion</th>"
-						+ "<th>Producto</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
@@ -171,8 +160,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<td>" + stage.getNum() + "</td>");
 					out.println("<td>" + stage.getFechaInicial() + "</td>");
 					out.println("<td>" + stage.getFechaFinal() + "</td>");
-					out.println("<td>" + stage.getEstaciondeProducto().getCodigo() + "</td>");
-					out.println("<td>" + stage.getProducto().getNombre() + "</td>");
 					out.println("</tr>");
 				}
 			}
@@ -189,7 +176,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "<th>Materia Prima</th>"
 						+ "<th>Componente</th>"
 						+ "<th>Etapa De Produccion</th>"
-						+ "<th>Pedido</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
@@ -200,7 +186,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<td>" + prod.getMateriaPrima() + "</td>");
 					out.println("<td>" + prod.getComponente() + "</td>");
 					out.println("<td>" + prod.getEtapadeProduccion() + "</td>");
-					out.println("<td>" + prod.getPedido().getiD() + "</td>");
 					out.println("</tr>");
 				}
 			}
@@ -266,7 +251,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "<tr>"
 						+ "<th>ID</th>"
 						+ "<th>Fecha Final</th>"
-						+ "<th>Producto</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
@@ -274,7 +258,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<tr>");
 					out.println("<td>" + stage.getNum() + "</td>");
 					out.println("<td>" + stage.getFechaFinal() + "</td>");
-					out.println("<td>" + stage.getProducto().getNombre() + "</td>");
 					out.println("</tr>");
 				}
 			}
@@ -319,8 +302,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "<th>ID</th>"
 						+ "<th>Nombre</th>"
 						+ "<th>Tonelada</th>"
-						+ "<th>Proveedor</th>"
-						+ "<th>Producto</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
@@ -329,8 +310,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<td>"+materia.getNumInventario() + "</td>");
 					out.println("<td>"+materia.getNombre()+"</td>");
 					out.println("<td>"+materia.getTonelada()+"</td>");
-					out.println("<td>"+materia.getMateriasProveedor().getProveedor().getNombre()+"</td>");
-					out.println("<td>"+materia.getProducto().getNombre()+"</td>");
 					out.println("</tr>");
 				}
 			}
@@ -368,8 +347,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "<th>ID</th>"
 						+ "<th>Fecha Inicial</th>"
 						+ "<th>Fecha Final</th>"
-						+ "<th>Estacion</th>"
-						+ "<th>Producto</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
@@ -378,8 +355,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<td>" + stage.getNum() + "</td>");
 					out.println("<td>" + stage.getFechaInicial() + "</td>");
 					out.println("<td>" + stage.getFechaFinal() + "</td>");
-					out.println("<td>" + stage.getEstaciondeProducto().getCodigo() + "</td>");
-					out.println("<td>" + stage.getProducto().getNombre() + "</td>");
 					out.println("</tr>");
 				}
 			}
@@ -416,7 +391,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 	}
 
 	private void solicitudGerente(String role, String tipo, String existencias,
-			String etapa, String fechaSol, String fechaEntreg, PrintWriter out) {
+			String etapa, String fechaSol, String fechaEntreg, PrintWriter out) {		
 		// TODO Auto-generated method stub
 		if(tipo.equals("materia-prima")) {
 			ArrayList<MateriaPrima> items = ProdAndesGerente.darInstancia().consultarExistenciasMatPrima(tipo, existencias, etapa, fechaSol, fechaEntreg);
@@ -428,8 +403,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "<th>ID</th>"
 						+ "<th>Nombre</th>"
 						+ "<th>Tonelada</th>"
-						+ "<th>Proveedor</th>"
-						+ "<th>Producto</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
@@ -438,8 +411,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<td>"+materia.getNumInventario() + "</td>");
 					out.println("<td>"+materia.getNombre()+"</td>");
 					out.println("<td>"+materia.getTonelada()+"</td>");
-					out.println("<td>"+materia.getMateriasProveedor().getProveedor().getNombre()+"</td>");
-					out.println("<td>"+materia.getProducto().getNombre()+"</td>");
 					out.println("</tr>");
 				}
 			}
@@ -454,8 +425,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "<th>ID</th>"
 						+ "<th>Nombre</th>"
 						+ "<th>UnidadMedida</th>"
-						+ "<th>Producto</th>"
-						+ "<th>Proveedor</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
@@ -464,7 +433,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<td>" + comp.getNumInventario() + "</td>");
 					out.println("<td>" + comp.getNombre() + "</td>");
 					out.println("<td>" + comp.getUnidadMedida() + "</td>");
-					out.println("<td>" + comp.getMateriasProveedor().getProveedor().getNombre() + "</td>");
 					out.println("</tr>");
 				}
 			}
@@ -479,8 +447,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "<th>ID</th>"
 						+ "<th>Fecha Inicial</th>"
 						+ "<th>Fecha Final</th>"
-						+ "<th>Estacion</th>"
-						+ "<th>Producto</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
@@ -489,8 +455,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<td>" + stage.getNum() + "</td>");
 					out.println("<td>" + stage.getFechaInicial() + "</td>");
 					out.println("<td>" + stage.getFechaFinal() + "</td>");
-					out.println("<td>" + stage.getEstaciondeProducto().getCodigo() + "</td>");
-					out.println("<td>" + stage.getProducto().getNombre() + "</td>");
 					out.println("</tr>");
 				}
 			}
@@ -507,7 +471,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 						+ "<th>Materia Prima</th>"
 						+ "<th>Componente</th>"
 						+ "<th>Etapa De Produccion</th>"
-						+ "<th>Pedido</th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>");
@@ -518,7 +481,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 					out.println("<td>" + prod.getMateriaPrima() + "</td>");
 					out.println("<td>" + prod.getComponente() + "</td>");
 					out.println("<td>" + prod.getEtapadeProduccion() + "</td>");
-					out.println("<td>" + prod.getPedido().getiD() + "</td>");
 					out.println("</tr>");
 				}
 			}

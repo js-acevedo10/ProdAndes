@@ -33,7 +33,7 @@ public class ProdAndesGerente {
 	
 	public void inicializarRuta(String ruta)
 	{
-		dao.inicializar(ruta);
+		dao.inicializar();
 	}
 
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,

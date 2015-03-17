@@ -9,7 +9,7 @@ public class ConsultaDAOUsuario {
 	
 	//Constantes
 	
-	private static final String ARCHIVO_CONEXION = "/../conexion.properties";
+	private static final String ARCHIVO_CONEXION = "/conexion.properties";
 	
 	//Consultas
 	//Atributos
@@ -29,19 +29,14 @@ public class ConsultaDAOUsuario {
 	
 	//Metodos
 	
-	public void inicializar(String path)
+	public void inicializar()
 	{
-		try {
-			File arch = new File(path + ARCHIVO_CONEXION);
-			Properties prop = new Properties();
-			FileInputStream in = new FileInputStream(arch);
+		try {			
+			cadenaConexion = "jdbc:oracle:thin:@prod.oracle.virtual.uniandes.edu.co:1531:prod";
 			
-			prop.load(in);
-			in.close();
-			
-			usuario = prop.getProperty("usuario");
-			clave = prop.getProperty("clave");
-			final String driver = prop.getProperty("driver");
+			usuario = "ISIS2304171510";
+			clave = "mmoefacet";
+			final String driver = "oracle.jdbc.driver.OracleDriver";
 			Class.forName(driver);
 		} catch (Exception e) {
 			e.printStackTrace();

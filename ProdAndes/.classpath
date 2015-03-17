@@ -13,5 +13,7 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="build/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ojdbc14-1.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

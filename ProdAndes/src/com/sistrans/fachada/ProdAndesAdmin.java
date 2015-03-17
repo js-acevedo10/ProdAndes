@@ -34,7 +34,7 @@ public class ProdAndesAdmin {
 	
 	public void inicializarRuta(String ruta)
 	{
-		dao.inicializar(ruta);
+		dao.inicializar();
 	}
 
 	public ArrayList consultarExistencias(String tipo,
@@ -137,6 +137,7 @@ public class ProdAndesAdmin {
 		PreparedStatement a = null;
 		try 
 		{
+			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next())
