@@ -39,7 +39,32 @@ public class ProdAndesOperario {
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
-		String query="SELECT * FROM MATERIAPRIMA ";
+		String query="SELECT dataTwo.nombre, datatwo.toneladas FROM ";
+		String queryExisTipo="";
+		if (existenciasMin!=""&&existenciasMax!="")
+		{
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>='"+existenciasMin+"' AND MATERIAPRIMA.TONELADAS<='"+existenciasMax+"') datatwo";
+		}
+		else if (existenciasMin!="")
+		{
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>='"+existenciasMin+"') datatwo";
+		}
+		else if (existenciasMax!="")
+		{
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS<='"+existenciasMax+"') datatwo";
+		}
+		else
+		{
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA) datatwo";
+		}
+		if (estacion!="")
+		{
+			query = query + "((SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDMATERIAPRIMA is not null AND ESTACIONDEPRODUCCION.CODIGO='"+estacion+"') dataone INNER JOIN " + queryExisTipo + " on dataone.IDMATERIAPRIMA=datatwo.ID)";
+		}
+		else
+		{
+			query = query + queryExisTipo;
+		}
 		ArrayList<MateriaPrima> resultado = new ArrayList<>();
 		PreparedStatement a = null;
 		try 

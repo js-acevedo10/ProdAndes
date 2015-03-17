@@ -39,35 +39,31 @@ public class ProdAndesAdmin {
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
-		String query="SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ";
+		String query="SELECT dataTwo.nombre, datatwo.toneladas FROM ";
 		String queryExisTipo="";
-		if (existencias!="")
+		if (existenciasMin!=""&&existenciasMax!="")
 		{
-			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>="+existencias+") datatwo";
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>='"+existenciasMin+"' AND MATERIAPRIMA.TONELADAS<='"+existenciasMax+"') datatwo";
+		}
+		else if (existenciasMin!="")
+		{
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>='"+existenciasMin+"') datatwo";
+		}
+		else if (existenciasMax!="")
+		{
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS<='"+existenciasMax+"') datatwo";
 		}
 		else
 		{
 			queryExisTipo = "(SELECT* FROM MATERIAPRIMA) datatwo";
 		}
-		if (etapa!="")
+		if (estacion!="")
 		{
-			query = query + "((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN" + queryExisTipo + " on dataone.IDMATERIAPRIMA=datatwo.ID)";
+			query = query + "((SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDMATERIAPRIMA is not null AND ESTACIONDEPRODUCCION.CODIGO='"+estacion+"') dataone INNER JOIN " + queryExisTipo + " on dataone.IDMATERIAPRIMA=datatwo.ID)";
 		}
 		else
 		{
 			query = query + queryExisTipo;
-		}
-		if (fechaSol!=""&fechaEntreg!="")
-		{
-			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('"+fechaSol+"','MM-DD-YYYY') AND PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
-		}
-		else if(fechaSol !="")
-		{
-			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('"+fechaSol+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
-		}
-		else if(fechaEntreg !="")
-		{
-			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
 		}
 		ArrayList<MateriaPrima> resultado = new ArrayList<>();
 		PreparedStatement a = null;
