@@ -49,90 +49,45 @@ public class ProdAndesAdmin {
 			String existencias, String etapa, String fechaSol,
 			String fechaEntreg) {
 		// TODO Auto-generated method stub
-		String query="";
-		if(etapa!="")
+		String query="SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ";
+		String queryExisTipo="";
+		if(tipo!=null&&existencias!=null)
 		{
-			if(tipo!="")
-			{
-				if(existencias!="")
-				{
-					if(fechaSol!="")
-					{
-						if(fechaEntreg!="")
-						{
-							query= "SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN (SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo on dataone.IDMATERIAPRIMA=datatwo.ID)INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('"+fechaSol+"','MM-DD-YYYY') AND PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID;";
-						}
-						else
-						{
-							query= "SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN (SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo on dataone.IDMATERIAPRIMA=datatwo.ID)INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('"+fechaSol+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID;";
-						}
-						
-					}
-					else if(fechaEntreg!="")
-					{
-						query= "SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN (SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo on dataone.IDMATERIAPRIMA=datatwo.ID)INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID;";
-					}
-					else
-					{
-						query= "SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN (SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo on dataone.IDMATERIAPRIMA=datatwo.ID);";
-					}
-				}
-				else if(fechaSol!="")
-				{
-					if(fechaEntreg!="")
-					{
-						query= "SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN (SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo on dataone.IDMATERIAPRIMA=datatwo.ID)INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('"+fechaSol+"','MM-DD-YYYY') AND PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID; ";
-					}
-					else
-					{
-						query= "SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN (SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo on dataone.IDMATERIAPRIMA=datatwo.ID)INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('"+fechaSol+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID; ";
-					}
-					
-				}
-				else if(fechaEntreg!="")
-				{
-					query= "SELECT dataTwo.nombre, datatwo.toneladas, datatwo.tipo FROM ((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='"+etapa+"') dataone INNER JOIN (SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='"+tipo+"'AND MATERIAPRIMA.TONELADAS>="+existencias+") datatwo on dataone.IDMATERIAPRIMA=datatwo.ID)INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID; ";
-				}
-			}
+			queryExisTipo =  "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='eclipse.tipo'AND MATERIAPRIMA.TONELADAS>='eclipse.existencias') datatwo";
 		}
-		else if(tipo!="")
+		else if (tipo!=null)
 		{
-			if(existencias!="")
-			{
-				if(fechaSol!="")
-				{
-					if(fechaEntreg!="")
-					{
-						
-					}
-				}
-			}
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TIPO='eclipse.tipo') datatwo";
 		}
-		else if(existencias!="")
+		else if (existencias!=null)
 		{
-			if(fechaSol!="")
-			{
-				if(fechaEntreg!="")
-				{
-					
-				}
-			}
-		}
-		else if(fechaSol!="")
-		{
-			if(fechaEntreg!="")
-			{
-				
-			}
-		}
-		else if(fechaEntreg!="")
-		{
-			
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.TONELADAS>='eclipse.existencias') datatwo";
 		}
 		else
 		{
-			
+			queryExisTipo = "(SELECT* FROM MATERIAPRIMA) datatwo";
 		}
+		if (etapa!=null)
+		{
+			query = query + "((SELECT* FROM ESTACIONMATERIAPRIMA WHERE ESTACIONMATERIAPRIMA.IDESTACION='eclipse.estapa') dataone INNER JOIN" + queryExisTipo + " on dataone.IDMATERIAPRIMA=datatwo.ID)";
+		}
+		else
+		{
+			query = query + queryExisTipo;
+		}
+		if (fechaSol!=null&fechaEntreg!=null)
+		{
+			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('eclipse.fechasol','MM-DD-YYYY') AND PEDIDO.FECHARECIBIDO>=to_date('eclipse.fechaEntreg','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
+		}
+		else if(fechaSol !=null)
+		{
+			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHACREACION<=to_date('eclipse.fechasol','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
+		}
+		else if(fechaEntreg !=null)
+		{
+			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHARECIBIDO>=to_date('eclipse.fechaEntreg','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
+		}
+		query = query+";";
 		ArrayList<MateriaPrima> resultado = new ArrayList<>();
 		PreparedStatement a = null;
 		try 
@@ -142,10 +97,16 @@ public class ProdAndesAdmin {
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
+<<<<<<< Updated upstream
 				String nombreT = b.getString("nombre");
 				int numInventarioT = b.getInt("numInventario");
 				int toneladasT = b.getInt("toneladas");
 				String tipoT = b.getString("tipo");
+=======
+				String nombreT = b.getString("NOMBRE");
+				int toneladasT = b.getInt("TONELADAS");
+				String tipoT = b.getString("TIPO");
+>>>>>>> Stashed changes
 				MateriaPrima z = new MateriaPrima(nombreT, toneladasT, tipoT);
 				resultado.add(z);
 			}
@@ -174,6 +135,7 @@ public class ProdAndesAdmin {
 
 		}		
 		return resultado;
+		
 	}
 
 	public ArrayList<Componente> consultarExistenciasComp(String tipo,
