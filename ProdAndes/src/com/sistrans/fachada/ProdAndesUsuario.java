@@ -494,7 +494,6 @@ public class ProdAndesUsuario {
 			if(numInventarioT>cantidadRequerida)
 			{
 				String query3 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+id1+id2+fechaCreacion+"','"+id2+"','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'), '"+id1+"', '"+id32+"')";
-				String query4 = "INSERT INTO ";
 				a = dao.conexion.prepareStatement(query3);
 				a.executeQuery();
 				flag = true;

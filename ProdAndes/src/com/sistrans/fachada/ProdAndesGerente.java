@@ -634,7 +634,7 @@ public class ProdAndesGerente {
 
 	public boolean registrarEntregaPedido(String id, String fechaFinal) {
 		// TODO Auto-generated method stub
-		String query = "UPDATE PEDIDO SET fechaRecibido=to_date('"+fechaFinal+"','MM-DD-YYYY') WHERE ID='"+id+"'";
+		String query = "UPDATE PEDIDO SET fechaRecibido=to_date('"+fechaFinal+"','MM-DD-YYYY'), estadoPago ='pago' WHERE ID='"+id+"'";
 		PreparedStatement a = null;
 		try 
 		{
