@@ -180,31 +180,33 @@ public class ProdAndesGerente {
 	public ArrayList<EtapadeProduccion> consultarExistenciasEtapa(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
 		String query="SELECT dataTwo.ID, datatwo.NUM FROM ";
-		String queryExisTipo="";
-		if (existenciasMin!=""&&existenciasMax!="")
+		String queryExisTipo="(SELECT ESTACIONDEPRODUCCION.IDETAPAPRODUCCION FROM ESTACIONDEPRODUCCION WHERE ";
+		if((estacion==null||estacion=="")&&(existenciasMax==null||existenciasMax=="")&&(existenciasMin==null||existenciasMin==""))
 		{
-			queryExisTipo = "(SELECT* FROM ETAPAPRODUCCION WHERE ETAPAPRODUCCION.NUMINVENTARIO>="+existenciasMin+" AND ETAPAPRODUCCION.NUMINVENTARIO<="+existenciasMax+") datatwo";
+			queryExisTipo="(SELECT ESTACIONDEPRODUCCION.IDETAPAPRODUCCION FROM ESTACIONDEPRODUCCION) dataOne";
 		}
-		else if (existenciasMin!="")
+		if (estacion!=null&&estacion!=""&&(existenciasMin!=null&&existenciasMin!="")||(existenciasMax!=null&&existenciasMax!=""))
 		{
-			queryExisTipo = "(SELECT* FROM ETAPAPRODUCCION WHERE ETAPAPRODUCCION.NUMINVENTARIO>="+existenciasMin+") datatwo";
+			queryExisTipo = queryExisTipo+" ESTACIONDEPRODUCCION.CODIGO='"+estacion+"' AND";
 		}
-		else if (existenciasMax!="")
+		else if(estacion!=null&&estacion!="")
 		{
-			queryExisTipo = "(SELECT* FROM ETAPAPRODUCCION WHERE ETAPAPRODUCCION.NUMINVENTARIO<="+existenciasMax+") datatwo";
+			queryExisTipo = queryExisTipo+" ESTACIONDEPRODUCCION.CODIGO='"+estacion+"'";
 		}
-		else
+		
+		if ((existenciasMin!=null&&existenciasMin!="")&&(existenciasMax!=null&&existenciasMax!=""))
 		{
-			queryExisTipo = "(SELECT* FROM ETAPAPRODUCCION) datatwo";
+			queryExisTipo = " (ESTACIONDEPRODUCCION.NUMCOMPONENTE>="+existenciasMin+" AND ESTACIONDEPRODUCCION.NUMCOMPONENTE<="+existenciasMax+")OR(ESTACIONDEPRODUCCION.NUMMATERIAPRIMA>="+existenciasMin+" AND ESTACIONDEPRODUCCION.NUMMATERIAPRIMA<="+existenciasMax+")OR(ESTACIONDEPRODUCCION.NUMPRODUCTO>="+existenciasMin+" AND ESTACIONDEPRODUCCION.NUMPRODUCTO<="+existenciasMax+")) dataOne";
 		}
-		if (estacion!="")
+		else if (existenciasMin!=null&&existenciasMin!="")
 		{
-			query = query + "((SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDETAPAPRODUCCION is not null AND ESTACIONDEPRODUCCION.CODIGO='"+estacion+"') dataone INNER JOIN " + queryExisTipo + " on dataone.IDETAPAPRODUCCION=datatwo.ID)";
+			queryExisTipo = " (ESTACIONDEPRODUCCION.NUMCOMPONENTE>="+existenciasMin+")OR(ESTACIONDEPRODUCCION.NUMMATERIAPRIMA>="+existenciasMin+")OR(ESTACIONDEPRODUCCION.NUMPRODUCTO>="+existenciasMin+") dataOne";
 		}
-		else
+		else if (existenciasMax!=null&&existenciasMax!="")
 		{
-			query = query + queryExisTipo;
+			queryExisTipo = " (ESTACIONDEPRODUCCION.NUMCOMPONENTE<="+existenciasMax+")OR(ESTACIONDEPRODUCCION.NUMMATERIAPRIMA<="+existenciasMax+")OR(ESTACIONDEPRODUCCION.NUMPRODUCTO<="+existenciasMax+") dataOne";
 		}
+		query = query + queryExisTipo + " INNER JOIN ETAPAPRODUCCION dataTwo on dataOne.IDETAPAPRODUCCION=dataTwo.ID";
 		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
 		PreparedStatement a = null;
 		try 
