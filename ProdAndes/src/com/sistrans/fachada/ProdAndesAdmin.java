@@ -36,14 +36,6 @@ public class ProdAndesAdmin {
 		dao.inicializar();
 	}
 
-	public ArrayList consultarExistencias(String tipo,
-			String existencias, String etapa, String fechaSol,
-			String fechaEntreg) {
-		// TODO Auto-generated method stub
-		
-		return null;
-	}
-
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
 			String existencias, String etapa, String fechaSol,
 			String fechaEntreg) {
@@ -78,7 +70,6 @@ public class ProdAndesAdmin {
 		{
 			query = query + " INNER JOIN (PEDIDOMATERIAPRIMA dataFourth INNER JOIN (SELECT* FROM PEDIDO WHERE PEDIDO.FECHARECIBIDO>=to_date('"+fechaEntreg+"','MM-DD-YYYY')) datathree on dataFourth.IDPEDIDO=datathree.id)on dataFourth.IDMATERIAPRIMA = datatwo.ID";
 		}
-		query = query+";";
 		ArrayList<MateriaPrima> resultado = new ArrayList<>();
 		PreparedStatement a = null;
 		try 
@@ -127,7 +118,7 @@ public class ProdAndesAdmin {
 			String existencias, String etapa, String fechaSol,
 			String fechaEntreg) {
 		// TODO Auto-generated method stub
-		String query="SELECT * FROM componente";
+		String query="SELECT * FROM COMPONENTE";
 		
 		ArrayList<Componente> resultado = new ArrayList<>();
 		PreparedStatement a = null;
@@ -176,41 +167,7 @@ public class ProdAndesAdmin {
 			String existencias, String etapa, String fechaSol,
 			String fechaEntreg) {
 		// TODO Auto-generated method stub
-		String query="SELECT * FROM Producto WHERE ";
-		if(tipo!="")
-		{
-			query= "SELECT* FROM ((SELECT* FROM PRODANDES.PRODUCTO WHERE tipo='" + tipo + "') DATAONE LEFT JOIN PRODANDES.ETAPAPRODUCTO DATATWO ON DATAONE.ID = DATATWO.PRODUCTOID) DATATHREE LEFT JOIN PRODANDES.ETAPADEPRODUCCION DATAFOURTH ON DATATHREE.ETAPAID = DATAFOURTH.ID";
-			if (fechaSol!=""&&fechaEntreg!="")
-			{
-			 query="SELECT* FROM ((SELECT* FROM PRODANDES.PRODUCTO WHERE tipo='" + tipo + "') DATAONE LEFT JOIN PRODANDES.ETAPAPRODUCTO DATATWO ON DATAONE.ID = DATATWO.PRODUCTOID) DATATHREE LEFT JOIN (SELECT* FROM PRODANDES.ETAPADEPRODUCCION WHERE FECHAINICIAL= '"+ fechaSol + "' AND fechaFinal= '"+ fechaEntreg + "') DATAFOURTH ON DATATHREE.ETAPAID = DATAFOURTH.ID";
-			}
-			else if(fechaSol !="")
-			{
-				query="SELECT* FROM ((SELECT* FROM PRODANDES.PRODUCTO WHERE tipo='" + tipo + "') DATAONE LEFT JOIN PRODANDES.ETAPAPRODUCTO DATATWO ON DATAONE.ID = DATATWO.PRODUCTOID) DATATHREE LEFT JOIN (SELECT* FROM PRODANDES.ETAPADEPRODUCCION WHERE FECHAINICIAL= '"+ fechaSol +"') DATAFOURTH ON DATATHREE.ETAPAID = DATAFOURTH.ID";
-
-			}
-			else if(fechaEntreg!="")
-			{
-				query="SELECT* FROM ((SELECT* FROM PRODANDES.PRODUCTO WHERE tipo='" + tipo + "') DATAONE LEFT JOIN PRODANDES.ETAPAPRODUCTO DATATWO ON DATAONE.ID = DATATWO.PRODUCTOID) DATATHREE LEFT JOIN (SELECT* FROM PRODANDES.ETAPADEPRODUCCION WHERE fechaFinal= '"+ fechaEntreg + "') DATAFOURTH ON DATATHREE.ETAPAID = DATAFOURTH.ID";
-			}
-		}
-		else if (fechaSol!=""&&fechaEntreg!="")
-		{
-		 query="SELECT* FROM ((SELECT* FROM PRODANDES.PRODUCTO WHERE tipo='" + tipo + "') DATAONE LEFT JOIN PRODANDES.ETAPAPRODUCTO DATATWO ON DATAONE.ID = DATATWO.PRODUCTOID) DATATHREE LEFT JOIN (SELECT* FROM PRODANDES.ETAPADEPRODUCCION WHERE FECHAINICIAL= '"+ fechaSol + "' AND fechaFinal= '"+ fechaEntreg + "') DATAFOURTH ON DATATHREE.ETAPAID = DATAFOURTH.ID";
-		}
-		else if(fechaSol !="")
-		{
-			query="SELECT* FROM ((SELECT* FROM PRODANDES.PRODUCTO WHERE tipo='" + tipo + "') DATAONE LEFT JOIN PRODANDES.ETAPAPRODUCTO DATATWO ON DATAONE.ID = DATATWO.PRODUCTOID) DATATHREE LEFT JOIN (SELECT* FROM PRODANDES.ETAPADEPRODUCCION WHERE FECHAINICIAL= '"+ fechaSol +"') DATAFOURTH ON DATATHREE.ETAPAID = DATAFOURTH.ID";
-
-		}
-		else if(fechaEntreg!="")
-		{
-			query="SELECT* FROM ((SELECT* FROM PRODANDES.PRODUCTO WHERE tipo='" + tipo + "') DATAONE LEFT JOIN PRODANDES.ETAPAPRODUCTO DATATWO ON DATAONE.ID = DATATWO.PRODUCTOID) DATATHREE LEFT JOIN (SELECT* FROM PRODANDES.ETAPADEPRODUCCION WHERE fechaFinal= '"+ fechaEntreg + "') DATAFOURTH ON DATATHREE.ETAPAID = DATAFOURTH.ID";
-		}
-		else
-		{
-			query="SELECT * FROM EtapaDeProduccion";
-		}
+		String query="SELECT * FROM ETAPAPRODUCCION";
 		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
 		PreparedStatement a = null;
 		try 
@@ -256,72 +213,7 @@ public class ProdAndesAdmin {
 			String existencias, String etapa, String fechaSol,
 			String fechaEntreg) {
 		// TODO Auto-generated method stub
-		String query="SELECT * FROM Producto WHERE ";
-		System.out.println(tipo);
-		if(tipo!="")
-		{
-			query =  query + "tipo = '" + tipo + "'" ; 
-			if(existencias!="")
-			{
-				query = query + " AND numInventario = '" + existencias +"'";
-				if (fechaSol!=""&&fechaEntreg!="")
-				{
-					query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "' AND fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN PedidoProducto dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM Producto WHERE tipo = '" + tipo + "' AND numInventario = '" + existencias +"') dataFourth on dataThree.ProductoID = dataFourth.ID";
-				}
-				else if(fechaSol !="")
-				{
-					query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "') dataOne LEFT JOIN PedidoProducto dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN  (SELECT* FROM Producto WHERE tipo = '" + tipo + "' AND numInventario = '" + existencias +"') dataFourth on dataThree.ProductoID = dataFourth.ID";
-				}
-				else if(fechaEntreg!="")
-				{
-					query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN PedidoProducto dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN  (SELECT* FROM Producto WHERE tipo = '" + tipo + "' AND numInventario = '" + existencias +"') dataFourth on dataThree.ProductoID = dataFourth.ID";
-				}
-			}
-			else if (fechaSol!=""&&fechaEntreg!="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "' AND fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN PedidoProducto dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM Producto WHERE tipo = '" + tipo + "') dataFourth on dataThree.ProductoID = dataFourth.ID";
-			}
-			else if(fechaSol !="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "') dataOne LEFT JOIN PedidoProducto dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN  (SELECT* FROM Producto WHERE tipo = '" + tipo + "') dataFourth on dataThree.ProductoID = dataFourth.ID";
-			}
-			else if(fechaEntreg!="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN PedidoProducto dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN  (SELECT* FROM Producto WHERE tipo = '" + tipo + "') dataFourth on dataThree.ProductoID = dataFourth.ID";
-			}
-		}
-		else if (existencias !="")
-		{
-			query = query + " numInventario = '" + existencias +"'";
-			if (fechaSol!=""&&fechaEntreg!="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "' AND fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN PedidoProducto dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM Producto WHERE numInventario = '" + existencias +"') dataFourth on dataThree.ProductoID = dataFourth.ID";
-			}
-			else if(fechaSol !="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "') dataOne LEFT JOIN PedidoProducto dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM Producto WHERE numInventario = '" + existencias +"') dataFourth on dataThree.ProductoID = dataFourth.ID";
-			}
-			else if(fechaEntreg!="")
-			{
-				query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN PedidoProducto dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN (SELECT* FROM Producto WHERE numInventario = '" + existencias +"') dataFourth on dataThree.ProductoID = dataFourth.ID";
-			}
-		}
-		else 	if (fechaSol!=""&&fechaEntreg!="")
-		{
-			query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "' AND fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN PedidoProducto dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN Producto dataFourth on dataThree.ProductoID = dataFourth.ID";
-		}
-		else if(fechaSol !="")
-		{
-			query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechacreacion= '"+ fechaSol + "') dataOne LEFT JOIN PedidoProducto dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN Componente dataFourth on dataThree.ProductoID = dataFourth.ID";
-		}
-		else if(fechaEntreg!="")
-		{
-			query = "SELECT* FROM ((SELECT* FROM Pedido WHERE fechaRecibido= '"+ fechaEntreg + "') dataOne LEFT JOIN PedidoProducto dataTwo on dataOne.id = dataTwo.pedidoID) dataThree LEFT JOIN Producto dataFourth on dataThree.ProductoID = dataFourth.ID";
-		}
-		else
-		{
-			query="SELECT * FROM Producto";
-		}
+		String query="SELECT * FROM PRODUCTO";
 		ArrayList<Producto> resultado = new ArrayList<>();
 		PreparedStatement a = null;
 		try 
@@ -366,9 +258,9 @@ public class ProdAndesAdmin {
 
 	public ArrayList<String> informacionMaterial(String query, String tipo) {
 		String queer="";
-		if(tipo=="materia-prima")
+		if(tipo.equals("materia-prima"))
 		{
-			queer = "SELECT* FROM materiaprima";
+			queer = "SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.ID='"+query+"'";
 			ArrayList<String> resultado = new ArrayList<>();
 			PreparedStatement a = null;
 			try 
@@ -378,11 +270,22 @@ public class ProdAndesAdmin {
 				ResultSet b = a.executeQuery();
 				while(b.next())
 				{
-					String nombreT = b.getString("nombre");
-					String toneladasT = b.getString("toneladas");
+					String nombreT = b.getString("NOMBRE");
+					String toneladasT = b.getString("TONELADAS");
 					resultado.add(nombreT);
 					resultado.add(toneladasT);
 				}
+				String query2 = "SELECT dataTwo.nombre FROM (SELECT* FROM PRODUCTOMATERIAPRIMA WHERE PRODUCTOMATERIAPRIMA.IDMATERIAPRIMA = 'PAPACRIOLLA32') dataOne LEFT JOIN PRODUCTO dataTwo ON dataTwo.ID = dataOne.IDPRODUCTO";
+				a = dao.conexion.prepareStatement(query2);
+				b = a.executeQuery();
+				String nombresProductos ="";
+				while(b.next())
+				{
+					String nombreT = b.getString("NOMBRE");
+					nombresProductos = nombresProductos+nombreT+", ";
+					
+				}
+				resultado.add(nombresProductos);
 			} 
 			catch (SQLException e) 
 			{
@@ -409,9 +312,9 @@ public class ProdAndesAdmin {
 			}		
 			return resultado;
 		}
-		else if (tipo== "componente")
+		else if (tipo.equals("componente"))
 		{
-			queer = "SELECT* FROM componente";
+			queer = "SELECT* FROM COMPONENTE WHERE COMPONENTE.ID='"+query+"'";
 			ArrayList<String> resultado = new ArrayList<>();
 			PreparedStatement a = null;
 			try 
@@ -421,15 +324,25 @@ public class ProdAndesAdmin {
 				ResultSet b = a.executeQuery();
 				while(b.next())
 				{
-					String nombreT = b.getString("nombre");
-					String numInventarioT = b.getString("numInventario");
-					String toneladasT = b.getString("unidadMedida");
-					String tipoT = b.getString("tipo");
+					String nombreT = b.getString("NOMBRE");
+					String existencias = b.getString("NUMINVENTARIO");
+					String toneladasT = b.getString("UNIDADMEDIDA");
 					resultado.add(nombreT);
-					resultado.add(numInventarioT);
+					resultado.add(existencias);
 					resultado.add(toneladasT);
-					resultado.add(tipoT);
 				}
+				String query2 = "SELECT dataTwo.nombre FROM (SELECT* FROM PRODUCTOCOMPONENTE WHERE PRODUCTOCOMPONENTE.IDCOMPONENTE = '"+query+"') dataOne LEFT JOIN PRODUCTO dataTwo ON dataTwo.ID=dataOne.IDPRODUCTO";
+				a = dao.conexion.prepareStatement(query2);
+				b = a.executeQuery();
+				String nombresProductos ="";
+				while(b.next())
+				{
+					String nombreT = b.getString("NOMBRE");
+					nombresProductos = nombresProductos+nombreT+", ";
+					
+				}
+				nombresProductos = nombresProductos.substring(0, nombresProductos.length()-2) + ".";
+				resultado.add(nombresProductos);
 			} 
 			catch (SQLException e) 
 			{
@@ -456,10 +369,9 @@ public class ProdAndesAdmin {
 			}		
 			return resultado;
 		}
-		else if(tipo == "producto")
+		else if(tipo.equals("producto"))
 		{
-			queer = "SELECT* FROM PRODUCTO WHERE PRODUCTO.ID ="+query;
-			System.out.println(queer);
+			queer = "SELECT* FROM PRODUCTO WHERE ID = '" + query + "'";
 			ArrayList<String> resultado = new ArrayList<>();
 			PreparedStatement a = null;
 			try 
@@ -469,16 +381,39 @@ public class ProdAndesAdmin {
 				ResultSet b = a.executeQuery();
 				while(b.next())
 				{
-					String nombreT = b.getString("nombre");
-					String numInventarioT = b.getString("numInventario");
-					String costoVenta = b.getString("costoVenta");
-					String tipoT = b.getString("tipo");
+					String nombreT = b.getString("NOMBRE");
+					String id = b.getString("ID");
+					String costoVenta = b.getString("COSTOVENTA");
+					String exist = b.getString("NUMINVENTARIO");
 
 					resultado.add(nombreT);
-					resultado.add(numInventarioT);
+					resultado.add(id);
 					resultado.add(costoVenta);
-					resultado.add(tipoT);
+					resultado.add(exist);
 				}
+				queer = "SELECT M.nombre FROM PRODUCTO P JOIN PRODUCTOMATERIAPRIMA W ON P.ID = '" + query + "' AND P.ID = W.IDPRODUCTO JOIN MATERIAPRIMA M ON W.IDMATERIAPRIMA = M.ID";
+				a = dao.conexion.prepareStatement(queer);
+				b = a.executeQuery();
+				String mat = "";
+				while(b.next())
+				{
+					String nomMat = b.getString("NOMBRE");
+					mat += nomMat + ", ";
+				}
+				mat = mat.substring(0, mat.length()-2) + ".";
+				resultado.add(mat);
+				
+				queer = "SELECT C.nombre FROM PRODUCTO P JOIN PRODUCTOCOMPONENTE W ON P.ID = '" + query + "' AND P.ID = W.IDPRODUCTO JOIN COMPONENTE C ON W.IDCOMPONENTE = C.ID";
+				a = dao.conexion.prepareStatement(queer);
+				b = a.executeQuery();
+				String comp = "";
+				while(b.next())
+				{
+					String nomComp = b.getString("NOMBRE");
+					comp += nomComp + ", ";
+				}
+				comp = comp.substring(0, comp.length()-2) + ".";
+				resultado.add(comp);
 			} 
 			catch (SQLException e) 
 			{
@@ -507,7 +442,7 @@ public class ProdAndesAdmin {
 		}
 		else
 		{
-			queer = "SELECT* FROM etapaproduccion";
+			queer = "SELECT* FROM etapaproduccion WHERE ETAPAPRODUCCION.ID = '" + query +"'";
 			ArrayList<String> resultado = new ArrayList<>();
 			PreparedStatement a = null;
 			try 
@@ -515,17 +450,27 @@ public class ProdAndesAdmin {
 				dao.inicializar();
 				a = dao.conexion.prepareStatement(queer);
 				ResultSet b = a.executeQuery();
+				String idprod = "";
 				while(b.next())
 				{
 					String nombreT = b.getString("id");
 					String num = b.getString("num");
-					String fechainicial = b.getString("fechaInicial");
-					String fechaFinal = b.getString("fechaFinal");
+					idprod = b.getString("idproducto");
+					System.out.println(idprod);
 					resultado.add(nombreT);
 					resultado.add(num);
-					resultado.add(fechainicial);
-					resultado.add(fechaFinal);
 				}
+				String query2 = "SELECT P.nombre FROM ETAPAPRODUCCION E JOIN PRODUCTO P ON E.IDPRODUCTO = P.ID AND P.ID = '" + idprod + "'";
+				a = dao.conexion.prepareStatement(query2);
+				b = a.executeQuery();
+				String nombresProductos ="";
+				while(b.next())
+				{
+					String nombreT = b.getString("nombre");
+					nombresProductos = nombresProductos+nombreT+", ";
+				}
+				nombresProductos = nombresProductos.substring(0, nombresProductos.length()-2) + ".";
+				resultado.add(nombresProductos);
 			} 
 			catch (SQLException e) 
 			{
