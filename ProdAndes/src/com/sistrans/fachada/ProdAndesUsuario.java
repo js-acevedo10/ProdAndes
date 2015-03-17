@@ -149,17 +149,7 @@ public class ProdAndesUsuario {
 	public ArrayList<EtapadeProduccion> consultarExistenciasEtapa(String tipo,
 			String existencias) {
 		// TODO Auto-generated method stub
-		String query="SELECT * FROM ProdAndes.Producto WHERE ";
-		if(tipo!="")
-		{
-			query= "SELECT* FROM ((SELECT* FROM PRODANDES.PRODUCTO WHERE tipo='" + tipo + "') DATAONE LEFT JOIN PRODANDES.ETAPAPRODUCTO DATATWO ON DATAONE.ID = DATATWO.PRODUCTOID) DATATHREE LEFT JOIN PRODANDES.ETAPADEPRODUCCION DATAFOURTH ON DATATHREE.ETAPAID = DATAFOURTH.ID";
-		}
-		else
-		{
-			query="SELECT * FROM EtapaDeProduccion";
-		}
-		System.out.println(query + "------------apoingapodisngapodnfaosnfopasndoasnfpoansdpfoinaposdifn");
-
+		String query="SELECT * FROM Producto";
 		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
 		PreparedStatement a = null;
 		try 
@@ -206,23 +196,7 @@ public class ProdAndesUsuario {
 	public ArrayList<Producto> consultarExistenciasProd(String tipo,
 			String existencias) {
 		// TODO Auto-generated method stub
-		String query="SELECT * FROM ProdAndes.producto WHERE ";
-		if(tipo!="")
-		{
-			query =  query + "tipo = '" + tipo + "'" ; 
-			if(existencias!="")
-			{
-				query = query + " AND numInventario = '" + existencias +"'";
-			}
-		}
-		else if (existencias !="")
-		{
-			query = query + " numInventario = '" + existencias +"'";
-		}
-		else
-		{
-			query="SELECT * FROM ProdAndes.producto";
-		}
+		String query="SELECT * FROM producto";
 		ArrayList<Producto> resultado = new ArrayList<>();
 		PreparedStatement a = null;
 		try 
@@ -271,7 +245,7 @@ public class ProdAndesUsuario {
 		String queer="";
 		if(tipo=="materia-prima")
 		{
-			queer = "SELECT* FROM ProdAndes.materiaprima";
+			queer = "SELECT* FROM materiaprima";
 			ArrayList<String> resultado = new ArrayList<>();
 			PreparedStatement a = null;
 			try 
@@ -314,7 +288,7 @@ public class ProdAndesUsuario {
 		}
 		else if (tipo== "componente")
 		{
-			queer = "SELECT* FROM ProdAndes.componente";
+			queer = "SELECT* FROM componente";
 			ArrayList<String> resultado = new ArrayList<>();
 			PreparedStatement a = null;
 			try 
@@ -361,7 +335,7 @@ public class ProdAndesUsuario {
 		}
 		else if(tipo == "producto")
 		{
-			queer = "SELECT* FROM ProdAndes.producto";
+			queer = "SELECT* FROM producto";
 			ArrayList<String> resultado = new ArrayList<>();
 			PreparedStatement a = null;
 			try 
@@ -409,7 +383,7 @@ public class ProdAndesUsuario {
 		}
 		else
 		{
-			queer = "SELECT* FROM ProdAndes.etapadeproduccion";
+			queer = "SELECT* FROM etapadeproduccion";
 			ArrayList<String> resultado = new ArrayList<>();
 			PreparedStatement a = null;
 			try 
