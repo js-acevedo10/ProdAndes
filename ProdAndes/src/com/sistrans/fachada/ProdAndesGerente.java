@@ -37,8 +37,7 @@ public class ProdAndesGerente {
 	}
 
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
-			String existencias, String etapa, String fechaSol,
-			String fechaEntreg) {
+			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
 		String query="SELECT * FROM MATERIAPRIMA";
 		ArrayList<MateriaPrima> resultado = new ArrayList<>();
@@ -83,8 +82,7 @@ public class ProdAndesGerente {
 	}
 
 	public ArrayList<Componente> consultarExistenciasComp(String tipo,
-			String existencias, String etapa, String fechaSol,
-			String fechaEntreg) {
+			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
 		String query="SELECT * FROM COMPONENTE";
 		ArrayList<Componente> resultado = new ArrayList<>();
@@ -130,8 +128,7 @@ public class ProdAndesGerente {
 	}
 
 	public ArrayList<EtapadeProduccion> consultarExistenciasEtapa(String tipo,
-			String existencias, String etapa, String fechaSol,
-			String fechaEntreg) {
+			String existenciasMin, String existenciasMax, String estacion) {
 		String query="SELECT * FROM ETAPAPRODUCCION";
 		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
 		PreparedStatement a = null;
@@ -175,8 +172,7 @@ public class ProdAndesGerente {
 	}
 
 	public ArrayList<Producto> consultarExistenciasProd(String tipo,
-			String existencias, String etapa, String fechaSol,
-			String fechaEntreg) {
+			String existenciasMin, String existenciasMax, String estacion) {
 		String query="SELECT * FROM PRODUCTO";
 
 		ArrayList<Producto> resultado = new ArrayList<>();
@@ -500,11 +496,7 @@ public class ProdAndesGerente {
 	public boolean registrarComponente(String nombre, String cantidad,
 			String unidadMedida) {
 		// TODO Auto-generated method stub
-<<<<<<< Updated upstream
 		String query = "INSERT INTO COMPONENTE (ID, NOMBRE, NUMINVENTARIO, UNIDADMEDIDA)VALUES ('"+nombre+cantidad+"', '"+nombre+"','"+cantidad+"', '"+unidadMedida+"')";
-=======
-		String query = "INSERT INTO COMPONENTE (ID, NOMBRE, NUMINVENTARIO, UNIDADMEDIDA) VALUES ('"+nombre+cantidad+"', '"+nombre+"','"+cantidad+"', '"+unidadMedida+"');";
->>>>>>> Stashed changes
 		PreparedStatement a = null;
 		try 
 		{
@@ -540,7 +532,7 @@ public class ProdAndesGerente {
 
 	public boolean registrarEntregaPedido(String id, String fechaFinal) {
 		// TODO Auto-generated method stub
-		String query = "UPDATE PEDIDO SET fechaRecibido='"+fechaFinal+"' WHERE id='"+id+"';";
+		String query = "UPDATE PEDIDO SET fechaRecibido='"+fechaFinal+"' WHERE id='"+id+"'";
 		PreparedStatement a = null;
 		try 
 		{
@@ -573,7 +565,82 @@ public class ProdAndesGerente {
 		}		
 		return true;
 	}
-	
+
+	public ArrayList<String> darEstaciones() {
+		String query = "SELECT E.CODIGO ESTACION FROM ESTACIONDEPRODUCCION E";
+		PreparedStatement a = null;
+		ArrayList<String> estaciones = new ArrayList<String>();
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next()) {
+				estaciones.add(b.getString("ESTACION"));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}			
+		}
+		return estaciones;
+	}
+
+	public ArrayList<String> darProductos() {
+		String query = "SELECT E.NOMBRE FORM PRODUCTO E";
+		PreparedStatement a = null;
+		ArrayList<String> productos = new ArrayList<String>();
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next()) {
+				productos.add(b.getString("NOMBRE"));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}			
+		}
+		return productos;
+	}
 	//Metodos de casos de uso
 	
 }

@@ -54,38 +54,29 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String role = request.getParameter("r");
 		String tipo = request.getParameter("t");
-		String existencias = request.getParameter("e");
-		String etapa = "";
-		String fechaSol = "";
-		String fechaEntreg = "";
+		String existenciasMin = request.getParameter("eMin");
+		String existenciasMax = request.getParameter("eMax");
+		String estacion = request.getParameter("estacion");
 		
 		switch(role) {
 			case "admin":
-				etapa = request.getParameter("s");
-				fechaSol = request.getParameter("ds");
-				fechaEntreg = request.getParameter("de");
 				printHeader(out, "admin");
-				solicitudAdmin(role, tipo, existencias, etapa, fechaSol, fechaEntreg, out);
+				solicitudAdmin(role, tipo, existenciasMin, existenciasMax, estacion, out);
 				printFooter(out);
 				break;
 			case "user":
 				printHeader(out, "user");
-				solicitudUser(role, tipo, existencias, out);
+				solicitudUser(role, tipo, out);
 				printFooter(out);
 				break;
 			case "operario":
-				etapa = request.getParameter("s");
-				fechaEntreg = request.getParameter("de");
 				printHeader(out, "operario");
-				solicitudOperario(role, tipo, existencias, fechaEntreg, out);
+				solicitudOperario(role, tipo, existenciasMin, existenciasMax, estacion, out);
 				printFooter(out);
 				break;
 			case "gerente":
-				etapa = request.getParameter("s");
-				fechaSol = request.getParameter("ds");
-				fechaEntreg = request.getParameter("de");
 				printHeader(out, "gerente");
-				solicitudGerente(role, tipo, existencias, etapa, fechaSol, fechaEntreg, out);
+				solicitudGerente(role, tipo, existenciasMin, existenciasMax, estacion, out);
 				printFooter(out);
 				break;
 			default:
@@ -96,10 +87,10 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 	
 	//LOGIC METHODS
 
-	private void solicitudAdmin(String role, String tipo, String existencias,
-			String etapa, String fechaSol, String fechaEntreg, PrintWriter out) {		
+	private void solicitudAdmin(String role, String tipo, String existenciasMin, String existenciasMax,
+			String estacion, PrintWriter out) {		
 		if(tipo.equals("materia-prima")) {
-			ArrayList<MateriaPrima> items = ProdAndesAdmin.darInstancia().consultarExistenciasMatPrima(tipo, existencias, etapa, fechaSol, fechaEntreg);
+			ArrayList<MateriaPrima> items = ProdAndesAdmin.darInstancia().consultarExistenciasMatPrima(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
 
 			} else {
@@ -123,7 +114,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 			}
 			out.println("</tbody>");
 		} else if(tipo.equals("componente")) {
-			ArrayList<Componente> items = ProdAndesAdmin.darInstancia().consultarExistenciasComp(tipo, existencias, etapa, fechaSol, fechaEntreg);
+			ArrayList<Componente> items = ProdAndesAdmin.darInstancia().consultarExistenciasComp(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
 				
 			} else {
@@ -145,7 +136,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 			}
 			out.println("</tbody>");
 		} else if(tipo.equals("etapa-producto")) {
-			ArrayList<EtapadeProduccion> items = ProdAndesAdmin.darInstancia().consultarExistenciasEtapa(tipo, existencias, etapa, fechaSol, fechaEntreg);
+			ArrayList<EtapadeProduccion> items = ProdAndesAdmin.darInstancia().consultarExistenciasEtapa(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
 				
 			} else {
@@ -166,7 +157,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 			}
 			out.println("</tbody>");
 		} else if(tipo.equals("producto")) {
-			ArrayList<Producto> items = ProdAndesAdmin.darInstancia().consultarExistenciasProd(tipo, existencias, etapa, fechaSol, fechaEntreg);
+			ArrayList<Producto> items = ProdAndesAdmin.darInstancia().consultarExistenciasProd(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
 				
 			} else {
@@ -198,11 +189,10 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		}
 	}
 
-	private void solicitudUser(String role, String tipo, String existencias,
-			PrintWriter out) {
+	private void solicitudUser(String role, String tipo, PrintWriter out) {
 		// TODO Auto-generated method stub
 		if(tipo.equals("materia-prima")) {
-			ArrayList<MateriaPrima> items = ProdAndesUsuario.darInstancia().consultarExistenciasMatPrima(tipo, existencias);
+			ArrayList<MateriaPrima> items = ProdAndesUsuario.darInstancia().consultarExistenciasMatPrima(tipo);
 			if(items.size() == 0) {
 
 			} else {
@@ -224,7 +214,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 			}
 			out.println("</tbody>");
 		} else if(tipo.equals("componente")) {
-			ArrayList<Componente> items = ProdAndesUsuario.darInstancia().consultarExistenciasComp(tipo, existencias);
+			ArrayList<Componente> items = ProdAndesUsuario.darInstancia().consultarExistenciasComp(tipo);
 			if(items.size() == 0) {
 				
 			} else {
@@ -246,7 +236,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 			}
 			out.println("</tbody>");
 		} else if(tipo.equals("etapa-producto")) {
-			ArrayList<EtapadeProduccion> items = ProdAndesUsuario.darInstancia().consultarExistenciasEtapa(tipo, existencias);
+			ArrayList<EtapadeProduccion> items = ProdAndesUsuario.darInstancia().consultarExistenciasEtapa(tipo);
 			if(items.size() == 0) {
 				
 			} else {
@@ -266,7 +256,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 			}
 			out.println("</tbody>");
 		} else if(tipo.equals("producto")) {
-			ArrayList<Producto> items = ProdAndesUsuario.darInstancia().consultarExistenciasProd(tipo, existencias);
+			ArrayList<Producto> items = ProdAndesUsuario.darInstancia().consultarExistenciasProd(tipo);
 			if(items.size() == 0) {
 				
 			} else {
@@ -293,10 +283,10 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 	}
 
 	private void solicitudOperario(String role, String tipo,
-			String existencias, String fechaEntreg, PrintWriter out) {
+			String existenciasMin, String existenciasMax, String estacion, PrintWriter out) {
 		// TODO Auto-generated method stub
 		if(tipo.equals("materia-prima")) {
-			ArrayList<MateriaPrima> items = ProdAndesOperario.darInstancia().consultarExistenciasMatPrima(tipo, existencias, fechaEntreg);
+			ArrayList<MateriaPrima> items = ProdAndesOperario.darInstancia().consultarExistenciasMatPrima(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
 
 			} else {
@@ -320,7 +310,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 			}
 			out.println("</tbody>");
 		} else if(tipo.equals("componente")) {
-			ArrayList<Componente> items = ProdAndesOperario.darInstancia().consultarExistenciasComp(tipo, existencias, fechaEntreg);
+			ArrayList<Componente> items = ProdAndesOperario.darInstancia().consultarExistenciasComp(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
 				
 			} else {
@@ -343,7 +333,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 			}
 			out.println("</tbody>");
 		} else if(tipo.equals("etapa-producto")) {
-			ArrayList<EtapadeProduccion> items = ProdAndesOperario.darInstancia().consultarExistenciasEtapa(tipo, existencias, fechaEntreg);
+			ArrayList<EtapadeProduccion> items = ProdAndesOperario.darInstancia().consultarExistenciasEtapa(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
 				
 			} else {
@@ -363,7 +353,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 			}
 			out.println("</tbody>");
 		} else if(tipo.equals("producto")) {
-			ArrayList<Producto> items = ProdAndesOperario.darInstancia().consultarExistenciasProd(tipo, existencias, fechaEntreg);
+			ArrayList<Producto> items = ProdAndesOperario.darInstancia().consultarExistenciasProd(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
 				
 			} else {
@@ -393,11 +383,11 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		}
 	}
 
-	private void solicitudGerente(String role, String tipo, String existencias,
-			String etapa, String fechaSol, String fechaEntreg, PrintWriter out) {		
+	private void solicitudGerente(String role, String tipo, String existenciasMin,
+			String existenciasMax, String estacion, PrintWriter out) {		
 		// TODO Auto-generated method stub
 		if(tipo.equals("materia-prima")) {
-			ArrayList<MateriaPrima> items = ProdAndesGerente.darInstancia().consultarExistenciasMatPrima(tipo, existencias, etapa, fechaSol, fechaEntreg);
+			ArrayList<MateriaPrima> items = ProdAndesGerente.darInstancia().consultarExistenciasMatPrima(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
 
 			} else {
@@ -421,7 +411,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 			}
 			out.println("</tbody>");
 		} else if(tipo.equals("componente")) {
-			ArrayList<Componente> items = ProdAndesGerente.darInstancia().consultarExistenciasComp(tipo, existencias, etapa, fechaSol, fechaEntreg);
+			ArrayList<Componente> items = ProdAndesGerente.darInstancia().consultarExistenciasComp(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
 				
 			} else {
@@ -443,7 +433,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 			}
 			out.println("</tbody>");
 		} else if(tipo.equals("etapa-producto")) {
-			ArrayList<EtapadeProduccion> items = ProdAndesGerente.darInstancia().consultarExistenciasEtapa(tipo, existencias, etapa, fechaSol, fechaEntreg);
+			ArrayList<EtapadeProduccion> items = ProdAndesGerente.darInstancia().consultarExistenciasEtapa(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
 				
 			} else {
@@ -463,7 +453,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 			}
 			out.println("</tbody>");
 		} else if(tipo.equals("producto")) {
-			ArrayList<Producto> items = ProdAndesGerente.darInstancia().consultarExistenciasProd(tipo, existencias, etapa, fechaSol, fechaEntreg);
+			ArrayList<Producto> items = ProdAndesGerente.darInstancia().consultarExistenciasProd(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
 				
 			} else {
@@ -492,6 +482,13 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 				
 		} else {
 			printError("No se encontró ningún material con estas características.", out);
+		}
+	}
+	
+	public void printEstaciones(PrintWriter out) {
+		ArrayList<String> estaciones = ProdAndesGerente.darInstancia().darEstaciones();
+		for(String x : estaciones) {
+			out.println("								<option value=\""+ x.toLowerCase() +"\">" + x + "</option>");
 		}
 	}
 	
@@ -525,7 +522,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		salida.println("                 </li>");
 		salida.println("            </ul>");
 		salida.println("            <ul class=\"nav navbar-nav navbar-right\">");
-		salida.println("                <li><a href=\"/ProdAndes/index.html\">Cerrar Sesion</a></li>");
+		salida.println("                <li><a href=\"/ProdAndes/index.html\">Cerrar Sesión</a></li>");
 		salida.println("            </ul>");
 		salida.println("          </div><!-- /.container-fluid -->");
 		salida.println("        </nav>");
@@ -535,29 +532,38 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		salida.println("               <br>");
 		salida.println("                <form class=\"form-horizontal\" action=\"/ProdAndes/consultar/existencias.html\" method=\"get\">");
 		salida.println("                    <div class=\"form-group\">");
-		salida.println("                        <div class=\"col-md-4\">");
+		salida.println("                        <div class=\"col-md-3\">");
 		salida.println("                            <select class=\"form-control input-lg\" id=\"search-input\" name=\"t\" required>");
-		salida.println("                                <option value=\"all\">Cateroria</option>");
+		salida.println("                                <option value=\"cualquiera\" selected disabled style=\"display: none\">Categoria</option>");
 		salida.println("                                <option value=\"materia-prima\">Materia Prima</option>");
 		salida.println("                                <option value=\"componente\">Componente</option>");
 		salida.println("                                <option value=\"producto\">Producto</option>");
 		salida.println("                            </select><br>");
 		salida.println("                        </div>");
 		salida.println("                        <div class=\"col-md-3\">");
-		salida.println("                            <input type=\"number\" class=\"form-control input-lg\" name=\"eMin\" placeholder=\"Existencias minimas\">");
+		salida.println("                    		<input type=\"number\" class=\"form-control input-lg\" name=\"eMin\" placeholder=\"Existencias minimas\">");
+		salida.println("                    	</div>");
+		salida.println("                    	<div class=\"col-md-3\">");
+		salida.println("                    		<input type=\"number\" class=\"form-control input-lg\" name=\"eMax\" placeholder=\"Existencias maximas\">");
+		salida.println("                    	</div>");
+		salida.println("                    	<div class=\"col-md-3\">");
+		salida.println("                            <select class=\"form-control input-lg\" id=\"search-input\" name=\"estacion\" required>");
+		salida.println("                                <option value=\"\" selected disabled style=\"display: none\">Estacion</option>");
+		
+		printEstaciones(salida);
+		
+		salida.println("                            </select><br>");
 		salida.println("                        </div>");
-		salida.println("                        <div class=\"col-md-3\">");
-		salida.println("                            <input type=\"number\" class=\"form-control input-lg\" name=\"eMax\" placeholder=\"Existencias maximas\">");
-		salida.println("                        </div>");
-		salida.println("                        <div class=\"col-md-2\">");
+		salida.println("                        <div class=\"col-md-12\">");
 		salida.println("                            <input class=\"btn btn-default btn-lg\" type=\"submit\" name=\"categoria\" id=\"submit\" value=\"Buscar\">");
 		salida.println("                        </div>");
-		salida.println("                        <input type=\"text\" name=\"r\" value=\""+ role +"\" style=\"display:none\">");
+		salida.println("                        	<input type=\"text\" name=\"r\" value=\""+ role +"\" style=\"display:none\">");
 		salida.println("                    </div>");
 		salida.println("                </form>");
 		salida.println("            </div>");
 		salida.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:black; padding-top:20px; margin-top:-10px;\">");
 		salida.println("                <table class=\"table table-hover\">");
+
 
 	}
 	

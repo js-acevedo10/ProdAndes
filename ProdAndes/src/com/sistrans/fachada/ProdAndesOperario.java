@@ -37,7 +37,7 @@ public class ProdAndesOperario {
 	}
 
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
-			String existencias, String fechaEntreg) {
+			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
 		String query="SELECT * FROM MATERIAPRIMA ";
 		ArrayList<MateriaPrima> resultado = new ArrayList<>();
@@ -82,7 +82,7 @@ public class ProdAndesOperario {
 	}
 
 	public ArrayList<Componente> consultarExistenciasComp(String tipo,
-			String existencias, String fechaEntreg) {
+			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
 		String query="SELECT * FROM COMPONENTE";
 		ArrayList<Componente> resultado = new ArrayList<>();
@@ -128,7 +128,7 @@ public class ProdAndesOperario {
 	}
 
 	public ArrayList<EtapadeProduccion> consultarExistenciasEtapa(String tipo,
-			String existencias, String fechaEntreg) {
+			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
 		String query="SELECT * FROM ETAPAPRODUCCION";
 		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
@@ -173,7 +173,7 @@ public class ProdAndesOperario {
 	}
 
 	public ArrayList<Producto> consultarExistenciasProd(String tipo,
-			String existencias, String fechaEntreg) {
+			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
 		String query="SELECT * FROM PRODUCTO ";
 		ArrayList<Producto> resultado = new ArrayList<>();

@@ -40,8 +40,7 @@ public class ProdAndesUsuario {
 		dao.inicializar();
 	}
 
-	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
-			String existencias) {
+	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo) {
 		// TODO Auto-generated method stub
 		String query="SELECT * FROM MATERIAPRIMA";
 		ArrayList<MateriaPrima> resultado = new ArrayList<>();
@@ -85,8 +84,7 @@ public class ProdAndesUsuario {
 		return resultado;
 	}
 
-	public ArrayList<Componente> consultarExistenciasComp(String tipo,
-			String existencias) {
+	public ArrayList<Componente> consultarExistenciasComp(String tipo) {
 		// TODO Auto-generated method stub
 		String query="SELECT * FROM COMPONENTE";
 		ArrayList<Componente> resultado = new ArrayList<>();
@@ -131,8 +129,7 @@ public class ProdAndesUsuario {
 		return resultado;
 	}
 
-	public ArrayList<EtapadeProduccion> consultarExistenciasEtapa(String tipo,
-			String existencias) {
+	public ArrayList<EtapadeProduccion> consultarExistenciasEtapa(String tipo) {
 		// TODO Auto-generated method stub
 		String query="SELECT * FROM ETAPAPRODUCCION";
 		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
@@ -176,8 +173,7 @@ public class ProdAndesUsuario {
 		return resultado;
 	}
 
-	public ArrayList<Producto> consultarExistenciasProd(String tipo,
-			String existencias) {
+	public ArrayList<Producto> consultarExistenciasProd(String tipo) {
 		// TODO Auto-generated method stub
 		String query="SELECT * FROM PRODUCTO";
 		ArrayList<Producto> resultado = new ArrayList<>();
