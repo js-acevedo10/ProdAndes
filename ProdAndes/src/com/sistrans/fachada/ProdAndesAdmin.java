@@ -256,7 +256,7 @@ public class ProdAndesAdmin {
 	public ArrayList<Producto> consultarExistenciasProd(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
-		String query="SELECT datatwo.NOMBRE, datatwo.NUMINVENTARIO FROM ";
+		String query="SELECT datatwo.NOMBRE, datatwo.NUMINVENTARIO, datatwo.COSTOVENTA FROM ";
 		String queryExisTipo="";
 		if (existenciasMin!= null&&existenciasMax!= null&&existenciasMin!=""&&existenciasMax!="")
 		{
@@ -291,9 +291,9 @@ public class ProdAndesAdmin {
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
-				String nombreT = b.getString("nombre");
-				int numInventarioT = b.getInt("numInventario");
-				int costoVenta = Integer.parseInt(b.getString("COSTOVENTA"));
+				String nombreT = b.getString("NOMBRE");
+				int costoVenta = b.getInt("COSTOVENTA");
+				int numInventarioT = b.getInt("NUMINVENTARIO");
 				Producto z = new Producto(nombreT, costoVenta, numInventarioT);
 				resultado.add(z);
 			}
