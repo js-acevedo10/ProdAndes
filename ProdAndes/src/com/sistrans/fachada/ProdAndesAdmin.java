@@ -507,7 +507,7 @@ public class ProdAndesAdmin {
 		}
 		else
 		{
-			queer = "SELECT* FROM etapadeproduccion";
+			queer = "SELECT* FROM etapaproduccion";
 			ArrayList<String> resultado = new ArrayList<>();
 			PreparedStatement a = null;
 			try 

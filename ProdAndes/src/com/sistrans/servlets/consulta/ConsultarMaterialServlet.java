@@ -54,22 +54,22 @@ public class ConsultarMaterialServlet extends HttpServlet {
 		
 		switch(role) {
 			case "admin":
-				printHeader(out);
+				printHeader(out, "admin");
 				solicitudAdmin(tipo, query, out);
 				printFooter(out);
 				break;
 			case "user":
-				printHeader(out);
+				printHeader(out, "user");
 				solicitudUsuario(tipo, query, out);
 				printFooter(out);
 				break;
 			case "operario":
-				printHeader(out);
+				printHeader(out, "operario");
 				solicitudOperario(tipo, query, out);
 				printFooter(out);
 				break;
 			case "gerente":
-				printHeader(out);
+				printHeader(out, "gerente");
 				solicitudGerente(tipo, query, out);
 				printFooter(out);
 				break;
@@ -88,34 +88,32 @@ public class ConsultarMaterialServlet extends HttpServlet {
 					out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 					out.println("            </div>");
 					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-					out.println("<h3>Toneladas: " + detalles.get(1) + "</h3>");
-					out.println("<h3>Materia Prima: " + detalles.get(2) + "</h3>");
+					out.println("<h3>Existencias: " + detalles.get(1) + " toneladas." + "</h3>");
+					out.println("<h3>Compone los productos: " + detalles.get(2).substring(0, detalles.get(2).length()-2) + ".</h3>");
 					break;
 				case "componente":
 					out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 					out.println("            </div>");
 					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-					out.println("<h3>Numero: " + detalles.get(2) + "</h3>");
-					out.println("<h3>Unidad de Medida: " + detalles.get(3) + "</h3>");
-					out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+					out.println("<h3>Existencias: " + detalles.get(1) +" " + detalles.get(2) + "</h3>");
+					out.println("<h3>Compone los productos: " + detalles.get(3) + "</h3>");
 					break;
 				case "producto":
 					out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 					out.println("            </div>");
 					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-					out.println("<h3>Costo de Venta: " + detalles.get(1) + "</h3>");
-					out.println("<h3>Materia Prima: " + detalles.get(2) + "</h3>");
-					out.println("<h3>Componente: " + detalles.get(3) + "</h3>");
-					out.println("<h3>Etapa de Produccion: " + detalles.get(4) + "</h3>");
+					out.println("<h3>ID: " + detalles.get(1) + "</h3>");
+					out.println("<h3>Costo de Venta: $" + detalles.get(2) + ".00</h3>");
+					out.println("<h3>Existencias: " + detalles.get(3) + "</h3>");
+					out.println("<h3>Materias primas involucradas: " + detalles.get(4) + "</h3>");
+					out.println("<h3>Componentes involucrados: " + detalles.get(5) + "</h3>");
 					break;
 				case "etapa-producto":
-					out.println("                <h1>Num: "+ detalles.get(0) +"</h1>");
+					out.println("                <h1>ID: "+ detalles.get(0) +"</h1>");
 					out.println("            </div>");
 					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-					out.println("<h3>Fecha Inicial: " + detalles.get(1) + "</h3>");
-					out.println("<h3>Fecha Final: " + detalles.get(2) + "</h3>");
-					out.println("<h3>Estacion de Produccion: " + detalles.get(3) + "</h3>");
-					out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+					out.println("<h3>Etapa Numero: " + detalles.get(1) + "</h3>");
+					out.println("<h3>Nombre del producto en la etapa: " + detalles.get(2) + "</h3>");
 					break;
 				default:
 					break;
@@ -134,30 +132,34 @@ public class ConsultarMaterialServlet extends HttpServlet {
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Toneladas: " + detalles.get(1) + "</h3>");
+				out.println("<h3>Existencias: " + detalles.get(1) + " toneladas." + "</h3>");
+				out.println("<h3>Compone los productos: " + detalles.get(2).substring(0, detalles.get(2).length()-2) + ".</h3>");
 				break;
 			case "componente":
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Numero: " + detalles.get(2) + "</h3>");
-				out.println("<h3>Unidad de Medida: " + detalles.get(3) + "</h3>");
-				out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+				out.println("<h3>Existencias: " + detalles.get(1) +" " + detalles.get(2) + "</h3>");
+				out.println("<h3>Compone los productos: " + detalles.get(3) + "</h3>");
 				break;
 			case "producto":
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Costo de Venta: " + detalles.get(1) + "</h3>");
+				out.println("<h3>ID: " + detalles.get(1) + "</h3>");
+				out.println("<h3>Costo de Venta: " + detalles.get(2) + "</h3>");
+				if(!detalles.get(3).equals("0")) {
+					out.println("<h3>Aun hay existencias de este producto.</h3>");
+				} else {
+					out.println("<h3>Este producto se encuentra agotado.</h3>");
+				}
 				break;
 			case "etapa-producto":
-				out.println("                <h1>Num: "+ detalles.get(0) +"</h1>");
+				out.println("                <h1>ID: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Fecha Inicial: " + detalles.get(1) + "</h3>");
-				out.println("<h3>Fecha Final: " + detalles.get(2) + "</h3>");
-				out.println("<h3>Estacion de Produccion: " + detalles.get(3) + "</h3>");
-				out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+				out.println("<h3>Etapa Numero: " + detalles.get(1) + "</h3>");
+				out.println("<h3>Nombre del producto en la etapa: " + detalles.get(2) + "</h3>");
 				break;
 			default:
 				break;
@@ -176,35 +178,32 @@ public class ConsultarMaterialServlet extends HttpServlet {
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Toneladas: " + detalles.get(1) + "</h3>");
-				out.println("<h3>Materia Prima: " + detalles.get(2) + "</h3>");
+				out.println("<h3>Existencias: " + detalles.get(1) + " toneladas." + "</h3>");
+				out.println("<h3>Compone los productos: " + detalles.get(2).substring(0, detalles.get(2).length()-2) + ".</h3>");
 				break;
 			case "componente":
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Numero: " + detalles.get(2) + "</h3>");
-				out.println("<h3>Unidad de Medida: " + detalles.get(3) + "</h3>");
-				out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+				out.println("<h3>Existencias: " + detalles.get(1) +" " + detalles.get(2) + "</h3>");
+				out.println("<h3>Compone los productos: " + detalles.get(3) + "</h3>");
 				break;
 			case "producto":
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
-				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Costo de Venta: " + detalles.get(1) + "</h3>");
-				out.println("<h3>Materia Prima: " + detalles.get(2) + "</h3>");
-				out.println("<h3>Componente: " + detalles.get(3) + "</h3>");
-				out.println("<h3>Etapa de Produccion: " + detalles.get(4) + "</h3>");
+				out.println("<h3>ID: " + detalles.get(1) + "</h3>");
+				out.println("<h3>Costo de Venta: $" + detalles.get(2) + ".00</h3>");
+				out.println("<h3>Existencias: " + detalles.get(3) + "</h3>");
+				out.println("<h3>Materias primas involucradas: " + detalles.get(4) + "</h3>");
+				out.println("<h3>Componentes involucrados: " + detalles.get(5) + "</h3>");
 				break;
 			case "etapa-producto":
-				out.println("                <h1>Num: "+ detalles.get(0) +"</h1>");
+				out.println("                <h1>ID: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Fecha Inicial: " + detalles.get(1) + "</h3>");
-				out.println("<h3>Fecha Final: " + detalles.get(2) + "</h3>");
-				out.println("<h3>Estacion de Produccion: " + detalles.get(3) + "</h3>");
-				out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+				out.println("<h3>Etapa Numero: " + detalles.get(1) + "</h3>");
+				out.println("<h3>Nombre del producto en la etapa: " + detalles.get(2) + "</h3>");
 				break;
 			default:
 				break;
@@ -223,34 +222,32 @@ public class ConsultarMaterialServlet extends HttpServlet {
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Toneladas: " + detalles.get(1) + "</h3>");
-				out.println("<h3>Materia Prima: " + detalles.get(2) + "</h3>");
+				out.println("<h3>Existencias: " + detalles.get(1) + " toneladas." + "</h3>");
+				out.println("<h3>Compone los productos: " + detalles.get(2).substring(0, detalles.get(2).length()-2) + ".</h3>");
 				break;
 			case "componente":
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Costo de Venta: " + detalles.get(1) + "</h3>");
-				out.println("<h3>Materia Prima: " + detalles.get(2) + "</h3>");
-				out.println("<h3>Componente: " + detalles.get(3) + "</h3>");
-				out.println("<h3>Etapa de Produccion: " + detalles.get(4) + "</h3>");
+				out.println("<h3>Existencias: " + detalles.get(1) +" " + detalles.get(2) + "</h3>");
+				out.println("<h3>Compone los productos: " + detalles.get(3) + "</h3>");
 				break;
 			case "producto":
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Numero: " + detalles.get(2) + "</h3>");
-				out.println("<h3>Unidad de Medida: " + detalles.get(3) + "</h3>");
-				out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+				out.println("<h3>ID: " + detalles.get(1) + "</h3>");
+				out.println("<h3>Costo de Venta: $" + detalles.get(2) + ".00</h3>");
+				out.println("<h3>Existencias: " + detalles.get(3) + "</h3>");
+				out.println("<h3>Materias primas involucradas: " + detalles.get(4) + "</h3>");
+				out.println("<h3>Componentes involucrados: " + detalles.get(5) + "</h3>");
 				break;
 			case "etapa-producto":
-				out.println("                <h1>Num: "+ detalles.get(0) +"</h1>");
+				out.println("                <h1>ID: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Fecha Inicial: " + detalles.get(1) + "</h3>");
-				out.println("<h3>Fecha Final: " + detalles.get(2) + "</h3>");
-				out.println("<h3>Estacion de Produccion: " + detalles.get(3) + "</h3>");
-				out.println("<h3>Producto: " + detalles.get(4) + "</h3>");
+				out.println("<h3>Etapa Numero: " + detalles.get(1) + "</h3>");
+				out.println("<h3>Nombre del producto en la etapa: " + detalles.get(2) + "</h3>");
 				break;
 			default:
 				break;
@@ -262,7 +259,7 @@ public class ConsultarMaterialServlet extends HttpServlet {
 	
 	//METODOS HTML
 	
-	public void printHeader(PrintWriter salida) {
+	public void printHeader(PrintWriter salida, String role) {
 		salida.println("<!DOCTYPE html>");
 		salida.println("<html>");
 		salida.println("    <head>");
@@ -271,8 +268,8 @@ public class ConsultarMaterialServlet extends HttpServlet {
 		salida.println("        <link href=\"//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css\" rel=\"stylesheet\">");
 		salida.println("        <script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js\"></script>");
 		salida.println("        <script src=\"//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js\"></script>");
-		salida.println("        <link rel=\"stylesheet\" href=\"../../style/bootstrap.min.css\">");
-		salida.println("        <link type=\"text/css\" href=\"../../style/custom-bootstrap-override.css\" rel=\"stylesheet\">");
+		salida.println("        <link rel=\"stylesheet\" href=\"/ProdAndes/style/bootstrap.min.css\">");
+		salida.println("        <link type=\"text/css\" href=\"/ProdAndes/style/custom-bootstrap-override.css\" rel=\"stylesheet\">");
 		salida.println("        <!--[if lt IE 9]>");
 		salida.println("          <script src=\"https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js\"></script>");
 		salida.println("          <script src=\"https://oss.maxcdn.com/respond/1.4.2/respond.min.js\"></script>");
@@ -284,13 +281,13 @@ public class ConsultarMaterialServlet extends HttpServlet {
 		salida.println("            <!-- Brand and toggle get grouped for better mobile display -->");
 		salida.println("            <ul class=\"nav navbar-nav navbar-left\">");
 		salida.println("                 <li>");
-		salida.println("                    <a href=\"\" class=\"navbar-brand\" onclick=\"window.history.back()\" id=\"navBarLink\">");
+		salida.println("                    <a href=\"/ProdAndes/pages/" + role + "/dashboard.html\" class=\"navbar-brand\" id=\"navBarLink\">");
 		salida.println("                        <span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\"></span>Volver al Dashboard");
 		salida.println("                    </a>");
 		salida.println("                 </li>");
 		salida.println("            </ul>");
 		salida.println("            <ul class=\"nav navbar-nav navbar-right\">");
-		salida.println("                <li><a href=\"../../index.html\">Cerrar Sesión</a></li>");
+		salida.println("                <li><a href=\"/ProdAndes/index.html\">Cerrar Sesion</a></li>");
 		salida.println("            </ul>");
 		salida.println("          </div><!-- /.container-fluid -->");
 		salida.println("        </nav>");

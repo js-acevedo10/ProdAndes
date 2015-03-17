@@ -64,19 +64,19 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 				etapa = request.getParameter("s");
 				fechaSol = request.getParameter("ds");
 				fechaEntreg = request.getParameter("de");
-				printHeader(out);
+				printHeader(out, "admin");
 				solicitudAdmin(role, tipo, existencias, etapa, fechaSol, fechaEntreg, out);
 				printFooter(out);
 				break;
 			case "user":
-				printHeader(out);
+				printHeader(out, "user");
 				solicitudUser(role, tipo, existencias, out);
 				printFooter(out);
 				break;
 			case "operario":
 				etapa = request.getParameter("s");
 				fechaEntreg = request.getParameter("de");
-				printHeader(out);
+				printHeader(out, "operario");
 				solicitudOperario(role, tipo, existencias, fechaEntreg, out);
 				printFooter(out);
 				break;
@@ -84,7 +84,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 				etapa = request.getParameter("s");
 				fechaSol = request.getParameter("ds");
 				fechaEntreg = request.getParameter("de");
-				printHeader(out);
+				printHeader(out, "gerente");
 				solicitudGerente(role, tipo, existencias, etapa, fechaSol, fechaEntreg, out);
 				printFooter(out);
 				break;
@@ -497,7 +497,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 	
 	//HTML METHODS
 	
-	public void printHeader(PrintWriter salida) {
+	public void printHeader(PrintWriter salida, String role) {
 		salida.println("<!DOCTYPE html>");
 		salida.println("<html>");
 		salida.println("    <head>");
@@ -546,7 +546,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		salida.println("                        <div class=\"col-md-2\">");
 		salida.println("                            <input class=\"btn btn-default btn-lg\" type=\"submit\" name=\"categoria\" id=\"submit\" value=\"Cambiar Categoria\">");
 		salida.println("                        </div>");
-		salida.println("                        <input type=\"text\" name=\"r\" value=\"admin\" style=\"display:none\">");
+		salida.println("                        <input type=\"text\" name=\"r\" value=\""+ role +"\" style=\"display:none\">");
 		salida.println("                    </div>");
 		salida.println("                </form>");
 		salida.println("            </div>");

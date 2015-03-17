@@ -224,9 +224,9 @@ public class ProdAndesGerente {
 	public ArrayList<String> informacionMaterial(String query, String tipo) 
 	{
 		String queer="";
-		if(tipo=="materia-prima")
+		if(tipo.equals("materia-prima"))
 		{
-			queer = "SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.ID='"+query+"';";
+			queer = "SELECT* FROM MATERIAPRIMA WHERE MATERIAPRIMA.ID='"+query+"'";
 			ArrayList<String> resultado = new ArrayList<>();
 			PreparedStatement a = null;
 			try 
@@ -241,7 +241,7 @@ public class ProdAndesGerente {
 					resultado.add(nombreT);
 					resultado.add(toneladasT);
 				}
-				String query2 = "SELECT dataTwo.nombre FROM (SELECT* FROM PRODUCTOMATERIAPRIMA WHERE PRODUCTOMATERIAPRIMA.IDMATERIAPRIMA = '"+query+"') dataOne LEFT JOIN MATERIAPRIMA dataTwo ON dataTwo.ID=dataOne.IDPRODUCTO;";
+				String query2 = "SELECT dataTwo.nombre FROM (SELECT* FROM PRODUCTOMATERIAPRIMA WHERE PRODUCTOMATERIAPRIMA.IDMATERIAPRIMA = 'PAPACRIOLLA32') dataOne LEFT JOIN PRODUCTO dataTwo ON dataTwo.ID = dataOne.IDPRODUCTO";
 				a = dao.conexion.prepareStatement(query2);
 				b = a.executeQuery();
 				String nombresProductos ="";
@@ -278,9 +278,9 @@ public class ProdAndesGerente {
 			}		
 			return resultado;
 		}
-		else if (tipo== "componente")
+		else if (tipo.equals("componente"))
 		{
-			queer = "SELECT* FROM COMPONENTE WHERE COMPONENTE.ID='"+query+"';";
+			queer = "SELECT* FROM COMPONENTE WHERE COMPONENTE.ID='"+query+"'";
 			ArrayList<String> resultado = new ArrayList<>();
 			PreparedStatement a = null;
 			try 
@@ -291,13 +291,13 @@ public class ProdAndesGerente {
 				while(b.next())
 				{
 					String nombreT = b.getString("NOMBRE");
-					String numInventarioT = b.getString("NUMINVENTARIO");
+					String existencias = b.getString("NUMINVENTARIO");
 					String toneladasT = b.getString("UNIDADMEDIDA");
 					resultado.add(nombreT);
-					resultado.add(numInventarioT);
+					resultado.add(existencias);
 					resultado.add(toneladasT);
 				}
-				String query2 = "SELECT dataTwo.nombre FROM (SELECT* FROM PRODUCTOCOMPONENTE WHERE PRODUCTOCOMPONENTE.IDCOMPONENTE = '"+query+"') dataOne LEFT JOIN PRODUCTO dataTwo ON dataTwo.ID=dataOne.IDPRODUCTO;";
+				String query2 = "SELECT dataTwo.nombre FROM (SELECT* FROM PRODUCTOCOMPONENTE WHERE PRODUCTOCOMPONENTE.IDCOMPONENTE = '"+query+"') dataOne LEFT JOIN PRODUCTO dataTwo ON dataTwo.ID=dataOne.IDPRODUCTO";
 				a = dao.conexion.prepareStatement(query2);
 				b = a.executeQuery();
 				String nombresProductos ="";
@@ -307,6 +307,7 @@ public class ProdAndesGerente {
 					nombresProductos = nombresProductos+nombreT+", ";
 					
 				}
+				nombresProductos = nombresProductos.substring(0, nombresProductos.length()-2) + ".";
 				resultado.add(nombresProductos);
 			} 
 			catch (SQLException e) 
@@ -334,9 +335,9 @@ public class ProdAndesGerente {
 			}		
 			return resultado;
 		}
-		else if(tipo == "producto")
+		else if(tipo.equals("producto"))
 		{
-			queer = "SELECT* FROM PRODUCTO";
+			queer = "SELECT* FROM PRODUCTO WHERE ID = '" + query + "'";
 			ArrayList<String> resultado = new ArrayList<>();
 			PreparedStatement a = null;
 			try 
@@ -346,16 +347,39 @@ public class ProdAndesGerente {
 				ResultSet b = a.executeQuery();
 				while(b.next())
 				{
-					String nombreT = b.getString("nombre");
-					String numInventarioT = b.getString("numInventario");
-					String costoVenta = b.getString("costoVenta");
-					String tipoT = b.getString("tipo");
+					String nombreT = b.getString("NOMBRE");
+					String id = b.getString("ID");
+					String costoVenta = b.getString("COSTOVENTA");
+					String exist = b.getString("NUMINVENTARIO");
 
 					resultado.add(nombreT);
-					resultado.add(numInventarioT);
+					resultado.add(id);
 					resultado.add(costoVenta);
-					resultado.add(tipoT);
+					resultado.add(exist);
 				}
+				queer = "SELECT M.nombre FROM PRODUCTO P JOIN PRODUCTOMATERIAPRIMA W ON P.ID = '" + query + "' AND P.ID = W.IDPRODUCTO JOIN MATERIAPRIMA M ON W.IDMATERIAPRIMA = M.ID";
+				a = dao.conexion.prepareStatement(queer);
+				b = a.executeQuery();
+				String mat = "";
+				while(b.next())
+				{
+					String nomMat = b.getString("NOMBRE");
+					mat += nomMat + ", ";
+				}
+				mat = mat.substring(0, mat.length()-2) + ".";
+				resultado.add(mat);
+				
+				queer = "SELECT C.nombre FROM PRODUCTO P JOIN PRODUCTOCOMPONENTE W ON P.ID = '" + query + "' AND P.ID = W.IDPRODUCTO JOIN COMPONENTE C ON W.IDCOMPONENTE = C.ID";
+				a = dao.conexion.prepareStatement(queer);
+				b = a.executeQuery();
+				String comp = "";
+				while(b.next())
+				{
+					String nomComp = b.getString("NOMBRE");
+					comp += nomComp + ", ";
+				}
+				comp = comp.substring(0, comp.length()-2) + ".";
+				resultado.add(comp);
 			} 
 			catch (SQLException e) 
 			{
@@ -384,7 +408,7 @@ public class ProdAndesGerente {
 		}
 		else
 		{
-			queer = "SELECT* FROM ESTAPAPRODUCCION";
+			queer = "SELECT* FROM etapaproduccion WHERE ETAPAPRODUCCION.ID = '" + query +"'";
 			ArrayList<String> resultado = new ArrayList<>();
 			PreparedStatement a = null;
 			try 
@@ -392,17 +416,27 @@ public class ProdAndesGerente {
 				dao.inicializar();
 				a = dao.conexion.prepareStatement(queer);
 				ResultSet b = a.executeQuery();
+				String idprod = "";
 				while(b.next())
 				{
 					String nombreT = b.getString("id");
 					String num = b.getString("num");
-					String fechainicial = b.getString("fechaInicial");
-					String fechaFinal = b.getString("fechaFinal");
+					idprod = b.getString("idproducto");
+					System.out.println(idprod);
 					resultado.add(nombreT);
 					resultado.add(num);
-					resultado.add(fechainicial);
-					resultado.add(fechaFinal);
 				}
+				String query2 = "SELECT P.nombre FROM ETAPAPRODUCCION E JOIN PRODUCTO P ON E.IDPRODUCTO = P.ID AND P.ID = '" + idprod + "'";
+				a = dao.conexion.prepareStatement(query2);
+				b = a.executeQuery();
+				String nombresProductos ="";
+				while(b.next())
+				{
+					String nombreT = b.getString("nombre");
+					nombresProductos = nombresProductos+nombreT+", ";
+				}
+				nombresProductos = nombresProductos.substring(0, nombresProductos.length()-2) + ".";
+				resultado.add(nombresProductos);
 			} 
 			catch (SQLException e) 
 			{
@@ -434,7 +468,7 @@ public class ProdAndesGerente {
 	public boolean registrarMateriaPrima(String nombre, String cantidad,
 			String tonelada) {
 		// TODO Auto-generated method stub
-		String query = "INSERT INTO MATERIAPRIMA (ID, NOMBRE, TONELADAS)VALUES ('"+nombre+tonelada+"', '"+nombre+"','"+tonelada+"');";
+		String query = "INSERT INTO MATERIAPRIMA (ID, NOMBRE, TONELADAS) VALUES ('"+ nombre + tonelada + "', '" + nombre + "','" + tonelada + "')";
 		PreparedStatement a = null;
 		try 
 		{
