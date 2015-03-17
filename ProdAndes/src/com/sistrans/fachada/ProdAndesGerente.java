@@ -777,6 +777,43 @@ public class ProdAndesGerente {
 		}
 		return productos;
 	}
-	//Metodos de casos de uso
 	
+	public ArrayList<String> darPedidos() {
+		String query = "SELECT E.ID, C.LOGIN FROM PEDIDO E JOIN USUARIO C ON E.ID = C.LOGIN";
+		PreparedStatement a = null;
+		ArrayList<String> pedidos = new ArrayList<String>();
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next()) {
+				String x = "Pedido no." + b.getString("ID") + " del cliente " + b.getString("LOGIN");
+				pedidos.add(x);
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}			
+		}
+		return pedidos;
+	}
 }

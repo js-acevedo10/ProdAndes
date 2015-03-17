@@ -77,7 +77,7 @@ public class GerenteServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		switch (registro) {
 		case "order-placed":
-			response.sendRedirect("pages/gerente/registro/registroentregacliente.html");
+			procesarEntrega(out);
 			break;
 		case "catalog-matprima":
 			break;
@@ -99,10 +99,22 @@ public class GerenteServlet extends HttpServlet {
 			break;
 		}
 	}
-	
-	//HTML METHODS
 
-	private void printHeader(HttpServletResponse response, PrintWriter out){
-		out.println("<!DOCTYPE html><html><head></title></head>");
+	private void procesarEntrega(PrintWriter out) {
+		printEntregaHeader(out);
+		printPedidos(out);
+		printEntregaFooter(out);
+	}
+	
+	public void printEntregaHeader(PrintWriter salida) {
+		
+	}
+	
+	public void printPedidos(PrintWriter salida) {
+		
+	}
+	
+	public void printEntregaFooter(PrintWriter salida) {
+		
 	}
 }
