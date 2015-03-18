@@ -1,16 +1,22 @@
 package com.sistrans.servlets.consulta;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sistrans.fachada.ProdAndesAdmin;
+import com.sistrans.mundo.Usuario;
+
 /**
  * Servlet implementation class OperarioMasActivoServlet
  */
-@WebServlet("/OperarioMasActivoServlet")
+@WebServlet("/consulta/operariomasactivo.html")
 public class ConsultarOperarioMasActivoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -27,6 +33,7 @@ public class ConsultarOperarioMasActivoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		procesarSolicitud(request, response);
 	}
 
 	/**
@@ -34,6 +41,19 @@ public class ConsultarOperarioMasActivoServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		procesarSolicitud(request, response);
 	}
-
+	
+	public void procesarSolicitud(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		PrintWriter out = response.getWriter();
+		String etapa = request.getParameter("etapa");
+		String numOp = request.getParameter("number");
+		
+		ArrayList<Usuario> opers = ProdAndesAdmin.darInstancia().operarioMasActivo(etapa, numOp);
+		int i = 1;
+		for(Usuario user : opers) {
+			out.println( (i) +") " + user.getNombre());
+			i++;
+		}
+	}
 }
