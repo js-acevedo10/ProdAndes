@@ -344,7 +344,7 @@ public class ProdAndesAdmin {
 					resultado.add(nombreT);
 					resultado.add(toneladasT);
 				}
-				String query2 = "SELECT dataTwo.nombre FROM (SELECT* FROM PRODUCTOMATERIAPRIMA WHERE PRODUCTOMATERIAPRIMA.IDMATERIAPRIMA = 'PAPACRIOLLA32') dataOne LEFT JOIN PRODUCTO dataTwo ON dataTwo.ID = dataOne.IDPRODUCTO";
+				String query2 = "SELECT dataTwo.nombre FROM (SELECT* FROM PRODUCTOMATERIAPRIMA WHERE PRODUCTOMATERIAPRIMA.IDMATERIAPRIMA ='"+query+"') dataOne LEFT JOIN PRODUCTO dataTwo ON dataTwo.ID = dataOne.IDPRODUCTO";
 				a = dao.conexion.prepareStatement(query2);
 				b = a.executeQuery();
 				String nombresProductos ="";
@@ -574,7 +574,7 @@ public class ProdAndesAdmin {
 		ArrayList<Usuario> resultado = new ArrayList<>();
 		if(idEtapa!=null&&idEtapa!="")
 		{
-			String query="SELECT IDETAPA, IDOPERARIO, count(*) FROM ETAPAOPERARIO  WHERE IDETAPA='"+idEtapa+"'group by IDETAPA, IDOPERARIO order by count(*) DESC;";
+			String query="SELECT IDOPERARIO, count(*) FROM ETAPAOPERARIO  WHERE IDETAPA='"+idEtapa+"'group by IDOPERARIO order by count(*) DESC";
 			PreparedStatement a = null;
 			try 
 			{
@@ -675,6 +675,75 @@ public class ProdAndesAdmin {
 				}
 
 			}
+		}
+		return resultado;
+	}
+	public ArrayList<String> etapaMasActiva(String fechaInc, String fechaFin)
+	{
+		ArrayList<String> resultado=new ArrayList<>();
+		String query = "SELECT t.IDETAPA, count(*) as Cuenta FROM (SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInc+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFin+"','MM-DD-YYYY')) t group by t.IDETAPA order by count(*) DESC";
+		PreparedStatement a = null;
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			int cuenta = 0;
+			while(b.next())
+			{
+				String id = b.getString("IDETAPA");
+				String numero = b.getString("CUENTA");
+				String query2="SELECT* FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION='"+id+"' AND NUMCOMPONENTE is not null";
+				a = dao.conexion.prepareStatement(query2);
+				ResultSet c = a.executeQuery();
+				while(c.next())
+				{
+					int numeroActual = b.getInt("NUMCOMPONENTE");
+					cuenta+=numeroActual;
+				}
+				query2="SELECT* FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION='"+id+"' AND NUMMATERIAPRIMA is not null";
+				a = dao.conexion.prepareStatement(query2);
+				c = a.executeQuery();
+				while(c.next())
+				{
+					int numeroActual = b.getInt("NUMMATERIAPRIMA");
+					cuenta+=numeroActual;
+				}
+				query2="SELECT* FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION='"+id+"' AND NUMPRODUCTO is not null";
+				a = dao.conexion.prepareStatement(query2);
+				c = a.executeQuery();
+				while(c.next())
+				{
+					int numeroActual = b.getInt("NUMPRODUCTO");
+					cuenta+=numeroActual;
+				}
+				
+				String adicion = "La etapa de id: "+id+" se a realizado "+numero+ " veces, a procesado "+cuenta+" componentes,materias primas y productos para realizar un total de "+numero+ " elementos";
+				resultado.add(adicion);
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
 		}
 		return resultado;
 	}
