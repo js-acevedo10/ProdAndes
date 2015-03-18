@@ -44,12 +44,12 @@ public class RegistroEjecucionEtapaServlet extends HttpServlet {
 	private void procesarSolicitud(HttpServletRequest request,
 			HttpServletResponse response) throws IOException{
 		// TODO Auto-generated method stub
-		String id = request.getParameter("i");
-		String fi = request.getParameter("fi");
-		String ft = request.getParameter("ft");
-		String cod = request.getParameter("cod");
+		String idEtapa = request.getParameter("idEtapa");
+		String idOPer = request.getParameter("idOper");
+		String fInit = request.getParameter("fi");
+		String fFin = request.getParameter("ft");
 		
-		boolean x = ProdAndesOperario.darInstancia().registrarEjecucionEtapa(id,fi,ft,cod);
+		boolean x = ProdAndesOperario.darInstancia().registrarEjecucionEtapa(idEtapa,idOPer,fInit,fFin);
 		
 		if(x) {
 			response.sendRedirect("/ProdAndes/pages/operario/success/etapa.html");

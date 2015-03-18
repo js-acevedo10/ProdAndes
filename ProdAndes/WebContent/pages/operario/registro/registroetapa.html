@@ -32,10 +32,19 @@
         </nav>
         <div class="container">
             <div class="jumbotron">
+            <h1>Registra la ejecucion de una etapa:</h1>
                 <form class="form" action="/ProdAndes/ejecucion/etapa.html" method="get">
                     <div class="form-group">
-                        <label for="i" class="sr-only">ID del pedido</label>
-                        <input class="form-control" type="text" name="i" placeholder="ID del pedido" required>
+                    	<label for="idEtapa">ID de la etapa</label>
+                    	<select name="idEtapa" id="idEtapa" class="form-control" required>
+                        	<option value="componente">Componente</option>
+                    	</select>
+                    </div>
+                    <div class="form-group">
+                    	<label for="idOPer">ID del operario</label>
+                    	<select name="idOper" id="idOper" class="form-control" required>
+                        	<option value="componente">Componente</option>
+                    	</select>
                     </div>
                     <div class="form-group">
                         <label for="fi">Fecha Inicio</label>
@@ -44,10 +53,6 @@
                     <div class="form-group">
                         <label for="ft">Fecha de Terminacion</label>
                         <input class="form-control" type="date" name="ft" placeholder="Fecha de Terminación" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cod" class="sr-only">Load</label>
-                        <input class="form-control" type="number" name="cod" placeholder="Codigo Estacion" required>
                     </div>
                     <button class="btn btn-default" name="submit" type="submit" value="estacion">Registrar</button>
                 </form>

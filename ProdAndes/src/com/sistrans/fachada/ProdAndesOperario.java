@@ -590,6 +590,7 @@ public class ProdAndesOperario {
 					int numInventario = c.getInt("TONELADAS");
 					if(numInventario<numero)
 					{
+						System.out.println("1");
 						flag = false;
 					}
 				}
@@ -609,6 +610,7 @@ public class ProdAndesOperario {
 					int numInventario = c.getInt("NUMINVENTARIO");
 					if(numInventario<numero)
 					{
+						System.out.println("2");
 						flag = false;
 					}
 				}
@@ -628,6 +630,7 @@ public class ProdAndesOperario {
 					int numInventario = c.getInt("NUMINVENTARIO");
 					if(numInventario<numero)
 					{
+						System.out.println("3");
 						flag = false;
 					}
 				}
@@ -672,8 +675,11 @@ public class ProdAndesOperario {
 				query = "UPDATE USUARIO SET OPERACIONESHECHAS=OPERACIONESHECHAS+1 WHERE LOGIN='"+fi+"'";
 				a = dao.conexion.prepareStatement(query);
 				b = a.executeQuery();
-				query = "INSERT INTO ETAPAOPERARIO (IDETAPA, IDOPERARIO, FECHAINICIAL, FECHAFINAL) VALUES ('"+ id + "', '" + fi + "', to_date('"+cod+"','MM-DD-YYYY'), to_date('"+ft+"','MM-DD-YYYY'))";
+				query = "INSERT INTO ETAPAOPERARIO (IDETAPA, IDOPERARIO, FECHAINICIAL, FECHAFINAL) VALUES ('"+ id + "', '" + fi + "', to_date('"+ft+"','YYYY-MM-DD'), to_date('"+cod+"','YYYY-MM-DD'))";
+				a = dao.conexion.prepareStatement(query);
+				b = a.executeQuery();
 			}
+			System.out.println(query);
 			
 		} 
 		catch (SQLException e) 
