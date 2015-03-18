@@ -519,7 +519,8 @@ public class ProdAndesUsuario {
 				Calendar c = Calendar.getInstance();
 				c.setTime(dateCreacion);
 				c.add(Calendar.DATE, dias);
-				if(c.before(fechaEntrega))
+				Date xxx = c.getTime();
+				if(xxx.before(fechaEntrega))
 				{
 					boolean flag2 = true;
 					String query3 = "SELECT dataRight.NOMBRE, dataRight.TONELADAS, dataLeft.NUMMATERIAPRIMA FROM (SELECT dataTwo.IDMATERIAPRIMA, dataTwo.NUMMATERIAPRIMA FROM (SELECT* FROM ETAPAPRODUCCION WHERE ETAPAPRODUCCION.IDPRODUCTO ='"+idProducto+"') dataOne INNER JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDMATERIAPRIMA is not null) dataTwo on dataOne.ID = dataTwo.IDETAPAPRODUCCION) dataLeft INNER JOIN MATERIAPRIMA dataRight on dataLeft.IDMATERIAPRIMA=dataRight.ID";
