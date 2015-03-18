@@ -496,7 +496,7 @@ public class ProdAndesUsuario {
 			}
 			if(numInventarioT>cantidadRequerida)
 			{
-				String query3 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+id1+id2+fechaCreacion+"','"+id2+"','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'), '"+id1+"', '"+id32+"')";
+				String query3 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+id1+id2+fechaCreacion+"','"+id2+"','no pago',to_date('"+fechaCreacion+"','YYYY-MM-DD'),to_date('"+fechaEntrega+"','YYYY-MM-DD'), '"+id1+"', '"+id32+"')";
 				a = dao.conexion.prepareStatement(query3);
 				a.executeQuery();
 				flag = true;
@@ -520,6 +520,8 @@ public class ProdAndesUsuario {
 				c.setTime(dateCreacion);
 				c.add(Calendar.DATE, dias);
 				Date xxx = c.getTime();
+				String ti = df.format(dateCreacion);
+				String tf = df.format(fechaEntrega);
 				if(xxx.before(fechaEntrega))
 				{
 					boolean flag2 = true;
@@ -561,15 +563,17 @@ public class ProdAndesUsuario {
 					}
 					if(flag2)
 					{
+						int rand = (int) (Math.random()*1000);
 						flag = true;
-						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+id1+"','3','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'), '"+id1+"', '"+id32+"')";
+						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+(id1+""+rand) +"','3','no pago',to_date('"+ti+"','YYYY-MM-DD'),to_date('"+tf+"','YYYY-MM-DD'), '"+id1+"', '"+id32+"')";
 						a = dao.conexion.prepareStatement(query6);
 						a.executeQuery();
 					}
 					else
 					{
+						int rand = (int) (Math.random()*1000);
 						flag = true;
-						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, ANOTACIONES, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+id1+"','3','no pago',to_date('"+fechaCreacion+"','MM-DD-YYYY'),to_date('"+deadline+"','MM-DD-YYYY'), 'No se tienen los materiales necesarios', '"+id1+"', '"+id32+"')";
+						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, ANOTACIONES, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+(id1+""+rand)+"','3','no pago',to_date('"+ti+"','YYYY-MM-DD'),to_date('"+tf+"','YYYY-MM-DD'), 'No se tienen los materiales necesarios', '"+id1+"', '"+id32+"')";
 						a = dao.conexion.prepareStatement(query6);
 						a.executeQuery();
 					}
