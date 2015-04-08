@@ -14,6 +14,7 @@ import com.sistrans.dao.ConsultaDAOUsuario;
 import com.sistrans.mundo.Componente;
 import com.sistrans.mundo.EtapadeProduccion;
 import com.sistrans.mundo.MateriaPrima;
+import com.sistrans.mundo.Pedido;
 import com.sistrans.mundo.Producto;
 
 public class ProdAndesUsuario {
@@ -607,6 +608,93 @@ public class ProdAndesUsuario {
 		return flag;
 	}
 	
-	//Metodos de casos de uso
+	public boolean cancelarPedido(String idPedido)
+	{
+		String query = "DELETE FROM PEDIDO WHERE ID = '"+idPedido+"'";
+		PreparedStatement a = null;
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					exception.printStackTrace();
+					return false;
+				}
+			}
+
+		}		
+		return true;
+	}
+	public ArrayList<Pedido> consultarPedidosUsuario (String idCliente)
+	{
+		ArrayList<Pedido> resultado = new ArrayList<>();
+		String query = "DELETE FROM PEDIDO WHERE IDCLIENTE = '"+idCliente+"'";
+		PreparedStatement a = null;
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next())
+			{
+				String idT = b.getString("ID");
+				String idClienteT = b.getString("IDCLIENTE");
+				String estadoPagoT = b.getString("ESTADOPAGO");
+				Date fechaCreacionT = b.getDate("FECHACREACION");
+				Date fechaRecibidoT = null;
+				if(b.getDate("FECHARECIBIDO")!=null)
+				{
+					fechaRecibidoT = b.getDate("FECHARECIBIDO");
+				}
+				Date deadlineT = b.getDate("DEADLINE");
+				String anotacionesT ="";
+				if(b.getString("ANOTACIONES")!=null&&b.getString("ANOTACIONES")!="")
+				{
+					anotacionesT = b.getString("ANOTACIONES");
+				}
+				String idPrductoT = b.getString("IDPRODUCTO");
+				int numProductoT = b.getInt("NUMPRODUCTO");
+				Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, null, 0, null, 0, idPrductoT, numProductoT);
+				resultado.add(z);
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return resultado;
+	}
 	
 }

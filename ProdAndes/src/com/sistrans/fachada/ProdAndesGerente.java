@@ -594,6 +594,36 @@ public class ProdAndesGerente {
 		}		
 		return true;
 	}
+	public boolean registrarMateriaProducto(String idMateria, String idProducto)
+	{
+		String query = "INSERT INTO PRODUCTOMATERIAPRIMA (IDPRODUCTO, IDMATERIAPRIMA) VALUES ('"+ idProducto + "', '" + idMateria + "')";
+		PreparedStatement a = null;
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					exception.printStackTrace();
+					return false;
+				}
+			}
+
+		}		
+		return true;
+	}
 
 	public boolean registrarComponente(String nombre, String cantidad,
 			String unidadMedida) {
@@ -625,6 +655,36 @@ public class ProdAndesGerente {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				}
+			}
+
+		}		
+		return true;
+	}
+	public boolean registrarComponenteProducto(String idComponente, String idProducto)
+	{
+		String query = "INSERT INTO PRODUCTOCOMPONENTE (IDPRODUCTO, IDCOMPONENTE) VALUES ('"+ idProducto + "', '" + idComponente + "')";
+		PreparedStatement a = null;
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					exception.printStackTrace();
+					return false;
 				}
 			}
 
