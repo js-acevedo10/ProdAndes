@@ -1,5 +1,7 @@
 package com.sistrans.mundo;
 
+import java.util.ArrayList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -211,6 +213,7 @@ public class Usuario
 		this.ciudad = ciudad;
 		this.departamento = departamento;
 		this.codPostal = codPostal;
+		pedidos = new ArrayList<Pedido>();
 	}
 
 	/**
@@ -310,6 +313,12 @@ public class Usuario
 	 */
 	public Usuario(){
 		super();
+	}
+	
+	private ArrayList<Pedido> pedidos;
+	public void agregarPedido (Pedido a)
+	{
+		pedidos.add(a);
 	}
 
 }

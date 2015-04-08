@@ -4,11 +4,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.sistrans.dao.ConsultaDAOUsuario;
 import com.sistrans.mundo.Componente;
 import com.sistrans.mundo.EtapadeProduccion;
 import com.sistrans.mundo.MateriaPrima;
+import com.sistrans.mundo.Pedido;
 import com.sistrans.mundo.Producto;
 import com.sistrans.mundo.Usuario;
 
@@ -746,6 +748,364 @@ public class ProdAndesAdmin {
 
 		}
 		return resultado;
+	}
+	public ArrayList<Pedido> consultarPedidos (String ID, String idCLiente, String estadoPago, String fechaCreacion, String fechaRecibido, String deadline, String idMateriaprima, Integer numMateriaPrima, String idComponente, Integer numComponente, String idProducto, Integer numProducto)
+	{
+		ArrayList<Pedido> resultado = new ArrayList<>();
+		String query = "SELECT FROM PEDIDO";
+		if(ID!=null&&ID!="")
+		{
+			query = "SELECT FROM PEDIDO WHERE ID='"+ID+"'";
+		}
+		if(idCLiente!=null&&idCLiente!="")
+		{
+			if(query.length()>18)
+			{
+				query = query +" AND IDCLIENTE='"+idCLiente+"'";
+			}
+			else
+			{
+				query=query + " WHERE IDCLIENTE='"+idCLiente+"'";
+			}
+		}
+		if(estadoPago!=null&&estadoPago!="")
+		{
+			if(query.length()>18)
+			{
+				query = query +" AND ESTADOPAGO='"+estadoPago+"'";
+			}
+			else
+			{
+				query=query + " WHERE ESTADOPAGO='"+estadoPago+"'";
+			}
+		}
+		if(fechaCreacion!=null&&fechaCreacion!="")
+		{
+			if(query.length()>18)
+			{
+				query = query +" AND fechaCreacion='"+fechaCreacion+"'";
+			}
+			else
+			{
+				query=query + " WHERE fechaCreacion='"+fechaCreacion+"'";
+			}
+		}
+		if(fechaRecibido!=null&&fechaRecibido!="")
+		{
+			if(query.length()>18)
+			{
+				query = query +" AND fechaRecibido='"+fechaRecibido+"'";
+			}
+			else
+			{
+				query=query + " WHERE fechaRecibido='"+fechaRecibido+"'";
+			}
+		}
+		if(deadline!=null&&deadline!="")
+		{
+			if(query.length()>18)
+			{
+				query = query +" AND deadline='"+deadline+"'";
+			}
+			else
+			{
+				query=query + " WHERE deadline='"+deadline+"'";
+			}
+		}
+		if(idMateriaprima!=null&&idMateriaprima!="")
+		{
+			if(query.length()>18)
+			{
+				query = query +" AND idMateriaprima='"+idMateriaprima+"'";
+			}
+			else
+			{
+				query=query + " WHERE idMateriaprima='"+idMateriaprima+"'";
+			}
+		}
+		if(numMateriaPrima!=null)
+		{
+			if(query.length()>18)
+			{
+				query = query +" AND numMateriaPrima='"+numMateriaPrima+"'";
+			}
+			else
+			{
+				query=query + " WHERE numMateriaPrima='"+numMateriaPrima+"'";
+			}
+		}
+		if(idComponente!=null&&idComponente!="")
+		{
+			if(query.length()>18)
+			{
+				query = query +" AND idComponente='"+idComponente+"'";
+			}
+			else
+			{
+				query=query + " WHERE idComponente='"+idComponente+"'";
+			}
+		}
+		if(numComponente!=null)
+		{
+			if(query.length()>18)
+			{
+				query = query +" AND numComponente='"+numComponente+"'";
+			}
+			else
+			{
+				query=query + " WHERE numComponente='"+numComponente+"'";
+			}
+		}
+		if(idProducto!=null&&idProducto!="")
+		{
+			if(query.length()>18)
+			{
+				query = query +" AND idProducto='"+idProducto+"'";
+			}
+			else
+			{
+				query=query + " WHERE idProducto='"+idProducto+"'";
+			}
+		}
+		if(numProducto!=null)
+		{
+			if(query.length()>18)
+			{
+				query = query +" AND numProducto='"+numProducto+"'";
+			}
+			else
+			{
+				query=query + " WHERE numProducto='"+numProducto+"'";
+			}
+		}
+		PreparedStatement a = null;
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next())
+			{
+				String idT = b.getString("ID");
+				String idClienteT = b.getString("IDCLIENTE");
+				String estadoPagoT = b.getString("ESTADOPAGO");
+				Date fechaCreacionT = b.getDate("FECHACREACION");
+				Date fechaRecibidoT = null;
+				if(b.getDate("FECHARECIBIDO")!=null)
+				{
+					fechaRecibidoT = b.getDate("FECHARECIBIDO");
+				}
+				Date deadlineT = b.getDate("DEADLINE");
+				String anotacionesT ="";
+				if(b.getString("ANOTACIONES")!=null&&b.getString("ANOTACIONES")!="")
+				{
+					anotacionesT = b.getString("ANOTACIONES");
+				}
+				
+				String idMateriaPrimaT = "";
+				
+				if(b.getString("IDMateriaPrima")!=null)
+				{
+					idMateriaPrimaT = b.getString("IDMateriaPrima");
+				}
+				int numMateriaPrimaT = b.getInt("NUMMateriaPrima");
+				
+				String idComponenteT = "";
+				
+				if(b.getString("IDComponente")!=null)
+				{
+					idComponenteT = b.getString("IDComponente");
+				}
+				int numComponenteT = b.getInt("NUMComponente");
+				
+				String idPrductoT = "";
+				
+				if(b.getString("IDPRODUCTO")!=null)
+				{
+					idPrductoT = b.getString("IDPRODUCTO");
+				}
+				int numProductoT = b.getInt("NUMPRODUCTO");
+				Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT);
+				resultado.add(z);
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return resultado;
+	}
+	public ArrayList<Usuario> consultarClientes(String login, String tipoDoc, Integer numDoc, String nombre, String direccion, String nacionalidad, String email, Integer telefono, String ciudad, String departamento, Integer codPostal, Integer numReg, Integer personaNatural) 
+		{
+		ArrayList<Usuario> resultado = new ArrayList<>();
+		String query="SELECT FROM USUARIO WHERE ROL='CLIENTE'";
+		if(login!=null&&login!="")
+		{
+			query = query +" AND login='"+login+"'";			
+		}
+		if(tipoDoc!=null&&tipoDoc!="")
+		{
+			query = query +" AND tipoDoc='"+tipoDoc+"'";			
+		}
+		if(numDoc!=null)
+		{
+			query = query +" AND numDoc='"+numDoc+"'";			
+		}
+		if(nombre!=null&&nombre!="")
+		{
+			query = query +" AND nombre='"+nombre+"'";			
+		}
+		if(direccion!=null&&direccion!="")
+		{
+			query = query +" AND direccion='"+direccion+"'";			
+		}
+		if(nacionalidad!=null&&nacionalidad!="")
+		{
+			query = query +" AND nacionalidad='"+nacionalidad+"'";			
+		}
+		if(email!=null&&email!="")
+		{
+			query = query +" AND email='"+email+"'";			
+		}
+		if(telefono!=null)
+		{
+			query = query +" AND telefono='"+telefono+"'";			
+		}
+		if(ciudad!=null&&ciudad!="")
+		{
+			query = query +" AND ciudad='"+ciudad+"'";			
+		}
+		if(departamento!=null&&departamento!="")
+		{
+			query = query +" AND departamento='"+departamento+"'";			
+		}
+		if(codPostal!=null)
+		{
+			query = query +" AND codPostal='"+codPostal+"'";			
+		}
+		if(numReg!=null)
+		{
+			query = query +" AND numReg='"+numReg+"'";			
+		}
+		if(personaNatural!=null)
+		{
+			query = query +" AND personaNatural='"+personaNatural+"'";			
+		}
+		PreparedStatement a = null;
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next())
+			{
+				String loginT = b.getString(1);
+				String tipoDocT = b.getString(3);
+				int numDocT = b.getInt(4);
+				String nombreT= b.getString(5);
+				String direccionT= b.getString(6);
+				String nacionalidadT = b.getString(7);
+				String emailT = b.getString(8);
+				int telefonoT = b.getInt(9);
+				String ciudadT = b.getString(10);
+				String departamentoT= b.getString(11);
+				int codPostalT = b.getInt(12);
+				Usuario z = new Usuario(loginT, "0", tipoDocT, numDocT, nombreT, direccionT, nacionalidadT, emailT, telefonoT, ciudadT, departamentoT, codPostalT);
+				String query2 = "SELECT FROM PEDIDO WHERE IDCLIENTE='"+loginT+"'";
+				a = dao.conexion.prepareStatement(query2);
+				ResultSet c = a.executeQuery();
+				while(c.next())
+				{
+					String idT = b.getString("ID");
+					String idClienteT = b.getString("IDCLIENTE");
+					String estadoPagoT = b.getString("ESTADOPAGO");
+					Date fechaCreacionT = b.getDate("FECHACREACION");
+					Date fechaRecibidoT = null;
+					if(b.getDate("FECHARECIBIDO")!=null)
+					{
+						fechaRecibidoT = b.getDate("FECHARECIBIDO");
+					}
+					Date deadlineT = b.getDate("DEADLINE");
+					String anotacionesT ="";
+					if(b.getString("ANOTACIONES")!=null&&b.getString("ANOTACIONES")!="")
+					{
+						anotacionesT = b.getString("ANOTACIONES");
+					}
+					
+					String idMateriaPrimaT = "";
+					
+					if(b.getString("IDMateriaPrima")!=null)
+					{
+						idMateriaPrimaT = b.getString("IDMateriaPrima");
+					}
+					int numMateriaPrimaT = b.getInt("NUMMateriaPrima");
+					
+					String idComponenteT = "";
+					
+					if(b.getString("IDComponente")!=null)
+					{
+						idComponenteT = b.getString("IDComponente");
+					}
+					int numComponenteT = b.getInt("NUMComponente");
+					
+					String idPrductoT = "";
+					
+					if(b.getString("IDPRODUCTO")!=null)
+					{
+						idPrductoT = b.getString("IDPRODUCTO");
+					}
+					int numProductoT = b.getInt("NUMPRODUCTO");
+					Pedido zz = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT);
+					z.agregarPedido(zz);
+				}
+				
+				resultado.add(z);
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return resultado;
+		
 	}
 	
 }

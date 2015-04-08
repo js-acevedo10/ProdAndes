@@ -638,10 +638,10 @@ public class ProdAndesUsuario {
 		}		
 		return true;
 	}
-	public ArrayList<Pedido> consultarPedidosUsuario (String idCliente)
+	public ArrayList<Pedido> consultarPedidos (String idCliente)
 	{
 		ArrayList<Pedido> resultado = new ArrayList<>();
-		String query = "DELETE FROM PEDIDO WHERE IDCLIENTE = '"+idCliente+"'";
+		String query = "SELECT FROM PEDIDO WHERE IDCLIENTE = '"+idCliente+"'";
 		PreparedStatement a = null;
 		try 
 		{
