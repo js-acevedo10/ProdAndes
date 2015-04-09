@@ -154,12 +154,15 @@ public class GerenteServlet extends HttpServlet {
 	
 	public void printPedidos(PrintWriter salida) {
 		ArrayList<String> pedidos = ProdAndesGerente.darInstancia().darPedidos();
-		
-		for(String pedido : pedidos) {
-			System.out.println(pedido);
-			String[] abc = pedido.split("&");
-			String imp = abc[1];			
-			salida.println("                            <option value=\"" + imp + "\">" + pedido.replaceAll("&", "") + "</option>");
+		if(pedidos.size() == 0) {
+			salida.println("                            <option value=\"none\" disabled selected>No hay pedidos disponibles</option>");
+		} else {
+			for(String pedido : pedidos) {
+				System.out.println(pedido);
+				String[] abc = pedido.split("&");
+				String imp = abc[1];			
+				salida.println("                            <option value=\"" + imp + "\">" + pedido.replaceAll("&", "") + "</option>");
+			}
 		}
 	}
 	
@@ -227,9 +230,13 @@ public class GerenteServlet extends HttpServlet {
 	
 	public void printEtapasOperMasActivo(PrintWriter salida) {
 		ArrayList<String> etapas = ProdAndesGerente.darInstancia().darEtapas();
-		for(String e : etapas) {
-			salida.println("                            <option value=\"" + e.toLowerCase() + "\">" + e +"</option>");
-		}		
+		if(etapas.size() == 0) {
+			salida.println("                            <option value=\"none\" selected disabled>No hay etapas disponibles</option>");
+		} else {
+			for(String e : etapas) {
+				salida.println("                            <option value=\"" + e.toLowerCase() + "\">" + e +"</option>");
+			}	
+		}
 	}
 	
 	public void printFooterOperMasActivo(PrintWriter salida) {

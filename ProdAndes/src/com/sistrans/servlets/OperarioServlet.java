@@ -136,8 +136,12 @@ public class OperarioServlet extends HttpServlet {
 	}
 	public void printRegistroEtapaOperarios(PrintWriter salida) {
 		ArrayList<String> operarios = ProdAndesGerente.darInstancia().darOperarios();
-		for(String o : operarios) {
-			salida.println("                        	<option value=\"" + o.toLowerCase() + "\">" + o + "</option>");
+		if(operarios.size() == 0) {
+			salida.println("                        	<option value=\"none\" selected disabled>No hay operarios disponibles</option>");
+		} else {
+			for(String o : operarios) {
+				salida.println("                        	<option value=\"" + o.toLowerCase() + "\">" + o + "</option>");
+			}
 		}
 		salida.println("                    	</select>");
 		salida.println("                    </div>");
@@ -147,8 +151,12 @@ public class OperarioServlet extends HttpServlet {
 	}
 	public void printRegistroEtapaEtapas(PrintWriter salida) {
 		ArrayList<String> etapas = ProdAndesGerente.darInstancia().darEtapas();
-		for(String o : etapas) {
-			salida.println("                        	<option value=\"" + o.toLowerCase() + "\">" + o+ "</option>");
+		if(etapas.size() == 0) {
+			salida.println("                        	<option value=\"none\" selected disabled>No hay etapas disponibles</option>");
+		} else {
+			for(String o : etapas) {
+				salida.println("                        	<option value=\"" + o.toLowerCase() + "\">" + o+ "</option>");
+			}
 		}
 	}
 	public void printRegistroEtapaFooter(PrintWriter salida) {

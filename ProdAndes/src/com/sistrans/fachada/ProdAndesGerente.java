@@ -405,7 +405,10 @@ public class ProdAndesGerente {
 					nombresProductos = nombresProductos+nombreT+", ";
 					
 				}
-				nombresProductos = nombresProductos.substring(0, nombresProductos.length()-2) + ".";
+				if(nombresProductos.length() > 2)
+				{
+					nombresProductos = nombresProductos.substring(0, nombresProductos.length()-2) + ".";
+				}
 				resultado.add(nombresProductos);
 			} 
 			catch (SQLException e) 
@@ -464,7 +467,10 @@ public class ProdAndesGerente {
 					String nomMat = b.getString("NOMBRE");
 					mat += nomMat + ", ";
 				}
-				mat = mat.substring(0, mat.length()-2) + ".";
+				if(mat.length() > 2)
+				{
+					mat = mat.substring(0, mat.length()-2) + ".";
+				}
 				resultado.add(mat);
 				
 				queer = "SELECT C.nombre FROM PRODUCTO P JOIN PRODUCTOCOMPONENTE W ON P.ID = '" + query + "' AND P.ID = W.IDPRODUCTO JOIN COMPONENTE C ON W.IDCOMPONENTE = C.ID";
@@ -476,7 +482,10 @@ public class ProdAndesGerente {
 					String nomComp = b.getString("NOMBRE");
 					comp += nomComp + ", ";
 				}
-				comp = comp.substring(0, comp.length()-2) + ".";
+				if(comp.length() > 2)
+				{
+					comp = comp.substring(0, comp.length()-2) + ".";
+				}
 				resultado.add(comp);
 			} 
 			catch (SQLException e) 
@@ -533,7 +542,10 @@ public class ProdAndesGerente {
 					String nombreT = b.getString("nombre");
 					nombresProductos = nombresProductos+nombreT+", ";
 				}
-				nombresProductos = nombresProductos.substring(0, nombresProductos.length()-2) + ".";
+				if(nombresProductos.length() > 2)
+				{
+					nombresProductos = nombresProductos.substring(0, nombresProductos.length()-2) + ".";
+				}
 				resultado.add(nombresProductos);
 			} 
 			catch (SQLException e) 

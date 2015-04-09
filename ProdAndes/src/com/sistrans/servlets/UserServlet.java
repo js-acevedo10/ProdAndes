@@ -147,21 +147,32 @@ public class UserServlet extends HttpServlet {
 	
 	public void printProductos(PrintWriter salida, int indice) {
 		ArrayList<String> prods = ProdAndesGerente.darInstancia().darProductos();
-		String required = "";
-		if(indice == 0) required = "required";
-		
-		salida.println("						<div class=\"col-md-9\">");
-		salida.println("                        	<select class=\"form-control input-lg\" id=\"search-input\" name=\"prod" + (indice+1) + "\"" + required + ">");
-		salida.println("                                	<option value=\"\" selected disabled style=\"display: none\">Selecciona el Producto " + (indice+1) + "</option>");
-		for(int i = 0; i < 100; i++) {
-			String prod = prods.get(i);
-			salida.println("                                <option value=\"" + prod.toLowerCase().replaceAll(" ", "") +  "\">" + prod + "</option>");
+		if(prods.size() == 0) {
+			salida.println("						<div class=\"col-md-9\">");
+			salida.println("                        	<select class=\"form-control input-lg\" id=\"search-input\" name=\"none\">");
+			salida.println("                                	<option value=\"\" selected disabled style=\"display: none\">No hay productos disponibles</option>");
+			salida.println("                        	</select><br>");
+			salida.println("						</div>");
+			salida.println("						<div class=\"col-md-3\">");
+			salida.println("							<input type=\"number\" class=\"form-control input-lg\" name=\"none\" placeholder=\"None\">");
+			salida.println("                    	</div>");
+		} else {
+			String required = "";
+			if(indice == 0) required = "required";
+			salida.println("						<div class=\"col-md-9\">");
+			salida.println("                        	<select class=\"form-control input-lg\" id=\"search-input\" name=\"prod" + (indice+1) + "\"" + required + ">");
+			salida.println("                                	<option value=\"\" selected disabled style=\"display: none\">Selecciona el Producto " + (indice+1) + "</option>");
+			for(int i = 0; i < 100; i++) {
+				String prod = prods.get(i);
+				salida.println("                                <option value=\"" + prod.toLowerCase().replaceAll(" ", "") +  "\">" + prod + "</option>");
+			}
+			salida.println("                        	</select><br>");
+			salida.println("						</div>");
+			salida.println("						<div class=\"col-md-3\">");
+			salida.println("							<input type=\"number\" class=\"form-control input-lg\" name=\"c"+(indice+1)+"\" placeholder=\"Cantidad\"" +required + ">");
+			salida.println("                    	</div>");
 		}
-		salida.println("                        	</select><br>");
-		salida.println("						</div>");
-		salida.println("						<div class=\"col-md-3\">");
-		salida.println("							<input type=\"number\" class=\"form-control input-lg\" name=\"c"+(indice+1)+"\" placeholder=\"Cantidad\"" +required + ">");
-		salida.println("                    	</div>");
+		
 	}
 	
 	public void printPedidoFooter(PrintWriter salida) {

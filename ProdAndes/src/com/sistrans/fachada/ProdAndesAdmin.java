@@ -585,18 +585,23 @@ public class ProdAndesAdmin {
 				ResultSet b = a.executeQuery();
 				while(b.next())
 				{
-					String login = b.getString("LOGIN");
-					String clave = b.getString("CLAVE");
-					String tipoDoc = b.getString("TIPODOC");
-					int numDoc = b.getInt("NUMDOC");
-					String nombre = b.getString("NOMBRE");
-					String direccion = b.getString("DIRECCION");
-					String nacionalidad = b.getString("NACIONALIDAD");
-					String email = b.getString("EMAIL");
-					int telefono = b.getInt("TELEFONO");
-					String ciudad = b.getString("CIUDAD");
-					String departamento = b.getString("DEPARTAMENTO");
-					int codPostal = b.getInt("CODPOSTAL");
+					String idoper = b.getString("IDOPERARIO");
+					String query2="SELECT* FROM USUARIO WHERE USUARIO.LOGIN='"+idoper+"'";
+					a = dao.conexion.prepareStatement(query2);
+					ResultSet c = a.executeQuery();
+			
+					String login = c.getString("LOGIN");
+					String clave = c.getString("CLAVE");
+					String tipoDoc = c.getString("TIPODOC");
+					int numDoc = c.getInt("NUMDOC");
+					String nombre = c.getString("NOMBRE");
+					String direccion = c.getString("DIRECCION");
+					String nacionalidad = c.getString("NACIONALIDAD");
+					String email = c.getString("EMAIL");
+					int telefono = c.getInt("TELEFONO");
+					String ciudad = c.getString("CIUDAD");
+					String departamento = c.getString("DEPARTAMENTO");
+					int codPostal = c.getInt("CODPOSTAL");
 					
 					Usuario z = new Usuario(login, clave, tipoDoc, numDoc, nombre, direccion, nacionalidad, email, telefono, ciudad, departamento, codPostal);
 					resultado.add(z);

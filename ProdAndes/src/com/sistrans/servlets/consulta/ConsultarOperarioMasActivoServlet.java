@@ -51,9 +51,14 @@ public class ConsultarOperarioMasActivoServlet extends HttpServlet {
 		
 		ArrayList<Usuario> opers = ProdAndesAdmin.darInstancia().operarioMasActivo(etapa, numOp);
 		int i = 1;
-		for(Usuario user : opers) {
-			out.println( (i) +") " + user.getNombre());
-			i++;
+		if(opers.size() == 0) {
+			out.println("<h1>No hay operarios en esta etapa</h1>");
+		} else {
+			for(Usuario user : opers) {
+				out.println( (i) +") " + user.getNombre());
+				i++;
+			}
 		}
+		
 	}
 }

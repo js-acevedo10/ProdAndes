@@ -85,20 +85,29 @@ public class ConsultarMaterialServlet extends HttpServlet {
 		if(detalles.size() != 0) {
 			switch(tipo) {
 				case "materia-prima":
+					if(detalles.size() > 1) {
 					out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 					out.println("            </div>");
 					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
 					out.println("<h3>Existencias: " + detalles.get(1) + " toneladas." + "</h3>");
 					out.println("<h3>Compone los productos: " + detalles.get(2).substring(0, detalles.get(2).length()-2) + ".</h3>");
+					} else {
+						out.println("<h1>No hay ninguna materia prima asociada al ID</h1>");
+					}
 					break;
 				case "componente":
+					if(detalles.size() > 2) {
 					out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 					out.println("            </div>");
 					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
 					out.println("<h3>Existencias: " + detalles.get(1) +" " + detalles.get(2) + "</h3>");
 					out.println("<h3>Compone los productos: " + detalles.get(3) + "</h3>");
+					} else {
+						out.println("<h1>No hay ningun componente asociado al ID</h1>");
+					}
 					break;
 				case "producto":
+					if(detalles.size() > 4) {
 					out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 					out.println("            </div>");
 					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
@@ -107,13 +116,20 @@ public class ConsultarMaterialServlet extends HttpServlet {
 					out.println("<h3>Existencias: " + detalles.get(3) + "</h3>");
 					out.println("<h3>Materias primas involucradas: " + detalles.get(4) + "</h3>");
 					out.println("<h3>Componentes involucrados: " + detalles.get(5) + "</h3>");
+					} else {
+						out.println("<h1>No hay ningun producto asociado al ID</h1>");
+					}
 					break;
 				case "etapa-producto":
+					if(detalles.size() > 1) {
 					out.println("                <h1>ID: "+ detalles.get(0) +"</h1>");
 					out.println("            </div>");
 					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
 					out.println("<h3>Etapa Numero: " + detalles.get(1) + "</h3>");
 					out.println("<h3>Nombre del producto en la etapa: " + detalles.get(2) + "</h3>");
+					} else {
+						out.println("<h1>No hay ninguna etapa de produccion asociada al ID</h1>");
+					}
 					break;
 				default:
 					break;
@@ -129,20 +145,29 @@ public class ConsultarMaterialServlet extends HttpServlet {
 		if(detalles.size() != 0) {
 			switch(tipo) {
 			case "materia-prima":
+				if(detalles.size() > 1) {
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
 				out.println("<h3>Existencias: " + detalles.get(1) + " toneladas." + "</h3>");
 				out.println("<h3>Compone los productos: " + detalles.get(2).substring(0, detalles.get(2).length()-2) + ".</h3>");
+				} else {
+					out.println("<h1>No hay ningun material asociado al ID</h1>");
+				}
 				break;
 			case "componente":
+				if(detalles.size() > 2) {
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
 				out.println("<h3>Existencias: " + detalles.get(1) +" " + detalles.get(2) + "</h3>");
 				out.println("<h3>Compone los productos: " + detalles.get(3) + "</h3>");
+				} else {
+					out.println("<h1>No hay ningun material asociado al ID</h1>");
+				}
 				break;
 			case "producto":
+				if(detalles.size() > 2) {
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
@@ -153,13 +178,20 @@ public class ConsultarMaterialServlet extends HttpServlet {
 				} else {
 					out.println("<h3>Este producto se encuentra agotado.</h3>");
 				}
+				} else {
+					out.println("<h1>No hay ningun material asociado al ID</h1>");
+				}
 				break;
 			case "etapa-producto":
+				if(detalles.size() > 1) {
 				out.println("                <h1>ID: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
 				out.println("<h3>Etapa Numero: " + detalles.get(1) + "</h3>");
 				out.println("<h3>Nombre del producto en la etapa: " + detalles.get(2) + "</h3>");
+				} else {
+					out.println("<h1>No hay ningun material asociado al ID</h1>");
+				}
 				break;
 			default:
 				break;
@@ -175,20 +207,29 @@ public class ConsultarMaterialServlet extends HttpServlet {
 		if(detalles.size() != 0) {
 			switch(tipo) {
 			case "materia-prima":
+				if(detalles.size() > 1) {
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
 				out.println("<h3>Existencias: " + detalles.get(1) + " toneladas." + "</h3>");
 				out.println("<h3>Compone los productos: " + detalles.get(2).substring(0, detalles.get(2).length()-2) + ".</h3>");
+				} else {
+					out.println("<h1>No hay ninguna materia prima asociada al ID</h1>");
+				}
 				break;
 			case "componente":
+				if(detalles.size() > 2) {
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
 				out.println("<h3>Existencias: " + detalles.get(1) +" " + detalles.get(2) + "</h3>");
 				out.println("<h3>Compone los productos: " + detalles.get(3) + "</h3>");
+				} else {
+					out.println("<h1>No hay ningun componente asociado al ID</h1>");
+				}
 				break;
 			case "producto":
+				if(detalles.size() > 4) {
 				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
@@ -197,13 +238,20 @@ public class ConsultarMaterialServlet extends HttpServlet {
 				out.println("<h3>Existencias: " + detalles.get(3) + "</h3>");
 				out.println("<h3>Materias primas involucradas: " + detalles.get(4) + "</h3>");
 				out.println("<h3>Componentes involucrados: " + detalles.get(5) + "</h3>");
+				} else {
+					out.println("<h1>No hay ningun producto asociado al ID</h1>");
+				}
 				break;
 			case "etapa-producto":
+				if(detalles.size() > 1) {
 				out.println("                <h1>ID: "+ detalles.get(0) +"</h1>");
 				out.println("            </div>");
 				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
 				out.println("<h3>Etapa Numero: " + detalles.get(1) + "</h3>");
 				out.println("<h3>Nombre del producto en la etapa: " + detalles.get(2) + "</h3>");
+				} else {
+					out.println("<h1>No hay ninguna etapa asociada al ID</h1>");
+				}
 				break;
 			default:
 				break;
@@ -219,35 +267,51 @@ public class ConsultarMaterialServlet extends HttpServlet {
 		if(detalles.size() != 0) {
 			switch(tipo) {
 			case "materia-prima":
-				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
-				out.println("            </div>");
-				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Existencias: " + detalles.get(1) + " toneladas." + "</h3>");
-				out.println("<h3>Compone los productos: " + detalles.get(2).substring(0, detalles.get(2).length()-2) + ".</h3>");
+				if(detalles.size() > 1) {
+					out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+					out.println("            </div>");
+					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+					out.println("<h3>Existencias: " + detalles.get(1) + " toneladas." + "</h3>");
+					out.println("<h3>Compone los productos: " + detalles.get(2).substring(0, detalles.get(2).length()-2) + ".</h3>");
+				} else {
+					out.println("<h1>No hay ninguna materia prima asociada al ID</h1>");
+				}				
 				break;
 			case "componente":
-				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
-				out.println("            </div>");
-				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Existencias: " + detalles.get(1) +" " + detalles.get(2) + "</h3>");
-				out.println("<h3>Compone los productos: " + detalles.get(3) + "</h3>");
+				if(detalles.size() > 2) {	
+					out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+					out.println("            </div>");
+					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+					out.println("<h3>Existencias: " + detalles.get(1) +" " + detalles.get(2) + "</h3>");
+					out.println("<h3>Compone los productos: " + detalles.get(3) + "</h3>");
+				} else {
+					out.println("<h1>No hay ningun componente asociado al ID</h1>");
+				}
 				break;
 			case "producto":
-				out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
-				out.println("            </div>");
-				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>ID: " + detalles.get(1) + "</h3>");
-				out.println("<h3>Costo de Venta: $" + detalles.get(2) + ".00</h3>");
-				out.println("<h3>Existencias: " + detalles.get(3) + "</h3>");
-				out.println("<h3>Materias primas involucradas: " + detalles.get(4) + "</h3>");
-				out.println("<h3>Componentes involucrados: " + detalles.get(5) + "</h3>");
+				if(detalles.size() > 4) {
+					out.println("                <h1>Nombre: "+ detalles.get(0) +"</h1>");
+					out.println("            </div>");
+					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+					out.println("<h3>ID: " + detalles.get(1) + "</h3>");
+					out.println("<h3>Costo de Venta: $" + detalles.get(2) + ".00</h3>");
+					out.println("<h3>Existencias: " + detalles.get(3) + "</h3>");
+					out.println("<h3>Materias primas involucradas: " + detalles.get(4) + "</h3>");
+					out.println("<h3>Componentes involucrados: " + detalles.get(5) + "</h3>");
+				} else {
+					out.println("<h1>No hay ningun producto asociado al ID</h1>");
+				}
 				break;
 			case "etapa-producto":
-				out.println("                <h1>ID: "+ detalles.get(0) +"</h1>");
-				out.println("            </div>");
-				out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
-				out.println("<h3>Etapa Numero: " + detalles.get(1) + "</h3>");
-				out.println("<h3>Nombre del producto en la etapa: " + detalles.get(2) + "</h3>");
+				if(detalles.size() > 1) {
+					out.println("                <h1>ID: "+ detalles.get(0) +"</h1>");
+					out.println("            </div>");
+					out.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:BLACK;\">");
+					out.println("<h3>Etapa Numero: " + detalles.get(1) + "</h3>");
+					out.println("<h3>Nombre del producto en la etapa: " + detalles.get(2) + "</h3>");
+				} else {
+					out.println("<h1>No hay ninguna etapa de producto asociada al ID</h1>");
+				}
 				break;
 			default:
 				break;

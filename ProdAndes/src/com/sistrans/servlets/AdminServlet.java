@@ -144,9 +144,13 @@ public class AdminServlet extends HttpServlet {
 	
 	public void printEtapasOperMasActivo(PrintWriter salida) {
 		ArrayList<String> etapas = ProdAndesGerente.darInstancia().darEtapas();
-		for(String e : etapas) {
-			salida.println("                            <option value=\"" + e.toLowerCase() + "\">" + e +"</option>");
-		}		
+		if(etapas.size() == 0) {
+			salida.println("                            <option value=\"none\" selected disabled>No hay ninguna etapa</option>");
+		} else {
+			for(String e : etapas) {
+				salida.println("                            <option value=\"" + e.toLowerCase() + "\">" + e +"</option>");
+			}	
+		}	
 	}
 	
 	public void printFooterOperMasActivo(PrintWriter salida) {

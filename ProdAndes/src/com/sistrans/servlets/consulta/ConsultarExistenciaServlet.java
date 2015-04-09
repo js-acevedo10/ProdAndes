@@ -31,14 +31,12 @@ public class ConsultarExistenciaServlet extends HttpServlet {
      */
     public ConsultarExistenciaServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		procesarSolicitud(request, response);
 	}
 
@@ -46,7 +44,6 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		procesarSolicitud(request, response);
 	}
 	
@@ -92,7 +89,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		if(tipo.equals("materia-prima")) {
 			ArrayList<MateriaPrima> items = ProdAndesAdmin.darInstancia().consultarExistenciasMatPrima(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
-
+				out.println("<h1>No hay materias primas con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -116,7 +113,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		} else if(tipo.equals("componente")) {
 			ArrayList<Componente> items = ProdAndesAdmin.darInstancia().consultarExistenciasComp(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
-				
+				out.println("<h1>No hay componentes con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -138,7 +135,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		} else if(tipo.equals("etapa-producto")) {
 			ArrayList<EtapadeProduccion> items = ProdAndesAdmin.darInstancia().consultarExistenciasEtapa(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
-				
+				out.println("<h1>No hay etapas de produccion con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -159,7 +156,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		} else if(tipo.equals("producto")) {
 			ArrayList<Producto> items = ProdAndesAdmin.darInstancia().consultarExistenciasProd(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
-				
+				out.println("<h1>No hay productos con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -190,7 +187,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		if(tipo.equals("materia-prima")) {
 			ArrayList<MateriaPrima> items = ProdAndesUsuario.darInstancia().consultarExistenciasMatPrima(tipo);
 			if(items.size() == 0) {
-
+				out.println("<h1>No hay materias primas con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -212,7 +209,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		} else if(tipo.equals("componente")) {
 			ArrayList<Componente> items = ProdAndesUsuario.darInstancia().consultarExistenciasComp(tipo);
 			if(items.size() == 0) {
-				
+				out.println("<h1>No hay componentes con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -234,7 +231,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		} else if(tipo.equals("etapa-producto")) {
 			ArrayList<EtapadeProduccion> items = ProdAndesUsuario.darInstancia().consultarExistenciasEtapa(tipo);
 			if(items.size() == 0) {
-				
+				out.println("<h1>No hay etapas de produccion con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -254,7 +251,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		} else if(tipo.equals("producto")) {
 			ArrayList<Producto> items = ProdAndesUsuario.darInstancia().consultarExistenciasProd(tipo);
 			if(items.size() == 0) {
-				
+				out.println("<h1>No hay productos con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -286,7 +283,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		if(tipo.equals("materia-prima")) {
 			ArrayList<MateriaPrima> items = ProdAndesOperario.darInstancia().consultarExistenciasMatPrima(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
-
+				out.println("<h1>No hay materias primas con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -310,7 +307,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		} else if(tipo.equals("componente")) {
 			ArrayList<Componente> items = ProdAndesOperario.darInstancia().consultarExistenciasComp(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
-				
+				out.println("<h1>No hay componentes con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -333,7 +330,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		} else if(tipo.equals("etapa-producto")) {
 			ArrayList<EtapadeProduccion> items = ProdAndesOperario.darInstancia().consultarExistenciasEtapa(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
-				
+				out.println("<h1>No hay etapas de produccion con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -353,7 +350,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		} else if(tipo.equals("producto")) {
 			ArrayList<Producto> items = ProdAndesOperario.darInstancia().consultarExistenciasProd(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
-				
+				out.println("<h1>No hay productos con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -384,7 +381,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		if(tipo.equals("materia-prima")) {
 			ArrayList<MateriaPrima> items = ProdAndesGerente.darInstancia().consultarExistenciasMatPrima(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
-
+				out.println("<h1>No hay materias primas con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -408,7 +405,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		} else if(tipo.equals("componente")) {
 			ArrayList<Componente> items = ProdAndesGerente.darInstancia().consultarExistenciasComp(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
-				
+				out.println("<h1>No hay componentes con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -430,7 +427,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		} else if(tipo.equals("etapa-producto")) {
 			ArrayList<EtapadeProduccion> items = ProdAndesGerente.darInstancia().consultarExistenciasEtapa(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
-				
+				out.println("<h1>No hay etapas de produccion con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -450,7 +447,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		} else if(tipo.equals("producto")) {
 			ArrayList<Producto> items = ProdAndesGerente.darInstancia().consultarExistenciasProd(tipo, existenciasMin, existenciasMax, estacion);
 			if(items.size() == 0) {
-				
+				out.println("<h1>No hay productos con estas caracteristicas.</h1>");
 			} else {
 				out.println("<thead>"
 						+ "<tr>"
@@ -514,7 +511,7 @@ public class ConsultarExistenciaServlet extends HttpServlet {
 		salida.println("                 </li>");
 		salida.println("            </ul>");
 		salida.println("            <ul class=\"nav navbar-nav navbar-right\">");
-		salida.println("                <li><a href=\"/ProdAndes/index.html\">Cerrar Sesión</a></li>");
+		salida.println("                <li><a href=\"/ProdAndes/index.html\">Cerrar Sesion</a></li>");
 		salida.println("            </ul>");
 		salida.println("          </div><!-- /.container-fluid -->");
 		salida.println("        </nav>");
