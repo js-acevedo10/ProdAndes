@@ -754,6 +754,19 @@ public class ProdAndesAdmin {
 		}
 		return resultado;
 	}
+	/*
+	 *                  <tr>
+                            <td>1</td>
+                            <td>Juan Santiago</td>
+                            <td>Hembro</td>
+                            <td>Único</td>
+                            <td>Único</td>
+                            <td>Único</td>
+                            <td>Único</td>
+                            <td>Único</td>
+                            <td>Único</td>
+                        </tr>
+	 */
 	public ArrayList<Pedido> consultarPedidos (String ID, String idCLiente, String estadoPago, String fechaCreacion, String fechaRecibido, String deadline, String idMateriaprima, Integer numMateriaPrima, String idComponente, Integer numComponente, String idProducto, Integer numProducto)
 	{
 		ArrayList<Pedido> resultado = new ArrayList<>();

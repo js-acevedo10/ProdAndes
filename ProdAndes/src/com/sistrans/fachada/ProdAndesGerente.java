@@ -964,4 +964,156 @@ public class ProdAndesGerente {
 		}
 		return etapas;
 	}
+
+	public ArrayList<String> darClientes() {
+		String query = "SELECT E.LOGIN FROM USUARIO E WHERE E.ROL = 'CLIENTE'";
+		PreparedStatement a = null;
+		ArrayList<String> etapas = new ArrayList<String>();
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next()) {
+				etapas.add(b.getString("LOGIN"));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}			
+		}
+		return etapas;
+	}
+
+	public ArrayList<String> darMateriasPrimas() {
+		String query = "SELECT E.ID FROM MATERIAPRIMA E";
+		PreparedStatement a = null;
+		ArrayList<String> etapas = new ArrayList<String>();
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next()) {
+				etapas.add(b.getString("ID"));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}			
+		}
+		return etapas;
+	}
+
+	public ArrayList<String> darComponentes() {
+		String query = "SELECT E.ID FROM COMPONENTE E";
+		PreparedStatement a = null;
+		ArrayList<String> etapas = new ArrayList<String>();
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next()) {
+				etapas.add(b.getString("ID"));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}			
+		}
+		return etapas;
+	}
+
+	public ArrayList<String> darIDProductos() {
+		String query = "SELECT E.ID FROM PRODUCTO E";
+		PreparedStatement a = null;
+		ArrayList<String> etapas = new ArrayList<String>();
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next()) {
+				etapas.add(b.getString("ID"));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}			
+		}
+		return etapas;
+	}
 }
