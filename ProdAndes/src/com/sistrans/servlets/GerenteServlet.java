@@ -232,7 +232,7 @@ public class GerenteServlet extends HttpServlet {
 		salida.println("            <div class=\"jumbotron\" style=\"padding-top:10px; margin-bottom:-10px;\">");
 		salida.println("               <h1>Consulta de Pedidos ProdAndes:</h1>");
 		salida.println("               <br>");
-		salida.println("                <form class=\"form-horizontal\" action=\"/ProdAndes/consultar/pedido.html\" method=\"put\">");
+		salida.println("                <form class=\"form-horizontal\" action=\"/ProdAndes/consultar/pedido.html\" method=\"post\">");
 		salida.println("                    <div class=\"form-group\">");
 		salida.println("                        <div class=\"col-md-4\">");
 		salida.println("                           <label for=\"idPedido\">ID del Pedido:</label>");

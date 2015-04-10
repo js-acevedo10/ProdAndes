@@ -754,30 +754,18 @@ public class ProdAndesAdmin {
 		}
 		return resultado;
 	}
-	/*
-	 *                  <tr>
-                            <td>1</td>
-                            <td>Juan Santiago</td>
-                            <td>Hembro</td>
-                            <td>Único</td>
-                            <td>Único</td>
-                            <td>Único</td>
-                            <td>Único</td>
-                            <td>Único</td>
-                            <td>Único</td>
-                        </tr>
-	 */
+	 
 	public ArrayList<Pedido> consultarPedidos (String ID, String idCLiente, String estadoPago, String fechaCreacion, String fechaRecibido, String deadline, String idMateriaprima, Integer numMateriaPrima, String idComponente, Integer numComponente, String idProducto, Integer numProducto)
 	{
 		ArrayList<Pedido> resultado = new ArrayList<>();
-		String query = "SELECT FROM PEDIDO";
-		if(ID!=null&&ID!="")
+		String query = "SELECT * FROM PEDIDO";
+		if(ID!=null&&!ID.equals(""))
 		{
-			query = "SELECT FROM PEDIDO WHERE ID='"+ID+"'";
+			query = "SELECT * FROM PEDIDO WHERE ID='"+ID+"'";
 		}
-		if(idCLiente!=null&&idCLiente!="")
+		if(idCLiente!=null&&!idCLiente.equals(""))
 		{
-			if(query.length()>18)
+			if(query.length()>20)
 			{
 				query = query +" AND IDCLIENTE='"+idCLiente+"'";
 			}
@@ -786,9 +774,9 @@ public class ProdAndesAdmin {
 				query=query + " WHERE IDCLIENTE='"+idCLiente+"'";
 			}
 		}
-		if(estadoPago!=null&&estadoPago!="")
+		if(estadoPago!=null&&!estadoPago.equals(""))
 		{
-			if(query.length()>18)
+			if(query.length()>20)
 			{
 				query = query +" AND ESTADOPAGO='"+estadoPago+"'";
 			}
@@ -797,9 +785,9 @@ public class ProdAndesAdmin {
 				query=query + " WHERE ESTADOPAGO='"+estadoPago+"'";
 			}
 		}
-		if(fechaCreacion!=null&&fechaCreacion!="")
+		if(fechaCreacion!=null&&!fechaCreacion.equals(""))
 		{
-			if(query.length()>18)
+			if(query.length()>20)
 			{
 				query = query +" AND fechaCreacion='"+fechaCreacion+"'";
 			}
@@ -808,9 +796,9 @@ public class ProdAndesAdmin {
 				query=query + " WHERE fechaCreacion='"+fechaCreacion+"'";
 			}
 		}
-		if(fechaRecibido!=null&&fechaRecibido!="")
+		if(fechaRecibido!=null&&!fechaRecibido.equals(""))
 		{
-			if(query.length()>18)
+			if(query.length()>20)
 			{
 				query = query +" AND fechaRecibido='"+fechaRecibido+"'";
 			}
@@ -819,9 +807,9 @@ public class ProdAndesAdmin {
 				query=query + " WHERE fechaRecibido='"+fechaRecibido+"'";
 			}
 		}
-		if(deadline!=null&&deadline!="")
+		if(deadline!=null&&!deadline.equals(""))
 		{
-			if(query.length()>18)
+			if(query.length()>20)
 			{
 				query = query +" AND deadline='"+deadline+"'";
 			}
@@ -830,9 +818,9 @@ public class ProdAndesAdmin {
 				query=query + " WHERE deadline='"+deadline+"'";
 			}
 		}
-		if(idMateriaprima!=null&&idMateriaprima!="")
+		if(idMateriaprima!=null&&!idMateriaprima.equals(""))
 		{
-			if(query.length()>18)
+			if(query.length()>20)
 			{
 				query = query +" AND idMateriaprima='"+idMateriaprima+"'";
 			}
@@ -841,7 +829,7 @@ public class ProdAndesAdmin {
 				query=query + " WHERE idMateriaprima='"+idMateriaprima+"'";
 			}
 		}
-		if(numMateriaPrima!=null)
+		if(numMateriaPrima!=null&&!numMateriaPrima.equals(""))
 		{
 			if(query.length()>18)
 			{
@@ -852,9 +840,9 @@ public class ProdAndesAdmin {
 				query=query + " WHERE numMateriaPrima='"+numMateriaPrima+"'";
 			}
 		}
-		if(idComponente!=null&&idComponente!="")
+		if(idComponente!=null&&!idComponente.equals(""))
 		{
-			if(query.length()>18)
+			if(query.length()>20)
 			{
 				query = query +" AND idComponente='"+idComponente+"'";
 			}
@@ -863,9 +851,9 @@ public class ProdAndesAdmin {
 				query=query + " WHERE idComponente='"+idComponente+"'";
 			}
 		}
-		if(numComponente!=null)
+		if(numComponente!=null&&!numComponente.equals(""))
 		{
-			if(query.length()>18)
+			if(query.length()>20)
 			{
 				query = query +" AND numComponente='"+numComponente+"'";
 			}
@@ -874,9 +862,9 @@ public class ProdAndesAdmin {
 				query=query + " WHERE numComponente='"+numComponente+"'";
 			}
 		}
-		if(idProducto!=null&&idProducto!="")
+		if(idProducto!=null&&!idProducto.equals(""))
 		{
-			if(query.length()>18)
+			if(query.length()>20)
 			{
 				query = query +" AND idProducto='"+idProducto+"'";
 			}
@@ -885,9 +873,9 @@ public class ProdAndesAdmin {
 				query=query + " WHERE idProducto='"+idProducto+"'";
 			}
 		}
-		if(numProducto!=null)
+		if(numProducto!=null&&!numProducto.equals(""))
 		{
-			if(query.length()>18)
+			if(query.length()>20)
 			{
 				query = query +" AND numProducto='"+numProducto+"'";
 			}
@@ -902,6 +890,7 @@ public class ProdAndesAdmin {
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
+			int x = 0;
 			while(b.next())
 			{
 				String idT = b.getString("ID");

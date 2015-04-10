@@ -18,7 +18,7 @@ public class Pedido
 
 	public Pedido(String iD, String idCliente, String estadoPago, Date fechaCreacion, Date fechaRecibido, Date deadLine, String anotaciones, String idMateriaPrima, int numMateriaPrima, String idComponente, int numComponente, String idProducto, int numProducto) {
 		super();
-
+		 this.id = iD;
 		 this.setIdCliente(idCliente);
 		 this.setEstadoPago(estadoPago);
 		 this.setFechaCreacion(fechaCreacion);
