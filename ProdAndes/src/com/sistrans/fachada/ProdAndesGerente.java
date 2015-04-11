@@ -1108,7 +1108,154 @@ public class ProdAndesGerente {
 					try {
 						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}			
+		}
+		return etapas;
+	}
+
+	public ArrayList<String> darTiposDoc() {
+		String query = "SELECT DISTINCT E.TIPODOC FROM USUARIO E WHERE E.ROL = 'CLIENTE'";
+		PreparedStatement a = null;
+		ArrayList<String> etapas = new ArrayList<String>();
+		try
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next()) {
+				etapas.add(b.getString("TIPODOC"));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}			
+		}
+		return etapas;
+	}
+
+	public ArrayList<String> darNacionalidades() {
+		String query = "SELECT DISTINCT E.NACIONALIDAD FROM USUARIO E WHERE E.ROL = 'CLIENTE'";
+		PreparedStatement a = null;
+		ArrayList<String> etapas = new ArrayList<String>();
+		try
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next()) {
+				etapas.add(b.getString("NACIONALIDAD"));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}			
+		}
+		return etapas;
+	}
+
+	public ArrayList<String> darCiudades() {
+		String query = "SELECT DISTINCT E.CIUDAD FROM USUARIO E WHERE E.ROL = 'CLIENTE'";
+		PreparedStatement a = null;
+		ArrayList<String> etapas = new ArrayList<String>();
+		try
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next()) {
+				etapas.add(b.getString("CIUDAD"));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}			
+		}
+		return etapas;
+	}
+
+	public ArrayList<String> darDepartamentos() {
+		String query = "SELECT DISTINCT E.DEPARTAMENTO FROM USUARIO E WHERE E.ROL = 'CLIENTE'";
+		PreparedStatement a = null;
+		ArrayList<String> etapas = new ArrayList<String>();
+		try
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next()) {
+				etapas.add(b.getString("DEPARTAMENTO"));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}

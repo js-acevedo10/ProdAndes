@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @generated
  */
 
-public class Usuario
+public class Usuario implements Comparable<Usuario>
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -319,6 +319,11 @@ public class Usuario
 	public void agregarPedido (Pedido a)
 	{
 		pedidos.add(a);
+	}
+
+	@Override
+	public int compareTo(Usuario o) {
+		return this.getLogin().compareTo(o.getLogin());
 	}
 
 }

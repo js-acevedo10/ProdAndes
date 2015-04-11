@@ -39,6 +39,64 @@ public class ProdAndesAdmin {
 		dao.inicializar();
 	}
 
+	public void encenderAutoCommit() {
+		String query = "SET AUTOCOMMIT 1";
+		PreparedStatement a = null;
+		try {
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+	
+	public void apagarAutoCommit() {
+		String query = "SET AUTOCOMMIT 0";
+		PreparedStatement a = null;
+		try {
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+	
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
@@ -74,7 +132,6 @@ public class ProdAndesAdmin {
 		{
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
-			System.out.println(query + "-----------------------------");
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
@@ -570,7 +627,6 @@ public class ProdAndesAdmin {
 		}
 	}
 	
-	//Metodos de casos de uso
 	public ArrayList<Usuario> operarioMasActivo(String idEtapa, String numOperaciones)
 	{
 		ArrayList<Usuario> resultado = new ArrayList<>();
@@ -685,6 +741,7 @@ public class ProdAndesAdmin {
 		}
 		return resultado;
 	}
+	
 	public ArrayList<String> etapaMasActiva(String fechaInc, String fechaFin)
 	{
 		ArrayList<String> resultado=new ArrayList<>();
@@ -831,7 +888,7 @@ public class ProdAndesAdmin {
 		}
 		if(numMateriaPrima!=null&&!numMateriaPrima.equals(""))
 		{
-			if(query.length()>18)
+			if(query.length()>20)
 			{
 				query = query +" AND numMateriaPrima='"+numMateriaPrima+"'";
 			}
@@ -938,8 +995,7 @@ public class ProdAndesAdmin {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 		finally 
 		{
@@ -961,63 +1017,65 @@ public class ProdAndesAdmin {
 		}		
 		return resultado;
 	}
-	public ArrayList<Usuario> consultarClientes(String login, String tipoDoc, Integer numDoc, String nombre, String direccion, String nacionalidad, String email, Integer telefono, String ciudad, String departamento, Integer codPostal, Integer numReg, Integer personaNatural) 
+	
+	public ArrayList<Usuario> consultarClientes(String login, String tipoDoc, String numDoc, String nombre, String direccion, String nacionalidad, String email, String telefono, String ciudad, String departamento, String codPostal, String numReg, String personaNatural)
 		{
-		ArrayList<Usuario> resultado = new ArrayList<>();
-		String query="SELECT FROM USUARIO WHERE ROL='CLIENTE'";
-		if(login!=null&&login!="")
+		ArrayList<Usuario> resultado = new ArrayList<Usuario>();
+		String query="SELECT * FROM USUARIO WHERE ROL='CLIENTE'";
+		if(login!=null&&!login.equals(""))
 		{
 			query = query +" AND login='"+login+"'";			
 		}
-		if(tipoDoc!=null&&tipoDoc!="")
+		if(tipoDoc!=null&&!tipoDoc.equals(""))
 		{
 			query = query +" AND tipoDoc='"+tipoDoc+"'";			
 		}
-		if(numDoc!=null)
+		if(numDoc!=null&&!numDoc.equals(""))
 		{
 			query = query +" AND numDoc='"+numDoc+"'";			
 		}
-		if(nombre!=null&&nombre!="")
+		if(nombre!=null&&!nombre.equals(""))
 		{
 			query = query +" AND nombre='"+nombre+"'";			
 		}
-		if(direccion!=null&&direccion!="")
+		if(direccion!=null&&!direccion.equals(""))
 		{
 			query = query +" AND direccion='"+direccion+"'";			
 		}
-		if(nacionalidad!=null&&nacionalidad!="")
+		if(nacionalidad!=null&&!nacionalidad.equals(""))
 		{
 			query = query +" AND nacionalidad='"+nacionalidad+"'";			
 		}
-		if(email!=null&&email!="")
+		if(email!=null&&!email.equals(""))
 		{
 			query = query +" AND email='"+email+"'";			
 		}
-		if(telefono!=null)
+		if(telefono!=null&&!telefono.equals(""))
 		{
 			query = query +" AND telefono='"+telefono+"'";			
 		}
-		if(ciudad!=null&&ciudad!="")
+		if(ciudad!=null&&!ciudad.equals(""))
 		{
 			query = query +" AND ciudad='"+ciudad+"'";			
 		}
-		if(departamento!=null&&departamento!="")
+		if(departamento!=null&&!departamento.equals(""))
 		{
 			query = query +" AND departamento='"+departamento+"'";			
 		}
-		if(codPostal!=null)
+		if(codPostal!=null&&!codPostal.equals(""))
 		{
 			query = query +" AND codPostal='"+codPostal+"'";			
 		}
-		if(numReg!=null)
+		if(numReg!=null&&!numReg.equals(""))
 		{
 			query = query +" AND numReg='"+numReg+"'";			
 		}
-		if(personaNatural!=null)
+		if(personaNatural!=null&&!personaNatural.equals(""))
 		{
 			query = query +" AND personaNatural='"+personaNatural+"'";			
 		}
 		PreparedStatement a = null;
+		PreparedStatement x = null;
 		try 
 		{
 			dao.inicializar();
@@ -1037,50 +1095,50 @@ public class ProdAndesAdmin {
 				String departamentoT= b.getString(11);
 				int codPostalT = b.getInt(12);
 				Usuario z = new Usuario(loginT, "0", tipoDocT, numDocT, nombreT, direccionT, nacionalidadT, emailT, telefonoT, ciudadT, departamentoT, codPostalT);
-				String query2 = "SELECT FROM PEDIDO WHERE IDCLIENTE='"+loginT+"'";
-				a = dao.conexion.prepareStatement(query2);
-				ResultSet c = a.executeQuery();
+				String query2 = "SELECT * FROM PEDIDO WHERE IDCLIENTE='"+loginT+"'";
+				x = dao.conexion.prepareStatement(query2);
+				ResultSet c = x.executeQuery();
 				while(c.next())
 				{
-					String idT = b.getString("ID");
-					String idClienteT = b.getString("IDCLIENTE");
-					String estadoPagoT = b.getString("ESTADOPAGO");
-					Date fechaCreacionT = b.getDate("FECHACREACION");
+					String idT = c.getString("ID");
+					String idClienteT = c.getString("IDCLIENTE");
+					String estadoPagoT = c.getString("ESTADOPAGO");
+					Date fechaCreacionT = c.getDate("FECHACREACION");
 					Date fechaRecibidoT = null;
-					if(b.getDate("FECHARECIBIDO")!=null)
+					if(c.getDate("FECHARECIBIDO")!=null)
 					{
-						fechaRecibidoT = b.getDate("FECHARECIBIDO");
+						fechaRecibidoT = c.getDate("FECHARECIBIDO");
 					}
-					Date deadlineT = b.getDate("DEADLINE");
+					Date deadlineT = c.getDate("DEADLINE");
 					String anotacionesT ="";
-					if(b.getString("ANOTACIONES")!=null&&b.getString("ANOTACIONES")!="")
+					if(c.getString("ANOTACIONES")!=null&&c.getString("ANOTACIONES")!="")
 					{
-						anotacionesT = b.getString("ANOTACIONES");
+						anotacionesT = c.getString("ANOTACIONES");
 					}
 					
 					String idMateriaPrimaT = "";
 					
-					if(b.getString("IDMateriaPrima")!=null)
+					if(c.getString("IDMateriaPrima")!=null)
 					{
-						idMateriaPrimaT = b.getString("IDMateriaPrima");
+						idMateriaPrimaT = c.getString("IDMateriaPrima");
 					}
-					int numMateriaPrimaT = b.getInt("NUMMateriaPrima");
+					int numMateriaPrimaT = c.getInt("NUMMateriaPrima");
 					
 					String idComponenteT = "";
 					
-					if(b.getString("IDComponente")!=null)
+					if(c.getString("IDComponente")!=null)
 					{
-						idComponenteT = b.getString("IDComponente");
+						idComponenteT = c.getString("IDComponente");
 					}
-					int numComponenteT = b.getInt("NUMComponente");
+					int numComponenteT = c.getInt("NUMComponente");
 					
 					String idPrductoT = "";
 					
-					if(b.getString("IDPRODUCTO")!=null)
+					if(c.getString("IDPRODUCTO")!=null)
 					{
-						idPrductoT = b.getString("IDPRODUCTO");
+						idPrductoT = c.getString("IDPRODUCTO");
 					}
-					int numProductoT = b.getInt("NUMPRODUCTO");
+					int numProductoT = c.getInt("NUMPRODUCTO");
 					Pedido zz = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT);
 					z.agregarPedido(zz);
 				}
@@ -1090,7 +1148,6 @@ public class ProdAndesAdmin {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally 
@@ -1114,5 +1171,5 @@ public class ProdAndesAdmin {
 		return resultado;
 		
 	}
-	
+
 }
