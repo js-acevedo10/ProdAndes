@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sistrans.fachada.ProdAndesAdmin;
 import com.sistrans.fachada.ProdAndesUsuario;
 
 /**
@@ -73,14 +74,18 @@ public class RegistroPedidoProductosCliente extends HttpServlet {
 				id1 = id4;
 				c1 = c4;
 			}
+			ProdAndesAdmin.darInstancia().apagarAutoCommit();
 			x = ProdAndesUsuario.darInstancia().registrarPedido(id1, id2, fecha, c1, id4);
 		}
 		
 		if(x) {
 			response.sendRedirect("/ProdAndes/pages/user/success/pedido.html");
+			ProdAndesAdmin.darInstancia().hacerCommit();
 		} else {
 			response.sendRedirect("/ProdAndes/pages/user/error/pedido.html");
+			ProdAndesAdmin.darInstancia().hacerRollback();
 		}
+		ProdAndesAdmin.darInstancia().encenderAutoCommit();
 	}
 
 }

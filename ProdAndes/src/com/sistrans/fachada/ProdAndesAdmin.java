@@ -38,7 +38,7 @@ public class ProdAndesAdmin {
 	}
 
 	public void encenderAutoCommit() {
-		String query = "SET AUTOCOMMIT 1";
+		String query = "SET AUTOCOMMIT ON";
 		PreparedStatement a = null;
 		try {
 			dao.inicializar();
@@ -67,7 +67,7 @@ public class ProdAndesAdmin {
 	}
 	
 	public void apagarAutoCommit() {
-		String query = "SET AUTOCOMMIT 0";
+		String query = "SET AUTOCOMMIT OFF";
 		PreparedStatement a = null;
 		try {
 			dao.inicializar();
