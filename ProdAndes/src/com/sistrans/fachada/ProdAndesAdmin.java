@@ -17,9 +17,7 @@ import com.sistrans.mundo.Usuario;
 public class ProdAndesAdmin {
 
 	private ConsultaDAOUsuario dao;
-	
-	//Singleton
-	
+		
 	private static ProdAndesAdmin instancia;
 	
 	public static ProdAndesAdmin darInstancia()
@@ -91,6 +89,56 @@ public class ProdAndesAdmin {
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+	
+	public void hacerCommit() {
+		String query = "COMMIT";
+		PreparedStatement a = null;
+		try {
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(a != null) {
+				try {
+					a.close();
+				} catch (Exception e) {
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception f) {
+						// TODO Auto-generated catch block
+						f.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+	
+	public void hacerRollback() {
+		String query = "ROLLBACK";
+		PreparedStatement a = null;
+		try {
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(a != null) {
+				try {
+					a.close();
+				} catch (Exception e) {
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception f) {
+						// TODO Auto-generated catch block
+						f.printStackTrace();
 					}
 				}
 			}
