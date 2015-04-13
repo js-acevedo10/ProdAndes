@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.sistrans.dao.ConsultaDAOUsuario;
 import com.sistrans.mundo.Componente;
+import com.sistrans.mundo.EstaciondeProducto;
 import com.sistrans.mundo.EtapadeProduccion;
 import com.sistrans.mundo.MateriaPrima;
 import com.sistrans.mundo.Producto;
@@ -1261,6 +1262,273 @@ public class ProdAndesGerente {
 				}
 			}			
 		}
-		return etapas;
+		return etapas;		
 	}
+	
+	public boolean desActivarEtapaProduccion(String idEstacion)
+	{
+		String query = "SELECT * FROM ETAPAPRODUCCION WHERE ID='"+idEstacion+"'";
+		PreparedStatement a = null;
+		try
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			String idProducto ="";
+			while(b.next()) 
+			{
+				idProducto=b.getString(4);
+			}
+			if(!idProducto.equals(""))
+			{
+				query="SELECT * FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION='"+idEstacion+"'"; 
+				a = dao.conexion.prepareStatement(query);
+				b = a.executeQuery();
+				ArrayList<EstaciondeProducto> estacionesEtapa= new ArrayList<>();
+				while(b.next())
+				{
+					String codigo = b.getString(1);
+					String etapaProduccion = b.getString(2);
+					int tiempoRealizacion = Integer.parseInt(b.getString(3));
+					EstaciondeProducto z = new EstaciondeProducto(codigo, etapaProduccion, tiempoRealizacion);
+					String idComponente = b.getString(4);
+					if(!b.wasNull())
+					{
+						int numComponente = b.getInt(5);
+						z.setIdComponente(idComponente);
+						z.setNumComponente(numComponente);
+					}
+					String idMateriaPrima = b.getString(6);
+					if(!b.wasNull())
+					{
+						int numMateriaPrima = b.getInt(7);
+						z.setIdMateriaPrima(idMateriaPrima);
+						z.setNumMateriaPrima(numMateriaPrima);
+					}
+					String idProductoA = b.getString(8);
+					if(!b.wasNull())
+					{
+						int numProducto = b.getInt(9);
+						z.setIdProducto(idProductoA);
+						z.setNumProducto(numProducto);
+					}
+					
+					estacionesEtapa.add(z);
+				}
+								
+				query="SELECT * FROM ETAPAPRODUCCION WHERE IDPRODUCTO='"+idProducto+"' AND ID!='"+idEstacion+"'"; 
+				a = dao.conexion.prepareStatement(query);
+				b = a.executeQuery();
+				ArrayList<EtapadeProduccion> etapasDeProduccion = new ArrayList<>();
+				while(b.next())
+				{
+					String id = b.getString(1);
+					int num = b.getInt(2);
+					EtapadeProduccion z = new EtapadeProduccion(num, id);
+					etapasDeProduccion.add(z);
+				}
+				ArrayList<Integer> cuenta = new ArrayList<>();
+				for(int i=0;i<etapasDeProduccion.size();i++)
+				{
+					query="SELECT * FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION='"+etapasDeProduccion.get(i).getNombre()+"'"; 
+					int contador =0;
+					a = dao.conexion.prepareStatement(query);
+					b = a.executeQuery();
+					while(b.next())
+					{
+						contador++;
+					}
+					cuenta.add(contador);
+				}
+				int promedio=0;
+				int suma=0;
+				for(int i=0; i<cuenta.size();i++)
+				{
+					suma+=cuenta.get(i);
+				}
+				promedio = suma/cuenta.size();
+				while(!estacionesEtapa.isEmpty())
+				{
+					int menor=999999999;
+					int indice=0;
+					for (int i=0;i<cuenta.size();i++)
+					{
+						if(menor==999999999||menor>cuenta.get(i))
+						{
+							menor=cuenta.get(i);
+							indice=i;
+						}							
+					}
+					query = "UPDATE ESTACIONDEPRODUCCION SET IDETAPAPRODUCCION='" +etapasDeProduccion.get(indice)+ "' WHERE CODIGO='"+estacionesEtapa.get(0)+"'";
+					a = dao.conexion.prepareStatement(query);
+					b = a.executeQuery();
+					estacionesEtapa.remove(0);
+					int nuevoNumero= cuenta.get(indice)+1;
+					cuenta.set(indice, nuevoNumero);
+				}
+			}
+			else
+			{
+				return false;
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}			
+		}
+		return true;
+	}
+	
+	
+	public boolean activarEtapaProduccion(String idEstacion)
+	{
+		String query = "SELECT * FROM ETAPAPRODUCCION WHERE ID='"+idEstacion+"'";
+		PreparedStatement a = null;
+		try
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			String idProducto ="";
+			while(b.next()) 
+			{
+				idProducto=b.getString(4);
+			}
+			if(!idProducto.equals(""))
+			{							
+				query="SELECT * FROM ETAPAPRODUCCION WHERE IDPRODUCTO='"+idProducto+"' AND ID!='"+idEstacion+"'"; 
+				a = dao.conexion.prepareStatement(query);
+				b = a.executeQuery();
+				ArrayList<EtapadeProduccion> etapasDeProduccion = new ArrayList<>();
+				while(b.next())
+				{
+					String id = b.getString(1);
+					int num = b.getInt(2);
+					EtapadeProduccion z = new EtapadeProduccion(num, id);
+					etapasDeProduccion.add(z);
+				}
+				ArrayList<Integer> cuenta = new ArrayList<>();
+				for(int i=0;i<etapasDeProduccion.size();i++)
+				{
+					query="SELECT * FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION='"+etapasDeProduccion.get(i).getNombre()+"'"; 
+					int contador =0;
+					a = dao.conexion.prepareStatement(query);
+					b = a.executeQuery();
+					while(b.next())
+					{
+						contador++;
+					}
+					cuenta.add(contador);
+				}
+				int promedio=0;
+				int suma=0;
+				for(int i=0; i<cuenta.size();i++)
+				{
+					suma+=cuenta.get(i);
+				}
+				promedio = suma/(cuenta.size()+1);
+				ArrayList<EstaciondeProducto> estacionesEtapa = new ArrayList<>();
+				while(estacionesEtapa.size()<promedio)
+				{
+					int mayor=0;
+					int indice=0;
+					for (int i=0;i<cuenta.size();i++)
+					{
+						if(mayor<cuenta.get(i))
+						{
+							mayor=cuenta.get(i);
+							indice=i;
+						}							
+					}
+					
+					query="SELECT * FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION='"+etapasDeProduccion.get(indice)+"'"; 
+					a = dao.conexion.prepareStatement(query);
+					b = a.executeQuery();
+					EstaciondeProducto estacionEtapaActual= null;
+					while(b.next()&&estacionEtapaActual==null)
+					{
+						String codigo = b.getString(1);
+						String etapaProduccion = b.getString(2);
+						int tiempoRealizacion = Integer.parseInt(b.getString(3));
+						EstaciondeProducto z = new EstaciondeProducto(codigo, etapaProduccion, tiempoRealizacion);
+						String idComponente = b.getString(4);
+						if(!b.wasNull())
+						{
+							int numComponente = b.getInt(5);
+							z.setIdComponente(idComponente);
+							z.setNumComponente(numComponente);
+						}
+						String idMateriaPrima = b.getString(6);
+						if(!b.wasNull())
+						{
+							int numMateriaPrima = b.getInt(7);
+							z.setIdMateriaPrima(idMateriaPrima);
+							z.setNumMateriaPrima(numMateriaPrima);
+						}
+						String idProductoA = b.getString(8);
+						if(!b.wasNull())
+						{
+							int numProducto = b.getInt(9);
+							z.setIdProducto(idProductoA);
+							z.setNumProducto(numProducto);
+						}
+						
+						estacionEtapaActual=z;
+					}
+					
+					query = "UPDATE ESTACIONDEPRODUCCION SET IDETAPAPRODUCCION='" +idEstacion+ "' WHERE CODIGO='"+estacionEtapaActual.getCodigo()+"'";
+					a = dao.conexion.prepareStatement(query);
+					b = a.executeQuery();
+					estacionesEtapa.add(estacionEtapaActual);
+					int nuevoNumero= cuenta.get(indice)-1;
+					cuenta.set(indice, nuevoNumero);
+				}
+			}
+			else
+			{
+				return false;
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}			
+		}
+		return true;
+	}
+	
+	
 }

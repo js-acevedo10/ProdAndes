@@ -9,24 +9,12 @@ package com.sistrans.mundo;
 
 public class EstaciondeProducto
 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
 	
-	private String codigo;
-	
-	public EstaciondeProducto(String codigo, String numEtapadeProduccion,
-			int capacidadProduccion, Operario operario,
-			EtapadeProduccion etapadeProduccion) {
+	public EstaciondeProducto(String codigo, String idEtapaProduccion, int tiempoRealizacion) {
 		super();
 		this.codigo = codigo;
-		this.numEtapadeProduccion = numEtapadeProduccion;
-		this.capacidadProduccion = capacidadProduccion;
-		this.operario = operario;
-		this.etapadeProduccion = etapadeProduccion;
+		this.idEtapadeProduccion = idEtapaProduccion;
+		this.tiempoRealizacion = tiempoRealizacion;
 	}
 
 	/**
@@ -43,106 +31,87 @@ public class EstaciondeProducto
 		this.codigo = codigo;
 	}
 
-	/**
-	 * @return the numEtapadeProduccion
-	 */
-	public String getNumEtapadeProduccion() {
-		return numEtapadeProduccion;
-	}
-
-	/**
-	 * @param numEtapadeProduccion the numEtapadeProduccion to set
-	 */
-	public void setNumEtapadeProduccion(String numEtapadeProduccion) {
-		this.numEtapadeProduccion = numEtapadeProduccion;
-	}
-
-	/**
-	 * @return the capacidadProduccion
-	 */
-	public int getCapacidadProduccion() {
-		return capacidadProduccion;
-	}
-
-	/**
-	 * @param capacidadProduccion the capacidadProduccion to set
-	 */
-	public void setCapacidadProduccion(int capacidadProduccion) {
-		this.capacidadProduccion = capacidadProduccion;
-	}
-
-	/**
-	 * @return the operario
-	 */
-	public Operario getOperario() {
-		return operario;
-	}
-
-	/**
-	 * @param operario the operario to set
-	 */
-	public void setOperario(Operario operario) {
-		this.operario = operario;
-	}
-
-	/**
-	 * @return the etapadeProduccion
-	 */
-	public EtapadeProduccion getEtapadeProduccion() {
-		return etapadeProduccion;
-	}
-
-	/**
-	 * @param etapadeProduccion the etapadeProduccion to set
-	 */
-	public void setEtapadeProduccion(EtapadeProduccion etapadeProduccion) {
-		this.etapadeProduccion = etapadeProduccion;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
 	
-	private String numEtapadeProduccion;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private int capacidadProduccion;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Operario operario;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public EtapadeProduccion etapadeProduccion;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
-	public EstaciondeProducto(){
-		super();
+	public String getIdEtapadeProduccion() {
+		return idEtapadeProduccion;
 	}
 
+	public void setIdEtapadeProduccion(String idEtapadeProduccion) {
+		this.idEtapadeProduccion = idEtapadeProduccion;
+	}
+
+
+	public int getTiempoRealizacion() {
+		return tiempoRealizacion;
+	}
+
+	public void setTiempoRealizacion(int tiempoRealizacion) {
+		this.tiempoRealizacion = tiempoRealizacion;
+	}
+
+
+	public String getIdComponente() {
+		return idComponente;
+	}
+
+	public void setIdComponente(String idComponente) {
+		this.idComponente = idComponente;
+	}
+
+
+	public int getNumComponente() {
+		return numComponente;
+	}
+
+	public void setNumComponente(int numComponente) {
+		this.numComponente = numComponente;
+	}
+
+
+	public String getIdMateriaPrima() {
+		return idMateriaPrima;
+	}
+
+	public void setIdMateriaPrima(String idMateriaPrima) {
+		this.idMateriaPrima = idMateriaPrima;
+	}
+
+
+	public int getNumMateriaPrima() {
+		return numMateriaPrima;
+	}
+
+	public void setNumMateriaPrima(int numMateriaPrima) {
+		this.numMateriaPrima = numMateriaPrima;
+	}
+
+
+	public String getIdProducto() {
+		return idProducto;
+	}
+
+	public void setIdProducto(String idProducto) {
+		this.idProducto = idProducto;
+	}
+
+
+	public int getNumProducto() {
+		return numProducto;
+	}
+
+	public void setNumProducto(int numProducto) {
+		this.numProducto = numProducto;
+	}
+
+
+	private String idEtapadeProduccion;
+	private String codigo;
+	private int tiempoRealizacion;
+	private String idComponente;
+	private int numComponente;
+	private String idMateriaPrima;
+	private int numMateriaPrima;
+	private String idProducto;
+	private int numProducto;
 }
 
