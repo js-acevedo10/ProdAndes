@@ -62,4 +62,36 @@ public class ConsultaDAOUsuario {
     {
     	establecerConexion(cadenaConexion, usuario, clave);
     }
+	
+	public void encenderAutocommit() {
+		try {
+			conexion.setAutoCommit(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void apagarAutocommit() {
+		try {
+			conexion.setAutoCommit(false);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void commit() {
+		try {
+			conexion.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void rollback() {
+		try {
+			conexion.rollback();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

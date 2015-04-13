@@ -573,7 +573,7 @@ public class ProdAndesUsuario {
 					else
 					{
 						int rand = (int) (Math.random()*1000);
-						flag = true;
+						flag = false;
 						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, ANOTACIONES, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+(id1+""+rand)+"','3','no pago',to_date('"+ti+"','YYYY-MM-DD'),to_date('"+tf+"','YYYY-MM-DD'), 'No se tienen los materiales necesarios', '"+id1+"', '"+id32+"')";
 						a = dao.conexion.prepareStatement(query6);
 						a.executeQuery();

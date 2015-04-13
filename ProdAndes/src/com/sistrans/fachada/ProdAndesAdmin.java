@@ -38,111 +38,23 @@ public class ProdAndesAdmin {
 	}
 
 	public void encenderAutoCommit() {
-		String query = "SET AUTOCOMMIT ON";
-		PreparedStatement a = null;
-		try {
-			dao.inicializar();
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		finally 
-		{
-			if (a != null) 
-			{
-				try {
-					a.close();
-				} catch (SQLException exception) {
-					
-					try {
-						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		}
+		dao.inicializar();
+		dao.encenderAutocommit();
 	}
 	
 	public void apagarAutoCommit() {
-		String query = "SET AUTOCOMMIT OFF";
-		PreparedStatement a = null;
-		try {
-			dao.inicializar();
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		finally 
-		{
-			if (a != null) 
-			{
-				try {
-					a.close();
-				} catch (SQLException exception) {
-					
-					try {
-						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		}
+		dao.inicializar();
+		dao.apagarAutocommit();
 	}
 	
 	public void hacerCommit() {
-		String query = "COMMIT";
-		PreparedStatement a = null;
-		try {
-			dao.inicializar();
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(a != null) {
-				try {
-					a.close();
-				} catch (Exception e) {
-					try {
-						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
-					} catch (Exception f) {
-						// TODO Auto-generated catch block
-						f.printStackTrace();
-					}
-				}
-			}
-		}
+		dao.inicializar();
+		dao.commit();
 	}
 	
 	public void hacerRollback() {
-		String query = "ROLLBACK";
-		PreparedStatement a = null;
-		try {
-			dao.inicializar();
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(a != null) {
-				try {
-					a.close();
-				} catch (Exception e) {
-					try {
-						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
-					} catch (Exception f) {
-						// TODO Auto-generated catch block
-						f.printStackTrace();
-					}
-				}
-			}
-		}
+		dao.inicializar();
+		dao.rollback();
 	}
 	
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
