@@ -75,6 +75,8 @@ public class RegistroPedidoProductosCliente extends HttpServlet {
 				c1 = c4;
 			}
 			ProdAndesAdmin.darInstancia().apagarAutoCommit();
+			ProdAndesAdmin.darInstancia().lockTable("PEDIDO");
+			ProdAndesAdmin.darInstancia().lockTable("PRODUCTO");
 			x = ProdAndesUsuario.darInstancia().registrarPedido(id1, id2, fecha, c1, id4);
 		}
 		
