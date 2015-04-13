@@ -214,6 +214,8 @@ public class Usuario implements Comparable<Usuario>
 		this.departamento = departamento;
 		this.codPostal = codPostal;
 		pedidos = new ArrayList<Pedido>();
+		materiasPrimas = new ArrayList<MateriaPrima>();
+		componentes = new ArrayList<Componente>();
 	}
 
 	/**
@@ -320,10 +322,44 @@ public class Usuario implements Comparable<Usuario>
 	{
 		pedidos.add(a);
 	}
+	public ArrayList<Pedido> darPedidos()
+	{
+		return pedidos;
+	}
 
 	@Override
 	public int compareTo(Usuario o) {
 		return this.getLogin().compareTo(o.getLogin());
+	}
+	
+	private ArrayList<MateriaPrima> materiasPrimas;
+	public void agregarMateriaPrima (MateriaPrima a)
+	{
+		materiasPrimas.add(a);
+	}
+	public ArrayList<MateriaPrima> darMateriasPrimas()
+	{
+		return materiasPrimas;
+	}
+	
+	private ArrayList<Componente> componentes;
+	public void agregarComponente (Componente a)
+	{
+		componentes.add(a);
+	}
+	public ArrayList<Componente> darComponentes()
+	{
+		return componentes;
+	}
+	
+	private ArrayList<Producto> productos;
+	public void agregarProducto (Producto a)
+	{
+		productos.add(a);
+	}
+	public ArrayList<Producto> darproductos()
+	{
+		return productos;
 	}
 
 }

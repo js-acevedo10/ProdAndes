@@ -999,7 +999,7 @@ public class ProdAndesAdmin {
 	}
 	
 	public ArrayList<Usuario> consultarClientes(String login, String tipoDoc, String numDoc, String nombre, String direccion, String nacionalidad, String email, String telefono, String ciudad, String departamento, String codPostal, String numReg, String personaNatural)
-		{
+	{
 		ArrayList<Usuario> resultado = new ArrayList<Usuario>();
 		String query="SELECT * FROM USUARIO WHERE ROL='CLIENTE'";
 		if(login!=null&&!login.equals(""))
@@ -1151,5 +1151,203 @@ public class ProdAndesAdmin {
 		return resultado;
 		
 	}
-
+	
+	public ArrayList<Usuario> consultarProveedor(String login, String tipoDoc, String numDoc, String nombre, String direccion, String nacionalidad, String email, String telefono, String ciudad, String departamento, String codPostal, String numReg, String personaNatural)
+	{
+		ArrayList<Usuario> resultado = new ArrayList<Usuario>();
+		String query="SELECT * FROM USUARIO WHERE ROL='PROVEEDOR'";
+		if(login!=null&&!login.equals(""))
+		{
+			query = query +" AND login='"+login+"'";			
+		}
+		if(tipoDoc!=null&&!tipoDoc.equals(""))
+		{
+			query = query +" AND tipoDoc='"+tipoDoc+"'";			
+		}
+		if(numDoc!=null&&!numDoc.equals(""))
+		{
+			query = query +" AND numDoc='"+numDoc+"'";			
+		}
+		if(nombre!=null&&!nombre.equals(""))
+		{
+			query = query +" AND nombre='"+nombre+"'";			
+		}
+		if(direccion!=null&&!direccion.equals(""))
+		{
+			query = query +" AND direccion='"+direccion+"'";			
+		}
+		if(nacionalidad!=null&&!nacionalidad.equals(""))
+		{
+			query = query +" AND nacionalidad='"+nacionalidad+"'";			
+		}
+		if(email!=null&&!email.equals(""))
+		{
+			query = query +" AND email='"+email+"'";			
+		}
+		if(telefono!=null&&!telefono.equals(""))
+		{
+			query = query +" AND telefono='"+telefono+"'";			
+		}
+		if(ciudad!=null&&!ciudad.equals(""))
+		{
+			query = query +" AND ciudad='"+ciudad+"'";			
+		}
+		if(departamento!=null&&!departamento.equals(""))
+		{
+			query = query +" AND departamento='"+departamento+"'";			
+		}
+		if(codPostal!=null&&!codPostal.equals(""))
+		{
+			query = query +" AND codPostal='"+codPostal+"'";			
+		}
+		if(numReg!=null&&!numReg.equals(""))
+		{
+			query = query +" AND numReg='"+numReg+"'";			
+		}
+		if(personaNatural!=null&&!personaNatural.equals(""))
+		{
+			query = query +" AND personaNatural='"+personaNatural+"'";			
+		}
+		PreparedStatement a = null;
+		PreparedStatement x = null;
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next())
+			{
+				String loginT = b.getString(1);
+				String tipoDocT = b.getString(3);
+				int numDocT = b.getInt(4);
+				String nombreT= b.getString(5);
+				String direccionT= b.getString(6);
+				String nacionalidadT = b.getString(7);
+				String emailT = b.getString(8);
+				int telefonoT = b.getInt(9);
+				String ciudadT = b.getString(10);
+				String departamentoT= b.getString(11);
+				int codPostalT = b.getInt(12);
+				Usuario z = new Usuario(loginT, "0", tipoDocT, numDocT, nombreT, direccionT, nacionalidadT, emailT, telefonoT, ciudadT, departamentoT, codPostalT);
+				String query2 = "SELECT * FROM PEDIDO WHERE IDCLIENTE='"+loginT+"' AND FECHARECIBIDO IS NULL";
+				x = dao.conexion.prepareStatement(query2);
+				ResultSet c = x.executeQuery();
+				while(c.next())
+				{
+					String idT = c.getString("ID");
+					String idClienteT = c.getString("IDCLIENTE");
+					String estadoPagoT = c.getString("ESTADOPAGO");
+					Date fechaCreacionT = c.getDate("FECHACREACION");
+					Date fechaRecibidoT = null;
+					if(c.getDate("FECHARECIBIDO")!=null)
+					{
+						fechaRecibidoT = c.getDate("FECHARECIBIDO");
+					}
+					Date deadlineT = c.getDate("DEADLINE");
+					String anotacionesT ="";
+					if(c.getString("ANOTACIONES")!=null&&c.getString("ANOTACIONES")!="")
+					{
+						anotacionesT = c.getString("ANOTACIONES");
+					}
+					
+					String idMateriaPrimaT = "";
+					
+					if(c.getString("IDMateriaPrima")!=null)
+					{
+						idMateriaPrimaT = c.getString("IDMateriaPrima");
+					}
+					int numMateriaPrimaT = c.getInt("NUMMateriaPrima");
+					
+					String idComponenteT = "";
+					
+					if(c.getString("IDComponente")!=null)
+					{
+						idComponenteT = c.getString("IDComponente");
+					}
+					int numComponenteT = c.getInt("NUMComponente");
+					
+					String idPrductoT = "";
+					
+					if(c.getString("IDPRODUCTO")!=null)
+					{
+						idPrductoT = c.getString("IDPRODUCTO");
+					}
+					int numProductoT = c.getInt("NUMPRODUCTO");
+					Pedido zz = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT);
+					z.agregarPedido(zz);
+				}
+				
+				query2 = "SELECT dataTwo.ID, dataTwo.NOMBRE, dataTwo.TONELADAS FROM (SELECT * FROM MATERIAPRIMAPROVEEDOR WHERE IDPPROVEEDOR='"+loginT+"') dataOne LEFT JOIN MATERIAPRIMA dataTwo on dataOne.IDMATERIAPRIMA=dataTwo.ID";
+				x = dao.conexion.prepareStatement(query2);
+				c = x.executeQuery();
+				while(c.next())
+				{
+					String nombreAA = c.getString(2);
+					int toneladas = c.getInt(3);
+					MateriaPrima zz = new MateriaPrima(nombreAA, toneladas);
+					z.agregarMateriaPrima(zz);
+				}
+				
+				query2 = "SELECT dataTwo.ID, dataTwo.NOMBRE, dataTwo.NUMINVENTARIO, dataTwo.UNIDADMEDIDA FROM (SELECT * FROM COMPONENTEPROVEEDOR WHERE IDPROVEEDOR='"+loginT+"') dataOne LEFT JOIN COMPONENTE dataTwo on dataOne.IDCOMPONENTE=dataTwo.ID";
+				x = dao.conexion.prepareStatement(query2);
+				c = x.executeQuery();
+				while(c.next())
+				{
+					String nombreAA = c.getString(2);
+					int numInventario = c.getInt(3);
+					String unidadMedida = c.getString(4);
+					Componente zz = new Componente(nombreAA, numInventario, unidadMedida);
+					z.agregarComponente(zz);
+				}
+				
+				query2 = "SELECT dataSix.ID, dataSix.NOMBRE, dataSix.COSTOVENTA, dataSix.NUMINVENTARIO FROM (SELECT dataFourth.IDPRODUCTO FROM (SELECT dataTwo.ID, dataTwo.NOMBRE, dataTwo.TONELADAS FROM (SELECT * FROM MATERIAPRIMAPROVEEDOR WHERE IDPPROVEEDOR='"+loginT+"') dataOne LEFT JOIN MATERIAPRIMA dataTwo on dataOne.IDMATERIAPRIMA=dataTwo.ID) dataThree LEFT JOIN PRODUCTOMATERIAPRIMA dataFourth on dataThree.ID=dataFourth.IDMATERIAPRIMA) dataFive LEFT JOIN PRODUCTO dataSix on dataFive.IDPRODUCTO=dataSix.ID";
+				x = dao.conexion.prepareStatement(query2);
+				c = x.executeQuery();
+				while(c.next())
+				{
+					String nombreAA = c.getString("NOMBRE");
+					int costoVenta = c.getInt("COSTOVENTA");
+					int numInventarioT = c.getInt("NUMINVENTARIO");
+					Producto zz = new Producto(nombreAA, costoVenta, numInventarioT);
+					z.agregarProducto(zz);
+				}
+				
+				query2 = "SELECT dataSix.ID, dataSix.NOMBRE, dataSix.COSTOVENTA, dataSix.NUMINVENTARIO FROM (SELECT dataFourth.IDPRODUCTO FROM (SELECT dataTwo.ID, dataTwo.NOMBRE, dataTwo.NUMINVENTARIO, dataTwo.UNIDADMEDIDA FROM (SELECT * FROM COMPONENTEPROVEEDOR WHERE IDPROVEEDOR='"+loginT+"') dataOne LEFT JOIN COMPONENTE dataTwo on dataOne.IDCOMPONENTE=dataTwo.ID) dataThree LEFT JOIN PRODUCTOCOMPONENTE dataFourth on dataThree.ID=dataFourth.IDCOMPONENTE) dataFive LEFT JOIN PRODUCTO dataSix on dataFive.IDPRODUCTO=dataSix.ID";
+				x = dao.conexion.prepareStatement(query2);
+				c = x.executeQuery();
+				while(c.next())
+				{
+					String nombreAA = c.getString("NOMBRE");
+					int costoVenta = c.getInt("COSTOVENTA");
+					int numInventarioT = c.getInt("NUMINVENTARIO");
+					Producto zz = new Producto(nombreAA, costoVenta, numInventarioT);
+					z.agregarProducto(zz);
+				}
+				resultado.add(z);
+				
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}		
+		return resultado;
+	}
 }
