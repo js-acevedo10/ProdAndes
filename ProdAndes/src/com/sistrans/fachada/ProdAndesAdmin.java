@@ -58,7 +58,7 @@ public class ProdAndesAdmin {
 	}
 	
 	public void lockTable(String tableName) {
-		String q = "lock table '" + tableName + "'in exclusive mode";
+		String q = "LOCK TABLE " + tableName + " IN SHARE UPDATE MODE";
 		PreparedStatement a = null;
 		try {
 			dao.inicializar();

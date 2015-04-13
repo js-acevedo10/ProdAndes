@@ -60,7 +60,9 @@ public class RegistroPedidoProductosCliente extends HttpServlet {
 		else if(id4 == null || id4.equals("")) g = 3;
 		
 		boolean x = true;
-		
+		ProdAndesAdmin.darInstancia().apagarAutoCommit();
+		ProdAndesAdmin.darInstancia().lockTable("PEDIDO");
+		ProdAndesAdmin.darInstancia().lockTable("PRODUCTO");
 		for(int i = 0; i < g; i++) {
 			if(i == 1) {
 				id1 = id2;
@@ -74,10 +76,8 @@ public class RegistroPedidoProductosCliente extends HttpServlet {
 				id1 = id4;
 				c1 = c4;
 			}
-			ProdAndesAdmin.darInstancia().apagarAutoCommit();
-			ProdAndesAdmin.darInstancia().lockTable("PEDIDO");
-			ProdAndesAdmin.darInstancia().lockTable("PRODUCTO");
 			x = ProdAndesUsuario.darInstancia().registrarPedido(id1, id2, fecha, c1, id4);
+			if(!x) break;
 		}
 		
 		if(x) {
