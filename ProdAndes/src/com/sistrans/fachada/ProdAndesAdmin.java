@@ -57,6 +57,26 @@ public class ProdAndesAdmin {
 		dao.rollback();
 	}
 	
+	public void lockTable(String tableName) {
+		String q = "lock table '" + tableName + "'in exclusive mode";
+		PreparedStatement a = null;
+		try {
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(q);
+			a.executeQuery();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(a != null) {
+				try {
+					a.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
