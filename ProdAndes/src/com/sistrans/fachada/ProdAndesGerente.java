@@ -11,13 +11,12 @@ import com.sistrans.mundo.EstaciondeProducto;
 import com.sistrans.mundo.EtapadeProduccion;
 import com.sistrans.mundo.MateriaPrima;
 import com.sistrans.mundo.Producto;
+import com.sistrans.mundo.Usuario;
 
 public class ProdAndesGerente {
 
 	private ConsultaDAOUsuario dao;
-	
-	//Singleton
-	
+		
 	private static ProdAndesGerente instancia;
 	
 	public static ProdAndesGerente darInstancia()
@@ -39,7 +38,6 @@ public class ProdAndesGerente {
 
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
-		// TODO Auto-generated method stub
 		String query="SELECT datatwo.nombre, datatwo.toneladas FROM ";
 		String queryExisTipo="";
 		if ((existenciasMin!=null&&existenciasMin!="")&&(existenciasMax!=null&&existenciasMax!=""))
@@ -83,7 +81,6 @@ public class ProdAndesGerente {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally 
@@ -97,7 +94,6 @@ public class ProdAndesGerente {
 					try {
 						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -109,7 +105,6 @@ public class ProdAndesGerente {
 
 	public ArrayList<Componente> consultarExistenciasComp(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
-		// TODO Auto-generated method stub
 		String query="SELECT dataTwo.nombre, datatwo.NUMINVENTARIO, datatwo.UNIDADMEDIDA FROM ";
 		String queryExisTipo="";
 		if ((existenciasMin!=null&&existenciasMin!="")&&(existenciasMax!=null&&existenciasMax!=""))
@@ -154,7 +149,6 @@ public class ProdAndesGerente {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally 
@@ -168,7 +162,6 @@ public class ProdAndesGerente {
 					try {
 						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -225,7 +218,6 @@ public class ProdAndesGerente {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally 
@@ -239,7 +231,6 @@ public class ProdAndesGerente {
 					try {
 						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -296,7 +287,6 @@ public class ProdAndesGerente {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally 
@@ -310,7 +300,6 @@ public class ProdAndesGerente {
 					try {
 						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -354,7 +343,6 @@ public class ProdAndesGerente {
 			} 
 			catch (SQLException e) 
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			finally 
@@ -368,7 +356,6 @@ public class ProdAndesGerente {
 						try {
 							throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -414,7 +401,6 @@ public class ProdAndesGerente {
 			} 
 			catch (SQLException e) 
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			finally 
@@ -428,7 +414,6 @@ public class ProdAndesGerente {
 						try {
 							throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -491,7 +476,6 @@ public class ProdAndesGerente {
 			} 
 			catch (SQLException e) 
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			finally 
@@ -505,7 +489,6 @@ public class ProdAndesGerente {
 						try {
 							throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -551,7 +534,6 @@ public class ProdAndesGerente {
 			} 
 			catch (SQLException e) 
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			finally 
@@ -565,7 +547,6 @@ public class ProdAndesGerente {
 						try {
 							throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -578,7 +559,6 @@ public class ProdAndesGerente {
 
 	public boolean registrarMateriaPrima(String id, String nombre,
 			String cantidad) {
-		// TODO Auto-generated method stub
 		String query = "INSERT INTO MATERIAPRIMA (ID, NOMBRE, TONELADAS) VALUES ('"+ id + "', '" + nombre + "'," + cantidad + ")";
 		PreparedStatement a = null;
 		try 
@@ -589,7 +569,6 @@ public class ProdAndesGerente {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally 
@@ -619,7 +598,6 @@ public class ProdAndesGerente {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally 
@@ -640,7 +618,6 @@ public class ProdAndesGerente {
 
 	public boolean registrarComponente(String nombre, String cantidad,
 			String unidadMedida) {
-		// TODO Auto-generated method stub
 		String query = "INSERT INTO COMPONENTE (ID, NOMBRE, NUMINVENTARIO, UNIDADMEDIDA)VALUES ('"+nombre+cantidad+"', '"+nombre+"','"+cantidad+"', '"+unidadMedida+"')";
 		PreparedStatement a = null;
 		try 
@@ -651,7 +628,6 @@ public class ProdAndesGerente {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally 
@@ -665,7 +641,6 @@ public class ProdAndesGerente {
 					try {
 						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -686,7 +661,6 @@ public class ProdAndesGerente {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally 
@@ -706,7 +680,6 @@ public class ProdAndesGerente {
 	}
 
 	public boolean registrarEntregaPedido(String id, String fechaFinal) {
-		// TODO Auto-generated method stub
 		String query = "UPDATE PEDIDO SET fechaRecibido=to_date('"+fechaFinal+"','MM-DD-YYYY'), estadoPago ='pago' WHERE ID='"+id+"'";
 		PreparedStatement a = null;
 		try 
@@ -751,7 +724,6 @@ public class ProdAndesGerente {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally 
@@ -765,7 +737,6 @@ public class ProdAndesGerente {
 					try {
 						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -790,7 +761,6 @@ public class ProdAndesGerente {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally 
@@ -804,7 +774,6 @@ public class ProdAndesGerente {
 					try {
 						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -828,7 +797,6 @@ public class ProdAndesGerente {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally 
@@ -842,7 +810,6 @@ public class ProdAndesGerente {
 					try {
 						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -1117,8 +1084,8 @@ public class ProdAndesGerente {
 		return etapas;
 	}
 
-	public ArrayList<String> darTiposDoc() {
-		String query = "SELECT DISTINCT E.TIPODOC FROM USUARIO E WHERE E.ROL = 'CLIENTE'";
+	public ArrayList<String> darTiposDoc(String rol) {
+		String query = "SELECT DISTINCT E.TIPODOC FROM USUARIO E WHERE E.ROL = '" + rol + "'";
 		PreparedStatement a = null;
 		ArrayList<String> etapas = new ArrayList<String>();
 		try
@@ -1528,6 +1495,36 @@ public class ProdAndesGerente {
 			}			
 		}
 		return true;
+	}
+
+	public Usuario consultarProveedor(String loginProv) {
+		Usuario resp = null;
+		String query = "SELECT * FROM USUARIO WHERE ID = '" + loginProv + "'";
+		PreparedStatement a = null;
+		try {
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet infoUser = a.executeQuery();
+			while(infoUser.next()) {
+				String login = infoUser.getString("LOGIN");
+				String clave = infoUser.getString("CLAVE");
+				String tipoDoc = infoUser.getString("TIPODOC");
+				int numDoc = infoUser.getInt("NUMDOC");
+				String nombre = infoUser.getString("NOMBRE");
+				String direccion = infoUser.getString("DIRECCION");
+				String nacionalidad = infoUser.getString("NACIONALIDAD");
+				String email = infoUser.getString("EMAIL");
+				int telefono = infoUser.getInt("TELEFONO");
+				String ciudad = infoUser.getString("CIUDAD");
+				String departamento = infoUser.getString("DEPARTAMENTO");
+				int codPostal = infoUser.getInt("CODPOSTAL");
+				resp = new Usuario(login, clave, tipoDoc, numDoc, nombre, direccion, nacionalidad, email, telefono, ciudad, departamento, codPostal);
+			}
+			String queryMat = "SELECT ";
+		} catch (SQLException e) {
+			
+		}
+		return resp;
 	}
 	
 	

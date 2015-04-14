@@ -216,6 +216,7 @@ public class Usuario implements Comparable<Usuario>
 		pedidos = new ArrayList<Pedido>();
 		materiasPrimas = new ArrayList<MateriaPrima>();
 		componentes = new ArrayList<Componente>();
+		productos = new ArrayList<Producto>();
 	}
 
 	/**

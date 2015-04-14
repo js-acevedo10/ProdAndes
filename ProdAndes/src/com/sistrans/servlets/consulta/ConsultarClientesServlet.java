@@ -120,7 +120,7 @@ public class ConsultarClientesServlet extends HttpServlet {
 		salida.println("                           <select class=\"form-control\" name=\"tipoDoc\">");
 		salida.println("								<option value=\"\" selected>Ninguno</option> ");
 		
-		ArrayList<String> tiposDoc = ProdAndesGerente.darInstancia().darTiposDoc();
+		ArrayList<String> tiposDoc = ProdAndesGerente.darInstancia().darTiposDoc("CLIENTE");
 		if(tiposDoc == null || tiposDoc.size() == 0) {
 			salida.println("							<option value=\"\" selected disabled>No hay registrados</option> ");
 		} else {

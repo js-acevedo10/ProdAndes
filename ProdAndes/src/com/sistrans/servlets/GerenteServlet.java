@@ -448,7 +448,7 @@ public class GerenteServlet extends HttpServlet {
 		salida.println("                           <select class=\"form-control\" name=\"tipoDoc\">");
 		salida.println("								<option value=\"\" selected>Ninguno</option> ");
 		
-		ArrayList<String> tiposDoc = ProdAndesGerente.darInstancia().darTiposDoc();
+		ArrayList<String> tiposDoc = ProdAndesGerente.darInstancia().darTiposDoc("CLIENTE");
 		if(tiposDoc == null || tiposDoc.size() == 0) {
 			salida.println("							<option value=\"\" selected disabled>No hay registrados</option> ");
 		} else {
@@ -652,7 +652,7 @@ public class GerenteServlet extends HttpServlet {
 		salida.println("                           <select class=\"form-control\" name=\"tipoDoc\">");
 		salida.println("								<option value=\"\" selected>Ninguno</option> ");
 		
-		ArrayList<String> tiposDoc = ProdAndesGerente.darInstancia().darTiposDoc();
+		ArrayList<String> tiposDoc = ProdAndesGerente.darInstancia().darTiposDoc("PROVEEDOR");
 		if(tiposDoc == null || tiposDoc.size() == 0) {
 			salida.println("							<option value=\"\" selected disabled>No hay registrados</option> ");
 		} else {
@@ -778,6 +778,7 @@ public class GerenteServlet extends HttpServlet {
 		salida.println("                            <th>Email</th>");
 		salida.println("                            <th>Telefono</th>");
 		salida.println("                            <th>Cod.Postal</th>");
+		salida.println("                            <th>Detalles</th>");
 		salida.println("                        </tr>");
 		salida.println("                    </thead>");
 		salida.println("                    <tbody>");
