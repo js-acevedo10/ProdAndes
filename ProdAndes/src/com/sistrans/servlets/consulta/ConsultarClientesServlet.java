@@ -252,6 +252,7 @@ public class ConsultarClientesServlet extends HttpServlet {
 			salida.println("                            <th>Email</th>");
 			salida.println("                            <th>Telefono</th>");
 			salida.println("                            <th>Cod.Postal</th>");
+			salida.println("                            <th>Detalles</th>");
 			salida.println("                        </tr>");
 			salida.println("                    </thead>");
 			salida.println("                    <tbody>");
@@ -268,6 +269,7 @@ public class ConsultarClientesServlet extends HttpServlet {
 				salida.println("							<td>" + e.getEmail() + "</td>");
 				salida.println("							<td>" + e.getTelefono() + "</td>");
 				salida.println("							<td>" + e.getCodPostal() + "</td>");
+				salida.println("							<td><button><a href=\"/ProdAndes/consulta/cliente.html?idCliente=" + e.getLogin() + "\" style=\"text-decoration:none; color:black;\">VER</a></button></td>");
 				salida.println("                        </tr>");
 			}
 		}

@@ -50,7 +50,7 @@ public class ConsultarProveedorServlet extends HttpServlet {
 		PrintWriter salida = response.getWriter();
 		String loginProv = request.getParameter("provID");
 		ArrayList<Usuario> prov = ProdAndesAdmin.darInstancia().consultarProveedor(loginProv, "", "", "", "", "", "", "", "", "", "", "", "");
-		if(prov == null || prov.get(0) == null) {
+		if(prov == null || prov.size() == 0) {
 			response.sendRedirect("/ProdAndes/pages/error/404.html");
 		} else {
 			printProvHeader(salida);
@@ -132,6 +132,8 @@ public class ConsultarProveedorServlet extends HttpServlet {
 				salida.println("							<td>" + e.getNumProducto() + "</td>");
 				if(!e.getAnotaciones().equals("")) {
 					salida.println("							<td><button><a onclick=\"alert('" + e.getAnotaciones() + "')\" style=\"text-decoration:none; color:black;\">Ver</a></button></td>");
+				} else {
+					salida.println("							<td><button disabled><a style=\"text-decoration:none; color:black;\">Ver</a></button></td>");
 				}
 				salida.println("                        </tr>");
 				}
