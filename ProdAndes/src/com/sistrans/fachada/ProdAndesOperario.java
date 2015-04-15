@@ -564,8 +564,7 @@ public class ProdAndesOperario {
 		}
 	}
 
-	public boolean registrarEjecucionEtapa(String id, String fi, String ft,
-			String cod) {
+	public boolean registrarEjecucionEtapa(String id, String fi, String ft, String cod, String idPedido) {
 		String idEtapa = id;
 		String idOperairo = fi;
 		String fechaFinal = ft;
@@ -675,9 +674,54 @@ public class ProdAndesOperario {
 				query = "UPDATE USUARIO SET OPERACIONESHECHAS=OPERACIONESHECHAS+1 WHERE LOGIN='"+fi+"'";
 				a = dao.conexion.prepareStatement(query);
 				b = a.executeQuery();
-				query = "INSERT INTO ETAPAOPERARIO (IDETAPA, IDOPERARIO, FECHAINICIAL, FECHAFINAL) VALUES ('"+ id + "', '" + fi + "', to_date('"+ft+"','YYYY-MM-DD'), to_date('"+cod+"','YYYY-MM-DD'))";
+				
+				query = "SELECT* FROM ETAPAOPERARIO WHERE IDETAPA='"+ id + "' AND IDOPERARIO='" + fi + "'";
 				a = dao.conexion.prepareStatement(query);
 				b = a.executeQuery();
+				ArrayList<String> actuales = new ArrayList<>();
+				while(b.next())
+				{
+					String actualesStr = b.getString(1);
+					actuales.add(actualesStr);
+				}
+				if(actuales.isEmpty())
+				{
+					query = "INSERT INTO ETAPAOPERARIO (IDETAPA, IDOPERARIO, FECHAINICIAL, FECHAFINAL, IDPEDIDO) VALUES ('"+ id + "', '" + fi + "', to_date('"+ft+"','YYYY-MM-DD'), to_date('"+cod+"','YYYY-MM-DD'), '"+idPedido+"')";
+					a = dao.conexion.prepareStatement(query);
+					b = a.executeQuery();
+				}
+				else
+				{
+					query = "UPDATE ETAPAOPERARIO SET FECHAINICIAL=to_date('"+ft+"','YYYY-MM-DD'), FECHAFINAL=to_date('"+cod+"','YYYY-MM-DD') WHERE IDETAPA='"+ id + "' AND IDOPERARIO='" + fi + "'";
+					a = dao.conexion.prepareStatement(query);
+					b = a.executeQuery();
+				}
+				
+				query = "SELECT* FROM(SELECT* FROM (SELECT* FROM ETAPAOPERARIO WHERE IDPEDIDO ='"+ idPedido + "') data1 LEFT JOIN ETAPAPRODUCCION data2 on data1.IDETAPA=data2.ID ORDER BY NUM DESC) WHERE ROWNUM=1";
+				String idProducto="";
+				int numeroSiguiente=0;
+				a = dao.conexion.prepareStatement(query);
+				b = a.executeQuery();
+				while(b.next())
+				{
+					idProducto=b.getString("IDPRODUCTO");
+					numeroSiguiente=b.getInt("NUM")+1;
+				}
+				query="SELECT* FROM ETAPAPRODUCCION WHERE IDPRODUCTO='"+ idProducto + "' AND NUM='" + numeroSiguiente + "'";
+				a = dao.conexion.prepareStatement(query);
+				b = a.executeQuery();
+				EtapadeProduccion nuevaEtapa=null;
+				while(b.next())
+				{
+					nuevaEtapa = new EtapadeProduccion(b.getInt(2), b.getString(1));
+				}
+				if(nuevaEtapa!=null)
+				{
+					query="INSERT INTO ETAPAOPERARIO (IDETAPA, IDOPERARIO, IDPEDIDO) VALUES ('"+ nuevaEtapa.getNombre() + "', '" + fi + "', '"+idPedido+"')";
+					a = dao.conexion.prepareStatement(query);
+					b = a.executeQuery();
+				}
+				
 			}
 			System.out.println(query);
 			

@@ -569,6 +569,18 @@ public class ProdAndesUsuario {
 						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+(id1+""+rand) +"','3','no pago',to_date('"+ti+"','YYYY-MM-DD'),to_date('"+tf+"','YYYY-MM-DD'), '"+id1+"', '"+id32+"')";
 						a = dao.conexion.prepareStatement(query6);
 						a.executeQuery();
+						
+						query6="SELECT* FROM ETAPAPRODUCCION WHERE IDPRODUCTO='"+id1+"' AND NUM='1'";
+						String idEtapa="";
+						a = dao.conexion.prepareStatement(query6);
+						b = a.executeQuery();
+						while(b.next())
+						{
+							idEtapa = b.getString(1);
+						}
+						query6="INSERT INTO ETAPAOPERARIO (IDETAPA, IDPEDIDO) VALUES ('"+idEtapa+"','"+(id1+""+rand) +"')";
+						a = dao.conexion.prepareStatement(query6);
+						b = a.executeQuery();
 					}
 					else
 					{
@@ -610,13 +622,143 @@ public class ProdAndesUsuario {
 	
 	public boolean cancelarPedido(String idPedido)
 	{
-		String query = "DELETE FROM PEDIDO WHERE ID = '"+idPedido+"'";
+		String query = "SELECT* FROM PEDIDO WHERE ID = '"+idPedido+"'";
 		PreparedStatement a = null;
 		try 
 		{
 			dao.inicializar();
+			
+			
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			ArrayList<String> infoPedido = new ArrayList<>();
+			while(b.next())
+			{
+				infoPedido.add(b.getString(12));
+			}
+			query = "DELETE FROM PEDIDO WHERE ID = '"+idPedido+"'";
 			a = dao.conexion.prepareStatement(query);
 			a.executeQuery();
+			query="SELECT* FROM ETAPAOPERARIO WHERE IDPEDIDO='"+idPedido+"' AND (FECHAINICIAL IS NULL OR FECHAFINAL IS NULL)";
+			a = dao.conexion.prepareStatement(query);
+			b = a.executeQuery();
+			ArrayList<String> idOperarios = new ArrayList<>();
+			while(b.next())
+			{
+				String idOperario=b.getString(2);
+				String query2 ="DELETE FROM ETAPAOPERARIO WHERE IDPEDIDO='"+idPedido+"' AND IDETAPA='"+b.getString(1)+"' AND IDOPERARIO='"+idOperario+"'";
+				a = dao.conexion.prepareStatement(query2);
+				a.executeQuery();
+				idOperarios.add(idOperario);
+			}
+			if(!idOperarios.isEmpty())
+			{
+				query = "SELECT* FROM ETAPAOPERARIO WHERE IDOPERARIO IS NULL";
+				a = dao.conexion.prepareStatement(query);
+				b = a.executeQuery();
+				while(b.next()&&!idOperarios.isEmpty())
+				{
+					String query2 ="UPDATE ETAPAOPERARIO SET IDOPERARIO='"+idOperarios.get(0)+"' WHERE IDETAPA='"+b.getString(1)+"' AND IDPEDIDO='"+b.getString(5)+"'";
+					a = dao.conexion.prepareStatement(query2);
+					a.executeQuery();
+					idOperarios.remove(0);
+				}
+				if(!idOperarios.isEmpty())
+				{
+					query="SELECT* FROM PEDIDO WHERE FECHARECIBIDO IS NULL";
+					a = dao.conexion.prepareStatement(query);
+					b = a.executeQuery();
+					while(b.next())
+					{
+						query = "SELECT* FROM(SELECT* FROM (SELECT* FROM ETAPAOPERARIO WHERE IDPEDIDO ='"+ b.getString(1) + "') data1 LEFT JOIN ETAPAPRODUCCION data2 on data1.IDETAPA=data2.ID ORDER BY NUM DESC) WHERE ROWNUM=1";
+						String idProducto="";
+						int numeroSiguiente=0;
+						a = dao.conexion.prepareStatement(query);
+						ResultSet c = a.executeQuery();
+						while(c.next())
+						{
+							idProducto=c.getString("IDPRODUCTO");
+							numeroSiguiente=c.getInt("NUM")+1;
+						}
+						query="SELECT* FROM ETAPAPRODUCCION WHERE IDPRODUCTO='"+ idProducto + "' AND NUM='" + numeroSiguiente + "'";
+						a = dao.conexion.prepareStatement(query);
+						c = a.executeQuery();
+						EtapadeProduccion nuevaEtapa=null;
+						while(c.next())
+						{
+							nuevaEtapa = new EtapadeProduccion(c.getInt(2), c.getString(1));
+						}
+						if(nuevaEtapa!=null)
+						{
+							query="INSERT INTO ETAPAOPERARIO (IDETAPA, IDOPERARIO, IDPEDIDO) VALUES ('"+ nuevaEtapa.getNombre() + "', '" + idOperarios.get(0) + "', '"+idPedido+"')";
+							a = dao.conexion.prepareStatement(query);
+							idOperarios.remove(0);
+						}
+					}
+				}
+				
+			}
+			query="SELECT* FROM (SELECT* FROM (SELECT* FROM ETAPAOPERARIO WHERE IDPEDIDO='"+idPedido+"') data1 LEFT JOIN ETAPAPRODUCCION data2 on data1.IDETAPA=data2.ID ORDER BY NUM DESC) WHERE ROWNUM=1";
+			a = dao.conexion.prepareStatement(query);
+			b = a.executeQuery();
+			int numeroDeEtapa =0;
+			while(b.next())
+			{
+				numeroDeEtapa = b.getInt(7);
+			}
+			if(numeroDeEtapa==1||numeroDeEtapa==0)
+			{
+				query="DELETE FROM ETAPAOPERARIO WHERE IDPEDIDO='"+idPedido+"'";
+				a = dao.conexion.prepareStatement(query);
+				a.executeQuery();
+			}
+			else
+			{
+				query="SELECT* FROM PEDIDO WHERE IDPRODUCTO='"+infoPedido.get(0)+"'";
+				a = dao.conexion.prepareStatement(query);
+				b = a.executeQuery();
+				while(b.next())
+				{
+					String idPedidoActual = b.getString(1);
+					query="SELECT* FROM (SELECT* FROM (SELECT* FROM ETAPAOPERARIO WHERE IDPEDIDO='"+idPedidoActual+"') data1 LEFT JOIN ETAPAPRODUCCION data2 on data1.IDETAPA=data2.ID ORDER BY NUM DESC) WHERE ROWNUM=1";
+					a = dao.conexion.prepareStatement(query);
+					ResultSet c = a.executeQuery();
+					int numeroEtapaActual=0;
+					while(c.next())
+					{
+						numeroEtapaActual=c.getInt("NUM");
+					}
+					if(numeroEtapaActual==0||numeroEtapaActual==1)
+					{
+						query="UPDATE ETAPAOPERARIO SET IDPEDIDO='"+idPedidoActual+"' WHERE IDPEDIDO='"+idPedido+"'";
+						a = dao.conexion.prepareStatement(query);
+						a.executeQuery();
+					}
+					else if(numeroEtapaActual<numeroDeEtapa)
+					{
+						while(numeroEtapaActual<numeroDeEtapa)
+						{
+							query="SELECT* FROM (SELECT* FROM (SELECT* FROM ETAPAOPERARIO WHERE IDPEDIDO='"+idPedido+"') data1 LEFT JOIN ETAPAPRODUCCION data2 on data1.IDETAPA=data2.ID ORDER BY NUM DESC) WHERE ROWNUM=1";
+							a = dao.conexion.prepareStatement(query);
+							c = a.executeQuery();
+							String idEtapaCambio="";
+							while(c.next())
+							{
+								idEtapaCambio=b.getString(1);
+							}
+							query="UPDATE ETAPAOPERARIO SET IDPEDIDO='"+idPedidoActual+"' WHERE IDPEDIDO='"+idPedido+"' AND IDETAPA='"+idEtapaCambio+"'";
+							a = dao.conexion.prepareStatement(query);
+							a.executeQuery();
+							numeroEtapaActual=numeroEtapaActual+1;
+							numeroDeEtapa=numeroDeEtapa-1;
+						}
+					}
+					query="DELETE FROM ETAPAOPERARIO WHERE IDPEDIDO='"+idPedido+"'";
+					a = dao.conexion.prepareStatement(query);
+					a.executeQuery();
+				}
+			}
+			
 		} 
 		catch (SQLException e) 
 		{
