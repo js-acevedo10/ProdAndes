@@ -90,6 +90,7 @@ public class UserServlet extends HttpServlet {
 	public void realizarCancelacion(String cancelacion, HttpServletResponse response) throws IOException {
 		switch (cancelacion) {
 			case "order-prod":
+				response.sendRedirect("/ProdAndes/cancelar/pedido/cliente.html");
 				break;
 			default:
 				response.sendRedirect("pages/error/404.html");

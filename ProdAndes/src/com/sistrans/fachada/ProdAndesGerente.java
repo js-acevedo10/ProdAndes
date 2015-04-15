@@ -1244,7 +1244,7 @@ public class ProdAndesGerente {
 			String idProducto ="";
 			while(b.next()) 
 			{
-				idProducto=b.getString(4);
+				idProducto=b.getString("IDPRODUCTO");
 			}
 			if(!idProducto.equals(""))
 			{
@@ -1324,7 +1324,7 @@ public class ProdAndesGerente {
 						{
 							menor=cuenta.get(i);
 							indice=i;
-						}							
+						}
 					}
 					query = "UPDATE ESTACIONDEPRODUCCION SET IDETAPAPRODUCCION='" +etapasDeProduccion.get(indice)+ "' WHERE CODIGO='"+estacionesEtapa.get(0)+"'";
 					a = dao.conexion.prepareStatement(query);
@@ -1332,12 +1332,15 @@ public class ProdAndesGerente {
 					estacionesEtapa.remove(0);
 					int nuevoNumero= cuenta.get(indice)+1;
 					cuenta.set(indice, nuevoNumero);
-				}
+				}							
 			}
 			else
 			{
 				return false;
 			}
+			query ="UPDATE ETAPAPRODUCCION SET ESTADO='DESACTIVA' WHERE ID='"+idEstacion+"'";
+			a= dao.conexion.prepareStatement(query);
+			a.executeQuery();
 		} 
 		catch (SQLException e) 
 		{
@@ -1376,12 +1379,12 @@ public class ProdAndesGerente {
 			String idProducto ="";
 			while(b.next()) 
 			{
-				idProducto=b.getString(4);
+				idProducto=b.getString("IDPRODUCTO");
 			}
 			if(!idProducto.equals(""))
 			{							
 				query="SELECT * FROM ETAPAPRODUCCION WHERE IDPRODUCTO='"+idProducto+"' AND ID!='"+idEstacion+"'"; 
-				a = dao.conexion.prepareStatement(query);
+				System.out.println(query);
 				b = a.executeQuery();
 				ArrayList<EtapadeProduccion> etapasDeProduccion = new ArrayList<>();
 				while(b.next())
@@ -1425,7 +1428,7 @@ public class ProdAndesGerente {
 						}							
 					}
 					
-					query="SELECT * FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION='"+etapasDeProduccion.get(indice)+"'"; 
+					query="SELECT * FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION='"+etapasDeProduccion.get(indice)+"'";
 					a = dao.conexion.prepareStatement(query);
 					b = a.executeQuery();
 					EstaciondeProducto estacionEtapaActual= null;
@@ -1466,12 +1469,15 @@ public class ProdAndesGerente {
 					estacionesEtapa.add(estacionEtapaActual);
 					int nuevoNumero= cuenta.get(indice)-1;
 					cuenta.set(indice, nuevoNumero);
-				}
+				}							
 			}
 			else
 			{
 				return false;
 			}
+			query ="UPDATE ETAPAPRODUCCION SET ESTADO='ACTIVA' WHERE ID='"+idEstacion+"'";
+			a= dao.conexion.prepareStatement(query);
+			a.executeQuery();
 		} 
 		catch (SQLException e) 
 		{
@@ -1519,6 +1525,33 @@ public class ProdAndesGerente {
 				String departamento = infoUser.getString("DEPARTAMENTO");
 				int codPostal = infoUser.getInt("CODPOSTAL");
 				resp = new Usuario(login, clave, tipoDoc, numDoc, nombre, direccion, nacionalidad, email, telefono, ciudad, departamento, codPostal);
+			}
+			String queryMat = "SELECT ";
+		} catch (SQLException e) {
+			
+		}
+		return resp;
+	}
+
+	public ArrayList<EtapadeProduccion> darEtapasFull() {
+		ArrayList<EtapadeProduccion> resp = new ArrayList<EtapadeProduccion>();
+		String query = "SELECT * FROM ETAPAPRODUCCION";
+		PreparedStatement a = null;
+		try {
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet infoUser = a.executeQuery();
+			while(infoUser.next()) {
+				String id = infoUser.getString("ID");
+				int num= Integer.parseInt(infoUser.getString("NUM"));
+				String idProducto= infoUser.getString("IDPRODUCTO");
+				String estado = infoUser.getString("ESTADO");
+				Boolean estadoB = false;
+				if(estado.equals("ACTIVA")) {
+					estadoB = true;
+				}
+				EtapadeProduccion temp = new EtapadeProduccion(num, id, estadoB);
+				resp.add(temp);
 			}
 			String queryMat = "SELECT ";
 		} catch (SQLException e) {

@@ -2,6 +2,7 @@ package com.sistrans.servlets.modificacion;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,14 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sistrans.fachada.ProdAndesOperario;
+import com.sistrans.fachada.ProdAndesGerente;
 import com.sistrans.mundo.EtapadeProduccion;
-import com.sistrans.mundo.Pedido;
 
 /**
  * Servlet implementation class RegistroCambioEstadoEtapaServlet
  */
-@WebServlet("/RegistroCambioEstadoEtapaServlet")
+@WebServlet("/etapas/cambio.html")
 public class RegistroCambioEstadoEtapaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -43,8 +43,18 @@ public class RegistroCambioEstadoEtapaServlet extends HttpServlet {
 
 	private void procesarSolicitud(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		PrintWriter salida = response.getWriter();
+		String accion = request.getParameter("submit");
+		if(accion.equals("Activar")) {
+			String idEtapa = request.getParameter("id");
+			ProdAndesGerente.darInstancia().activarEtapaProduccion(idEtapa);
+		} else if(accion.equals("Desactivar")) {
+			String idEtapa = request.getParameter("id");
+			ProdAndesGerente.darInstancia().desActivarEtapaProduccion(idEtapa);
+		}
+		ArrayList<EtapadeProduccion> etapas = ProdAndesGerente.darInstancia().darEtapasFull();
+		
 		printHeader(salida);
-		printBody(salida);
+		printBody(salida, etapas);
 		printFooter(salida);
 	}
 
@@ -85,7 +95,7 @@ public class RegistroCambioEstadoEtapaServlet extends HttpServlet {
 		salida.println("            	<h1>Registrar cambio de estado en etapa</h1>");
 	}
 
-	private void printBody(PrintWriter salida) {
+	private void printBody(PrintWriter salida, ArrayList<EtapadeProduccion> etapas) {
 		salida.println("				<div class=\"container\" style=\"background-color:WHITE; color:BLACK; border-radius:5px;\">");
 		if(etapas.size() == 0) {
 			salida.println("            		<h5>No hay etapas registradas.</h5>");
@@ -95,15 +105,20 @@ public class RegistroCambioEstadoEtapaServlet extends HttpServlet {
 			salida.println("                        <tr>");
 			salida.println("                            <th>ID de la Etapa</th>");
 			salida.println("                            <th>Estado de la Etapa</th>");
-			salida.println("                            <th>Detener la Etapa</th>");
-			salida.println("                            <th>Resumir la Etapa</th>");
+			salida.println("                            <th>Ejecutar Accion</th>");
 			salida.println("                        </tr>");
 			salida.println("                    </thead>");
 			salida.println("                    <tbody>");
-			for(EtapadeProduccion e : etapas)) {
+			for(EtapadeProduccion e : etapas) {
 				salida.println("                        <tr>");
 				salida.println("							<td>" + e.getNum() + "</td>");
-				salida.println("							<td>" + e.getEstado() + "</td>");
+				if(e.getEstado()) {
+					salida.println("							<td>Activa</td>");
+					salida.println("							<td><button class=\"btn btn-danger\"><a style=\"text-decoration:none; color:black;\" href=\"/ProdAndes/etapas/cambio.html?submit=Desactivar&id=" + e.getNum() + "\">Desactivar</a></button></td>");
+				} else {
+					salida.println("							<td>Inactiva</td>");
+					salida.println("							<td><button class=\"btn btn-success\"><a style=\"text-decoration:none; color:black;\" href=\"/ProdAndes/etapas/cambio.html?submit=Activar&id=" + e.getNum() + "\">Activar</a></button></td>");
+				}
 				salida.println("                        </tr>");
 			}
 			salida.println("                    </tbody>");
@@ -114,7 +129,10 @@ public class RegistroCambioEstadoEtapaServlet extends HttpServlet {
 	}
 
 	private void printFooter(PrintWriter salida) {
-		
+		salida.println("            </div>");
+		salida.println("        </div>");
+		salida.println("    </body>");
+		salida.println("</html>");
 	}
 
 }

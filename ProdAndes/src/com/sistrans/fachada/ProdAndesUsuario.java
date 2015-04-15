@@ -696,7 +696,6 @@ public class ProdAndesUsuario {
 						}
 					}
 				}
-				
 			}
 			query="SELECT* FROM (SELECT* FROM (SELECT* FROM ETAPAOPERARIO WHERE IDPEDIDO='"+idPedido+"') data1 LEFT JOIN ETAPAPRODUCCION data2 on data1.IDETAPA=data2.ID ORDER BY NUM DESC) WHERE ROWNUM=1";
 			a = dao.conexion.prepareStatement(query);

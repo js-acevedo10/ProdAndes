@@ -1350,4 +1350,84 @@ public class ProdAndesAdmin {
 		}		
 		return resultado;
 	}
+
+	public ArrayList<Pedido> getPedidos() {
+		String query = "SELECT * FROM PEDIDO WHERE IDCLIENTE = '3'";
+		ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
+		PreparedStatement a = null;
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next())
+			{
+				String idT = b.getString("ID");
+				String idClienteT = b.getString("IDCLIENTE");
+				String estadoPagoT = b.getString("ESTADOPAGO");
+				Date fechaCreacionT = b.getDate("FECHACREACION");
+				Date fechaRecibidoT = null;
+				if(b.getDate("FECHARECIBIDO")!=null)
+				{
+					fechaRecibidoT = b.getDate("FECHARECIBIDO");
+				}
+				Date deadlineT = b.getDate("DEADLINE");
+				String anotacionesT ="";
+				if(b.getString("ANOTACIONES")!=null&&b.getString("ANOTACIONES")!="")
+				{
+					anotacionesT = b.getString("ANOTACIONES");
+				}
+				
+				String idMateriaPrimaT = "";
+				
+				if(b.getString("IDMateriaPrima")!=null)
+				{
+					idMateriaPrimaT = b.getString("IDMateriaPrima");
+				}
+				int numMateriaPrimaT = b.getInt("NUMMateriaPrima");
+				
+				String idComponenteT = "";
+				
+				if(b.getString("IDComponente")!=null)
+				{
+					idComponenteT = b.getString("IDComponente");
+				}
+				int numComponenteT = b.getInt("NUMComponente");
+				
+				String idPrductoT = "";
+				
+				if(b.getString("IDPRODUCTO")!=null)
+				{
+					idPrductoT = b.getString("IDPRODUCTO");
+				}
+				int numProductoT = b.getInt("NUMPRODUCTO");
+				Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT);
+				pedidos.add(z);
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}
+		return pedidos;
+	}
 }

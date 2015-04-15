@@ -1,8 +1,4 @@
 package com.sistrans.mundo;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Date;
-
 
 /**
  * <!-- begin-user-doc -->
@@ -21,11 +17,21 @@ public class EtapadeProduccion
 	
 	private int num;
 	
+	private boolean estado;
+	
 	/**
 	 * @return the num
 	 */
 	public int getNum() {
 		return num;
+	}
+	
+	public boolean getEstado() {
+		return estado;
+	}
+	
+	public void setEstado(boolean x) {
+		estado = x;
 	}
 
 	/**
@@ -34,7 +40,6 @@ public class EtapadeProduccion
 	public void setNum(int num) {
 		this.num = num;
 	}
-
 
 	/**
 	 * @return the estaciondeProducto
@@ -49,12 +54,12 @@ public class EtapadeProduccion
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public EtapadeProduccion(int num, String nombre) {
+	public EtapadeProduccion(int num, String nombre, boolean estado) {
 		super();
 		this.num = num;
 		this.nombre = nombre;
+		this.estado = estado;
 	}
-
 	
 private String nombre;
 	
@@ -65,6 +70,11 @@ private String nombre;
 	 */
 	public EtapadeProduccion(){
 		super();
+	}
+
+	public EtapadeProduccion(int num2, String nombreT) {
+		this.num = num2;
+		nombre = nombreT;
 	}
 
 }

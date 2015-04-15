@@ -107,7 +107,8 @@ public class GerenteServlet extends HttpServlet {
 			break;
 		case "new-prod":
 			break;
-		case "matprima-order":
+		case "estado-etapa":
+			response.sendRedirect("/ProdAndes/etapas/cambio.html?submit=\"\"");
 			break;
 		default:
 			response.sendRedirect("pages/error/404.html");

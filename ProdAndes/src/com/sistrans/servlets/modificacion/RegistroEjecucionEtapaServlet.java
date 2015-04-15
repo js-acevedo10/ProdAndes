@@ -49,7 +49,7 @@ public class RegistroEjecucionEtapaServlet extends HttpServlet {
 		String fInit = request.getParameter("fi");
 		String fFin = request.getParameter("ft");
 		
-		boolean x = ProdAndesOperario.darInstancia().registrarEjecucionEtapa(idEtapa,idOPer,fInit,fFin);
+		boolean x = ProdAndesOperario.darInstancia().registrarEjecucionEtapa(idEtapa,idOPer,fInit,fFin, "");
 		
 		if(x) {
 			response.sendRedirect("/ProdAndes/pages/operario/success/etapa.html");
