@@ -1313,8 +1313,11 @@ public class ProdAndesGerente {
 				{
 					suma+=cuenta.get(i);
 				}
-				promedio = suma/cuenta.size();
-				while(!estacionesEtapa.isEmpty())
+				promedio = suma;
+				if(cuenta.size() > 0) {
+					promedio = suma/cuenta.size();
+				}
+				while(estacionesEtapa != null && estacionesEtapa.size() != 0)
 				{
 					int menor=999999999;
 					int indice=0;
@@ -1326,12 +1329,14 @@ public class ProdAndesGerente {
 							indice=i;
 						}
 					}
-					query = "UPDATE ESTACIONDEPRODUCCION SET IDETAPAPRODUCCION='" +etapasDeProduccion.get(indice)+ "' WHERE CODIGO='"+estacionesEtapa.get(0)+"'";
-					a = dao.conexion.prepareStatement(query);
-					b = a.executeQuery();
-					estacionesEtapa.remove(0);
-					int nuevoNumero= cuenta.get(indice)+1;
-					cuenta.set(indice, nuevoNumero);
+					if(etapasDeProduccion.size() != 0) {
+						query = "UPDATE ESTACIONDEPRODUCCION SET IDETAPAPRODUCCION='" +etapasDeProduccion.get(indice)+ "' WHERE CODIGO='"+estacionesEtapa.get(0)+"'";
+						a = dao.conexion.prepareStatement(query);
+						b = a.executeQuery();
+						estacionesEtapa.remove(0);
+						int nuevoNumero= cuenta.get(indice)+1;
+						cuenta.set(indice, nuevoNumero);
+					}
 				}							
 			}
 			else
@@ -1344,8 +1349,7 @@ public class ProdAndesGerente {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		}
 		finally 
 		{

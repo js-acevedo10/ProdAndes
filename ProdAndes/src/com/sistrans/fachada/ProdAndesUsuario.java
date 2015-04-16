@@ -628,7 +628,6 @@ public class ProdAndesUsuario {
 		{
 			dao.inicializar();
 			
-			
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			ArrayList<String> infoPedido = new ArrayList<>();
@@ -636,9 +635,6 @@ public class ProdAndesUsuario {
 			{
 				infoPedido.add(b.getString(12));
 			}
-			query = "DELETE FROM PEDIDO WHERE ID = '"+idPedido+"'";
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
 			query="SELECT* FROM ETAPAOPERARIO WHERE IDPEDIDO='"+idPedido+"' AND (FECHAINICIAL IS NULL OR FECHAFINAL IS NULL)";
 			a = dao.conexion.prepareStatement(query);
 			b = a.executeQuery();
@@ -757,7 +753,9 @@ public class ProdAndesUsuario {
 					a.executeQuery();
 				}
 			}
-			
+			query = "DELETE FROM PEDIDO WHERE ID = '"+idPedido+"'";
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
 		} 
 		catch (SQLException e) 
 		{
