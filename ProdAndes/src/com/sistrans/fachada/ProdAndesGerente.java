@@ -903,7 +903,7 @@ public class ProdAndesGerente {
 	}
 	
 	public ArrayList<String> darPedidos() {
-		String query = "SELECT E.ID, C.NOMBRE FROM PEDIDO E JOIN USUARIO C ON E.ID = C.LOGIN AND E.FECHARECIBIDO IS NULL";
+		String query = "SELECT * FROM PEDIDO";
 		PreparedStatement a = null;
 		ArrayList<String> pedidos = new ArrayList<String>();
 		try 
@@ -912,7 +912,7 @@ public class ProdAndesGerente {
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next()) {
-				String x = "Pedido con id.&" + b.getString("ID") + "& del cliente " + b.getString("NOMBRE");
+				String x = "Pedido " + b.getString("ID");
 				pedidos.add(x);
 			}
 		} 
@@ -1205,8 +1205,8 @@ public class ProdAndesGerente {
 		return etapas;
 	}
 
-	public ArrayList<String> darNacionalidades() {
-		String query = "SELECT DISTINCT E.NACIONALIDAD FROM USUARIO E WHERE E.ROL = 'CLIENTE'";
+	public ArrayList<String> darNacionalidades(String rol) {
+		String query = "SELECT DISTINCT E.NACIONALIDAD FROM USUARIO E WHERE E.ROL = '" + rol +"'";
 		PreparedStatement a = null;
 		ArrayList<String> etapas = new ArrayList<String>();
 		try
@@ -1242,8 +1242,8 @@ public class ProdAndesGerente {
 		return etapas;
 	}
 
-	public ArrayList<String> darCiudades() {
-		String query = "SELECT DISTINCT E.CIUDAD FROM USUARIO E WHERE E.ROL = 'CLIENTE'";
+	public ArrayList<String> darCiudades(String rol) {
+		String query = "SELECT DISTINCT E.CIUDAD FROM USUARIO E WHERE E.ROL = '" + rol.toUpperCase() + "'";
 		PreparedStatement a = null;
 		ArrayList<String> etapas = new ArrayList<String>();
 		try

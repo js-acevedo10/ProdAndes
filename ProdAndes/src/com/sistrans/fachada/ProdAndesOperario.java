@@ -648,7 +648,6 @@ public class ProdAndesOperario {
 					int numInventario = c.getInt("NUMINVENTARIO");
 					if(numInventario<numero)
 					{
-						System.out.println("3");
 						flag = false;
 					}
 				}

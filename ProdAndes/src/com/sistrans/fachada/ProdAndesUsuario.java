@@ -588,7 +588,7 @@ public class ProdAndesUsuario {
 					{
 						int rand = (int) (Math.random()*1000);
 						flag = true;
-						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+(id1+""+rand) +"','3','no pago',to_date('"+ti+"','YYYY-MM-DD'),to_date('"+tf+"','YYYY-MM-DD'), '"+id1+"', '"+id32+"')";
+						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+(id1+""+rand) +"','alejoC','no pago',to_date('"+ti+"','YYYY-MM-DD'),to_date('"+tf+"','YYYY-MM-DD'), '"+id1+"', '"+id32+"')";
 						a = dao.conexion.prepareStatement(query6);
 						a.executeQuery();
 						
@@ -611,7 +611,7 @@ public class ProdAndesUsuario {
 					{
 						int rand = (int) (Math.random()*1000);
 						flag = true;
-						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, ANOTACIONES, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+(id1+""+rand)+"','3','no pago',to_date('"+ti+"','YYYY-MM-DD'),to_date('"+tf+"','YYYY-MM-DD'), 'No se tienen los materiales necesarios', '"+id1+"', '"+id32+"')";
+						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, ANOTACIONES, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+(id1+""+rand)+"','','no pago',to_date('"+ti+"','YYYY-MM-DD'),to_date('"+tf+"','YYYY-MM-DD'), 'No se tienen los materiales necesarios', '"+id1+"', '"+id32+"')";
 						a = dao.conexion.prepareStatement(query6);
 						a.executeQuery();
 						
