@@ -32,7 +32,6 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("xxx");
 		procesarSolicitud(request, response);
 	}
 
@@ -55,7 +54,7 @@ public class UserServlet extends HttpServlet {
 			realizarConsulta(requestDetails, response);			
 		} else if(requestType.equals("register")) {
 			realizarRegistro(requestDetails, response);			
-		} else if(requestType.equals("blue")) {
+		} else if(requestType.equals("cancel")) {
 			realizarCancelacion(requestDetails, response);
 		}
 	}
@@ -82,9 +81,6 @@ public class UserServlet extends HttpServlet {
 		case "order":
 			pedido(out);
 			break;
-		case "mina":
-			response.sendRedirect("/ProdAndes/cancelar/pedido/cliente.html");
-			break;
 		default:
 			response.sendRedirect("pages/error/404.html");
 			break;
@@ -93,7 +89,7 @@ public class UserServlet extends HttpServlet {
 	
 	public void realizarCancelacion(String cancelacion, HttpServletResponse response) throws IOException {
 		switch (cancelacion) {
-			case "order":
+			case "order-prod":
 				response.sendRedirect("/ProdAndes/cancelar/pedido/cliente.html");
 				break;
 			default:
@@ -167,7 +163,7 @@ public class UserServlet extends HttpServlet {
 			salida.println("						<div class=\"col-md-9\">");
 			salida.println("                        	<select class=\"form-control input-lg\" id=\"search-input\" name=\"prod" + (indice+1) + "\"" + required + ">");
 			salida.println("                                	<option value=\"\" selected disabled style=\"display: none\">Selecciona el Producto " + (indice+1) + "</option>");
-			for(int i = 0; i < prods.size(); i++) {
+			for(int i = 0; i < 100; i++) {
 				String prod = prods.get(i);
 				salida.println("                                <option value=\"" + prod.toLowerCase().replaceAll(" ", "") +  "\">" + prod + "</option>");
 			}

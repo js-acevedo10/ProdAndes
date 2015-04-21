@@ -1352,7 +1352,7 @@ public class ProdAndesAdmin {
 	}
 
 	public ArrayList<Pedido> getPedidos() {
-		String query = "SELECT * FROM PEDIDO WHERE IDCLIENTE = 'alejoC'";
+		String query = "SELECT * FROM PEDIDO WHERE IDCLIENTE = '3'";
 		ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
 		PreparedStatement a = null;
 		try 

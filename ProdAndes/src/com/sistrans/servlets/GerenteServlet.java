@@ -169,7 +169,10 @@ public class GerenteServlet extends HttpServlet {
 			salida.println("                            <option value=\"none\" disabled selected>No hay pedidos disponibles</option>");
 		} else {
 			for(String pedido : pedidos) {
-				salida.println("                            <option value=\"" + pedido + "\">" + pedido + "</option>");
+				System.out.println(pedido);
+				String[] abc = pedido.split("&");
+				String imp = abc[1];			
+				salida.println("                            <option value=\"" + imp + "\">" + pedido.replaceAll("&", "") + "</option>");
 			}
 		}
 	}
@@ -480,7 +483,7 @@ public class GerenteServlet extends HttpServlet {
 		salida.println("                           <select class=\"form-control\" name=\"nacionalidad\">");
 		salida.println("								<option value=\"\" selected>Ninguno</option> ");
 		
-		ArrayList<String> nacionalidad = ProdAndesGerente.darInstancia().darNacionalidades("CLIENTE");
+		ArrayList<String> nacionalidad = ProdAndesGerente.darInstancia().darNacionalidades();
 		if(nacionalidad == null || nacionalidad.size() == 0) {
 			salida.println("							<option value=\"\" selected disabled>No hay opciones</option> ");
 		} else {
@@ -509,7 +512,7 @@ public class GerenteServlet extends HttpServlet {
 		salida.println("                           <select class=\"form-control\" name=\"ciudad\">");
 		salida.println("								<option value=\"\" selected>Ninguno</option> ");
 		
-		ArrayList<String> ciudades = ProdAndesGerente.darInstancia().darCiudades("CLIENTE");
+		ArrayList<String> ciudades = ProdAndesGerente.darInstancia().darCiudades();
 		if(ciudades == null || ciudades.size() == 0) {
 			salida.println("							<option value=\"\" selected disabled>No hay registrados</option> ");
 		} else {
@@ -639,13 +642,13 @@ public class GerenteServlet extends HttpServlet {
 		
 		//idCliente
 		salida.println("                        <div class=\"col-md-4\">");
-		salida.println("                           <label for=\"idCliente\">ID del Proveedor:</label>");
+		salida.println("                           <label for=\"idCliente\">ID del Cliente:</label>");
 		salida.println("                           <input class=\"form-control\" type=\"text\" name=\"idCliente\">");
 		salida.println("                        </div>");
 		
 		//TODO SELECT TIPODOC
 		salida.println("                        <div class=\"col-md-4\">");
-		salida.println("                           <label for=\"tipoDoc\">Tipo de Documento del Proveedor:</label>");
+		salida.println("                           <label for=\"tipoDoc\">Tipo de Documento del Cliente:</label>");
 		salida.println("                           <select class=\"form-control\" name=\"tipoDoc\">");
 		salida.println("								<option value=\"\" selected>Ninguno</option> ");
 		
@@ -668,23 +671,23 @@ public class GerenteServlet extends HttpServlet {
 		
 		//nombre
 		salida.println("                        <div class=\"col-md-4\">");
-		salida.println("                           <label for=\"nombre\">Nombre del Proveedor:</label>");
+		salida.println("                           <label for=\"nombre\">Nombre del Cliente:</label>");
 		salida.println("                           <input class=\"form-control\" type=\"text\" name=\"nombre\">");
 		salida.println("                        </div>");
 		
 		//direccion
 		salida.println("                        <div class=\"col-md-4\">");
-		salida.println("                           <label for=\"direccion\">Direccion del Proveedor:</label>");
+		salida.println("                           <label for=\"direccion\">Direccion del Cliente:</label>");
 		salida.println("                           <input class=\"form-control\" type=\"text\" name=\"direccion\">");
 		salida.println("                        </div>");
 		
 		//nacionalidad
 		salida.println("                        <div class=\"col-md-4\">");
-		salida.println("                           <label for=\"nacionalidad\">Nacionalidad del Proveedor:</label>");
+		salida.println("                           <label for=\"nacionalidad\">Nacionalidad del Cliente:</label>");
 		salida.println("                           <select class=\"form-control\" name=\"nacionalidad\">");
 		salida.println("								<option value=\"\" selected>Ninguno</option> ");
 		
-		ArrayList<String> nacionalidad = ProdAndesGerente.darInstancia().darNacionalidades("PROVEEDOR");
+		ArrayList<String> nacionalidad = ProdAndesGerente.darInstancia().darNacionalidades();
 		if(nacionalidad == null || nacionalidad.size() == 0) {
 			salida.println("							<option value=\"\" selected disabled>No hay opciones</option> ");
 		} else {
@@ -697,23 +700,23 @@ public class GerenteServlet extends HttpServlet {
 		
 		//email
 		salida.println("                        <div class=\"col-md-4\">");
-		salida.println("                           <label for=\"email\">Email del Proveedor:</label>");
+		salida.println("                           <label for=\"email\">Email del Cliente:</label>");
 		salida.println("                           <input class=\"form-control\" type=\"email\" name=\"email\">");
 		salida.println("                        </div>");
 		
 		//telefono
 		salida.println("                        <div class=\"col-md-4\">");
-		salida.println("                           <label for=\"telefono\">Telefono del Proveedor:</label>");
+		salida.println("                           <label for=\"telefono\">Telefono del Cliente:</label>");
 		salida.println("                           <input class=\"form-control\" type=\"number\" name=\"telefono\">");
 		salida.println("                        </div>");
 		
 		//ciudad
 		salida.println("                        <div class=\"col-md-4\">");
-		salida.println("                           <label for=\"ciudad\">Ciudad Origen del Proveedor:</label>");
+		salida.println("                           <label for=\"ciudad\">Ciudad Origen del Cliente:</label>");
 		salida.println("                           <select class=\"form-control\" name=\"ciudad\">");
 		salida.println("								<option value=\"\" selected>Ninguno</option> ");
 		
-		ArrayList<String> ciudades = ProdAndesGerente.darInstancia().darCiudades("CLIENTE");
+		ArrayList<String> ciudades = ProdAndesGerente.darInstancia().darCiudades();
 		if(ciudades == null || ciudades.size() == 0) {
 			salida.println("							<option value=\"\" selected disabled>No hay registrados</option> ");
 		} else {

@@ -154,7 +154,7 @@ public class ConsultarProveedoresServlet extends HttpServlet {
 		salida.println("                           <select class=\"form-control\" name=\"nacionalidad\">");
 		salida.println("								<option value=\"\" selected>Ninguno</option> ");
 		
-		ArrayList<String> nacionalidad = ProdAndesGerente.darInstancia().darNacionalidades("PROVEEDOR");
+		ArrayList<String> nacionalidad = ProdAndesGerente.darInstancia().darNacionalidades();
 		if(nacionalidad == null || nacionalidad.size() == 0) {
 			salida.println("							<option value=\"\" selected disabled>No hay opciones</option> ");
 		} else {
@@ -183,7 +183,7 @@ public class ConsultarProveedoresServlet extends HttpServlet {
 		salida.println("                           <select class=\"form-control\" name=\"ciudad\">");
 		salida.println("								<option value=\"\" selected>Ninguno</option> ");
 		
-		ArrayList<String> ciudades = ProdAndesGerente.darInstancia().darCiudades("PROVEEDOR");
+		ArrayList<String> ciudades = ProdAndesGerente.darInstancia().darCiudades();
 		if(ciudades == null || ciudades.size() == 0) {
 			salida.println("							<option value=\"\" selected disabled>No hay registrados</option> ");
 		} else {

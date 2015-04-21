@@ -35,25 +35,7 @@ public class ProdAndesOperario {
 	{
 		dao.inicializar();
 	}
-	public void encenderAutoCommit() {
-		dao.inicializar();
-		dao.encenderAutocommit();
-	}
-	
-	public void apagarAutoCommit() {
-		dao.inicializar();
-		dao.apagarAutocommit();
-	}
-	
-	public void hacerCommit() {
-		dao.inicializar();
-		dao.commit();
-	}
-	
-	public void hacerRollback() {
-		dao.inicializar();
-		dao.rollback();
-	}
+
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
@@ -591,7 +573,6 @@ public class ProdAndesOperario {
 		boolean flag = true;
 		try 
 		{
-			apagarAutoCommit();
 			String query = "SELECT* FROM ESTACIONDEPRODUCCION WHERE IDETAPAPRODUCCION ='"+id+"' AND IDMATERIAPRIMA is not null";
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
@@ -648,6 +629,7 @@ public class ProdAndesOperario {
 					int numInventario = c.getInt("NUMINVENTARIO");
 					if(numInventario<numero)
 					{
+						System.out.println("3");
 						flag = false;
 					}
 				}
@@ -742,15 +724,12 @@ public class ProdAndesOperario {
 				
 			}
 			System.out.println(query);
-			hacerCommit();
-			encenderAutoCommit();
+			
 		} 
 		catch (SQLException e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			hacerRollback();
-			encenderAutoCommit();
 		}
 		finally 
 		{

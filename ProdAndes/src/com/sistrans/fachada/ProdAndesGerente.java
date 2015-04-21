@@ -35,25 +35,6 @@ public class ProdAndesGerente {
 	{
 		dao.inicializar();
 	}
-	public void encenderAutoCommit() {
-		dao.inicializar();
-		dao.encenderAutocommit();
-	}
-	
-	public void apagarAutoCommit() {
-		dao.inicializar();
-		dao.apagarAutocommit();
-	}
-	
-	public void hacerCommit() {
-		dao.inicializar();
-		dao.commit();
-	}
-	
-	public void hacerRollback() {
-		dao.inicializar();
-		dao.rollback();
-	}
 
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
@@ -578,7 +559,6 @@ public class ProdAndesGerente {
 
 	public boolean registrarMateriaPrima(String id, String nombre,
 			String cantidad) {
-		apagarAutoCommit();
 		String query = "INSERT INTO MATERIAPRIMA (ID, NOMBRE, TONELADAS) VALUES ('"+ id + "', '" + nombre + "'," + cantidad + ")";
 		PreparedStatement a = null;
 		try 
@@ -586,14 +566,10 @@ public class ProdAndesGerente {
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			a.executeQuery();
-			hacerCommit();
-			encenderAutoCommit();
 		} 
 		catch (SQLException e) 
 		{
 			e.printStackTrace();
-			hacerRollback();
-			encenderAutoCommit();
 		}
 		finally 
 		{
@@ -612,7 +588,6 @@ public class ProdAndesGerente {
 	}
 	public boolean registrarMateriaProducto(String idMateria, String idProducto)
 	{
-		apagarAutoCommit();
 		String query = "INSERT INTO PRODUCTOMATERIAPRIMA (IDPRODUCTO, IDMATERIAPRIMA) VALUES ('"+ idProducto + "', '" + idMateria + "')";
 		PreparedStatement a = null;
 		try 
@@ -620,14 +595,10 @@ public class ProdAndesGerente {
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			a.executeQuery();
-			hacerCommit();
-			encenderAutoCommit();
 		} 
 		catch (SQLException e) 
 		{
 			e.printStackTrace();
-			hacerRollback();
-			encenderAutoCommit();
 		}
 		finally 
 		{
@@ -647,7 +618,6 @@ public class ProdAndesGerente {
 
 	public boolean registrarComponente(String nombre, String cantidad,
 			String unidadMedida) {
-		apagarAutoCommit();
 		String query = "INSERT INTO COMPONENTE (ID, NOMBRE, NUMINVENTARIO, UNIDADMEDIDA)VALUES ('"+nombre+cantidad+"', '"+nombre+"','"+cantidad+"', '"+unidadMedida+"')";
 		PreparedStatement a = null;
 		try 
@@ -655,15 +625,10 @@ public class ProdAndesGerente {
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
-			hacerCommit();
-			encenderAutoCommit();
-			
 		} 
 		catch (SQLException e) 
 		{
 			e.printStackTrace();
-			hacerRollback();
-			encenderAutoCommit();
 		}
 		finally 
 		{
@@ -688,21 +653,15 @@ public class ProdAndesGerente {
 	{
 		String query = "INSERT INTO PRODUCTOCOMPONENTE (IDPRODUCTO, IDCOMPONENTE) VALUES ('"+ idProducto + "', '" + idComponente + "')";
 		PreparedStatement a = null;
-		
 		try 
 		{
-			apagarAutoCommit();
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			a.executeQuery();
-			hacerCommit();
-			encenderAutoCommit();
 		} 
 		catch (SQLException e) 
 		{
 			e.printStackTrace();
-			hacerRollback();
-			encenderAutoCommit();
 		}
 		finally 
 		{
@@ -725,7 +684,6 @@ public class ProdAndesGerente {
 		PreparedStatement a = null;
 		try 
 		{
-			apagarAutoCommit();
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
@@ -739,19 +697,6 @@ public class ProdAndesGerente {
 				String queryMP="UPDATE MATERIAPRIMA SET TONELADAS=TONELADAS-"+numero+" WHERE ID='"+idMP+"'";
 				a = dao.conexion.prepareStatement(queryMP);
 				a.executeQuery();
-				String queryRoll="SELECT* FROM MATERIAPRIMA WHERE ID='"+idMP+"'";
-				a = dao.conexion.prepareStatement(queryRoll);
-				ResultSet nuevooSet = a.executeQuery();
-				while(nuevooSet.next())
-				{
-					int numerox = b.getInt("TONELADAS");
-					if(numerox<0)
-					{
-						hacerRollback();
-						encenderAutoCommit();
-						return false;
-					}
-				}
 			}
 			String query3 = "SELECT* FROM PEDIDO WHERE ID='"+id+"' AND IDCOMPONENTE is not null";
 			a = dao.conexion.prepareStatement(query3);
@@ -763,19 +708,6 @@ public class ProdAndesGerente {
 				String queryCP="UPDATE COMPONENTE SET NUMINVENTARIO=NUMINVENTARIO-"+numero+" WHERE ID='"+idMP+"'";
 				a = dao.conexion.prepareStatement(queryCP);
 				a.executeQuery();
-				String queryRoll="SELECT* FROM COMPONENTE WHERE ID='"+idMP+"'";
-				a = dao.conexion.prepareStatement(queryRoll);
-				ResultSet nuevooSet = a.executeQuery();
-				while(nuevooSet.next())
-				{
-					int numerox = b.getInt("NUMINVENTARIO");
-					if(numerox<0)
-					{
-						hacerRollback();
-						encenderAutoCommit();
-						return false;
-					}
-				}
 			}
 			String query4 = "SELECT* FROM PEDIDO WHERE ID='"+id+"' AND IDPRODUCTO is not null";
 			a = dao.conexion.prepareStatement(query4);
@@ -787,27 +719,11 @@ public class ProdAndesGerente {
 				String queryPR="UPDATE PRODUCTO SET NUMINVENTARIO=NUMINVENTARIO-"+numero+" WHERE ID='"+idMP+"'";
 				a = dao.conexion.prepareStatement(queryPR);
 				a.executeQuery();
-				String queryRoll="SELECT* FROM PRODUCTO WHERE ID='"+idMP+"'";
-				a = dao.conexion.prepareStatement(queryRoll);
-				ResultSet nuevooSet = a.executeQuery();
-				while(nuevooSet.next())
-				{
-					int numerox = b.getInt("NUMINVENTARIO");
-					if(numerox<0)
-					{
-						hacerRollback();
-						encenderAutoCommit();
-						return false;
-					}
-				}
 			}
-		 hacerCommit();
-		 encenderAutoCommit();
+			
 		} 
 		catch (SQLException e) 
 		{
-			hacerRollback();
-			encenderAutoCommit();
 			e.printStackTrace();
 		}
 		finally 
@@ -903,7 +819,7 @@ public class ProdAndesGerente {
 	}
 	
 	public ArrayList<String> darPedidos() {
-		String query = "SELECT * FROM PEDIDO";
+		String query = "SELECT E.ID, C.NOMBRE FROM PEDIDO E JOIN USUARIO C ON E.ID = C.LOGIN AND E.FECHARECIBIDO IS NULL";
 		PreparedStatement a = null;
 		ArrayList<String> pedidos = new ArrayList<String>();
 		try 
@@ -912,7 +828,7 @@ public class ProdAndesGerente {
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			while(b.next()) {
-				String x = "Pedido " + b.getString("ID");
+				String x = "Pedido con id.&" + b.getString("ID") + "& del cliente " + b.getString("NOMBRE");
 				pedidos.add(x);
 			}
 		} 
@@ -1205,8 +1121,8 @@ public class ProdAndesGerente {
 		return etapas;
 	}
 
-	public ArrayList<String> darNacionalidades(String rol) {
-		String query = "SELECT DISTINCT E.NACIONALIDAD FROM USUARIO E WHERE E.ROL = '" + rol +"'";
+	public ArrayList<String> darNacionalidades() {
+		String query = "SELECT DISTINCT E.NACIONALIDAD FROM USUARIO E WHERE E.ROL = 'CLIENTE'";
 		PreparedStatement a = null;
 		ArrayList<String> etapas = new ArrayList<String>();
 		try
@@ -1242,8 +1158,8 @@ public class ProdAndesGerente {
 		return etapas;
 	}
 
-	public ArrayList<String> darCiudades(String rol) {
-		String query = "SELECT DISTINCT E.CIUDAD FROM USUARIO E WHERE E.ROL = '" + rol.toUpperCase() + "'";
+	public ArrayList<String> darCiudades() {
+		String query = "SELECT DISTINCT E.CIUDAD FROM USUARIO E WHERE E.ROL = 'CLIENTE'";
 		PreparedStatement a = null;
 		ArrayList<String> etapas = new ArrayList<String>();
 		try
@@ -1322,7 +1238,6 @@ public class ProdAndesGerente {
 		PreparedStatement a = null;
 		try
 		{
-			apagarAutoCommit();
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
@@ -1426,33 +1341,14 @@ public class ProdAndesGerente {
 			}
 			else
 			{
-				hacerRollback();
-				encenderAutoCommit();
 				return false;
-			}
-			String queryRoll="SELECT* FROM ETAPAPRODUCCION WHERE ID='"+idEstacion+"'";
-			a = dao.conexion.prepareStatement(queryRoll);
-			ResultSet nuevooSet = a.executeQuery();
-			while(nuevooSet.next())
-			{
-				String estado = b.getString("ESTADO");
-				if(estado.equals("DESACTIVA"))
-				{
-					hacerRollback();
-					encenderAutoCommit();
-					return false;
-				}
 			}
 			query ="UPDATE ETAPAPRODUCCION SET ESTADO='DESACTIVA' WHERE ID='"+idEstacion+"'";
 			a= dao.conexion.prepareStatement(query);
 			a.executeQuery();
-			hacerCommit();
-			encenderAutoCommit();
 		} 
 		catch (SQLException e) 
 		{
-			hacerRollback();
-			encenderAutoCommit();
 			return false;
 		}
 		finally 
@@ -1571,8 +1467,7 @@ public class ProdAndesGerente {
 						estacionEtapaActual=z;
 					}
 					
-					query = "UPDATE ESTACIONDEPRODUCCION SET IDETAPAPRODUCCION='" +idEstacion+ "' WHERE CODIGO='1'";
-					System.out.println(query);
+					query = "UPDATE ESTACIONDEPRODUCCION SET IDETAPAPRODUCCION='" +idEstacion+ "' WHERE CODIGO='"+estacionEtapaActual.getCodigo()+"'";
 					a = dao.conexion.prepareStatement(query);
 					b = a.executeQuery();
 					estacionesEtapa.add(estacionEtapaActual);
@@ -1582,19 +1477,7 @@ public class ProdAndesGerente {
 			}
 			else
 			{
-				encenderAutoCommit();
 				return false;
-			}
-			String queryRoll="SELECT* FROM ETAPAPRODUCCION WHERE ID='"+idEstacion+"'";
-			a = dao.conexion.prepareStatement(queryRoll);
-			ResultSet nuevooSet = a.executeQuery();
-			while(nuevooSet.next())
-			{
-				String estado = b.getString("ESTADO");
-				if(estado.equals("ACTIVA"))
-				{
-					return false;
-				}
 			}
 			query ="UPDATE ETAPAPRODUCCION SET ESTADO='ACTIVA' WHERE ID='"+idEstacion+"'";
 			a= dao.conexion.prepareStatement(query);
@@ -1603,8 +1486,6 @@ public class ProdAndesGerente {
 		catch (SQLException e) 
 		{
 			// TODO Auto-generated catch block
-			hacerRollback();
-			encenderAutoCommit();
 			e.printStackTrace();
 		}
 		finally 

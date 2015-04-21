@@ -105,7 +105,7 @@ public class ConsultarClientesServlet extends HttpServlet {
 		salida.println("            <div class=\"jumbotron\" style=\"padding-top:10px; margin-bottom:-10px;\">");
 		salida.println("               <h1>Consulta de Clientes ProdAndes:</h1>");
 		salida.println("               <br>");
-		salida.println("                <form class=\"form-horizontal\" action=\"/ProdAndes/consultar/clientes.html\" method=\"post\">");
+		salida.println("                <form class=\"form-horizontal\" action=\"/ProdAndes/consultar/cliente.html\" method=\"post\">");
 		salida.println("                    <div class=\"form-group\">");
 		
 		//idCliente
@@ -155,7 +155,7 @@ public class ConsultarClientesServlet extends HttpServlet {
 		salida.println("                           <select class=\"form-control\" name=\"nacionalidad\">");
 		salida.println("								<option value=\"\" selected>Ninguno</option> ");
 		
-		ArrayList<String> nacionalidad = ProdAndesGerente.darInstancia().darNacionalidades("CLIENTE");
+		ArrayList<String> nacionalidad = ProdAndesGerente.darInstancia().darNacionalidades();
 		if(nacionalidad == null || nacionalidad.size() == 0) {
 			salida.println("							<option value=\"\" selected disabled>No hay opciones</option> ");
 		} else {
@@ -184,7 +184,7 @@ public class ConsultarClientesServlet extends HttpServlet {
 		salida.println("                           <select class=\"form-control\" name=\"ciudad\">");
 		salida.println("								<option value=\"\" selected>Ninguno</option> ");
 		
-		ArrayList<String> ciudades = ProdAndesGerente.darInstancia().darCiudades("CLIENTE");
+		ArrayList<String> ciudades = ProdAndesGerente.darInstancia().darCiudades();
 		if(ciudades == null || ciudades.size() == 0) {
 			salida.println("							<option value=\"\" selected disabled>No hay registrados</option> ");
 		} else {

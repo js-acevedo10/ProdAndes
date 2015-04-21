@@ -29,8 +29,7 @@
             <div class="jumbotron">
                 <h1>¿Qué deseas hacer?</h1>
             </div>
-            <form action="/ProdAndes/user.html" id="post-form" method="get"></form>
-            <form action="/ProdAndes/user.html" id="my-form" method="get"></form>
+            <form action="../../user.html" id="post-form" method="get"></form>
             <div class="panel panel-default">
                 <div class="panel-body">
                     Consultar:
@@ -54,21 +53,22 @@
             </div>
             <div class="row" id="registros">
                 <div class="col-xs-12 col-md-4">
-                	<button class="btn btn-info btn-lg btn-block btn-responsive" name="submit" value="register-mina" form="my-form" type="submit">
+                    <button class="btn btn-info btn-lg btn-block btn-responsive" 
+                       name="submit" value="register-order" form="post-form" type="submit">
+                        <p></p>
+                        <img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/128/Cart-icon.png" alt="Icons require internet">
+                        <p></p>
+                        <p>Registrar pedido de Productos</p>
+                    </button><br>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <button class="btn btn-info btn-lg btn-block btn-responsive" 
+                       name="submit" value="cancel-order-prod" form="post-form" type="submit">
                         <p></p>
                         <img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/128/Button-7-close-icon.png" alt="Icons require internet">
                         <p></p>
                         <p>Cancelar pedido de Productos</p>
                     </button><br>
-                </div>
-                <div class="col-xs-12 col-md-4">
-                 	<button class="btn btn-info btn-lg btn-block btn-responsive" 
-                       	name="submit" value="register-order" form="post-form" type="submit">
-                        <p></p>
-                        <img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/128/Cart-icon.png" alt="Icons require internet">
-                        <p></p>
-                        <p>Registrar pedido de Productos</p>
-                 	</button><br>
                 </div>
             </div>
         </div>
