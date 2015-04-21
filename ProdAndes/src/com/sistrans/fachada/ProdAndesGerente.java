@@ -1481,7 +1481,6 @@ public class ProdAndesGerente {
 		PreparedStatement a = null;
 		try
 		{
-			apagarAutoCommit();
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
@@ -1572,7 +1571,8 @@ public class ProdAndesGerente {
 						estacionEtapaActual=z;
 					}
 					
-					query = "UPDATE ESTACIONDEPRODUCCION SET IDETAPAPRODUCCION='" +idEstacion+ "' WHERE CODIGO='"+estacionEtapaActual.getCodigo()+"'";
+					query = "UPDATE ESTACIONDEPRODUCCION SET IDETAPAPRODUCCION='" +idEstacion+ "' WHERE CODIGO='1'";
+					System.out.println(query);
 					a = dao.conexion.prepareStatement(query);
 					b = a.executeQuery();
 					estacionesEtapa.add(estacionEtapaActual);
@@ -1593,16 +1593,12 @@ public class ProdAndesGerente {
 				String estado = b.getString("ESTADO");
 				if(estado.equals("ACTIVA"))
 				{
-					hacerRollback();
-					encenderAutoCommit();
 					return false;
 				}
 			}
 			query ="UPDATE ETAPAPRODUCCION SET ESTADO='ACTIVA' WHERE ID='"+idEstacion+"'";
 			a= dao.conexion.prepareStatement(query);
 			a.executeQuery();
-			hacerCommit();
-			encenderAutoCommit();
 		} 
 		catch (SQLException e) 
 		{
