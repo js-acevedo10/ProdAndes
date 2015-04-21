@@ -41,6 +41,25 @@ public class ProdAndesUsuario {
 	{
 		dao.inicializar();
 	}
+	public void encenderAutoCommit() {
+		dao.inicializar();
+		dao.encenderAutocommit();
+	}
+	
+	public void apagarAutoCommit() {
+		dao.inicializar();
+		dao.apagarAutocommit();
+	}
+	
+	public void hacerCommit() {
+		dao.inicializar();
+		dao.commit();
+	}
+	
+	public void hacerRollback() {
+		dao.inicializar();
+		dao.rollback();
+	}
 
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo) {
 		// TODO Auto-generated method stub
@@ -487,6 +506,7 @@ public class ProdAndesUsuario {
 		}
 		try 
 		{
+			apagarAutoCommit();
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
@@ -504,7 +524,9 @@ public class ProdAndesUsuario {
 			}
 			else if(fechaEntrega!=null&&dateCreacion.after(fechaEntrega))
 			{
-				
+				hacerRollback();
+				encenderAutoCommit();
+				return false;
 			}
 			else
 			{
@@ -566,7 +588,7 @@ public class ProdAndesUsuario {
 					{
 						int rand = (int) (Math.random()*1000);
 						flag = true;
-						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+(id1+""+rand) +"','3','no pago',to_date('"+ti+"','YYYY-MM-DD'),to_date('"+tf+"','YYYY-MM-DD'), '"+id1+"', '"+id32+"')";
+						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+(id1+""+rand) +"','alejoC','no pago',to_date('"+ti+"','YYYY-MM-DD'),to_date('"+tf+"','YYYY-MM-DD'), '"+id1+"', '"+id32+"')";
 						a = dao.conexion.prepareStatement(query6);
 						a.executeQuery();
 						
@@ -581,14 +603,21 @@ public class ProdAndesUsuario {
 						query6="INSERT INTO ETAPAOPERARIO (IDETAPA, IDPEDIDO) VALUES ('"+idEtapa+"','"+(id1+""+rand) +"')";
 						a = dao.conexion.prepareStatement(query6);
 						b = a.executeQuery();
+						
+						hacerCommit();
+						encenderAutoCommit();
 					}
 					else
 					{
 						int rand = (int) (Math.random()*1000);
-						flag = false;
-						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, ANOTACIONES, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+(id1+""+rand)+"','3','no pago',to_date('"+ti+"','YYYY-MM-DD'),to_date('"+tf+"','YYYY-MM-DD'), 'No se tienen los materiales necesarios', '"+id1+"', '"+id32+"')";
+						flag = true;
+						String query6 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, ANOTACIONES, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+(id1+""+rand)+"','','no pago',to_date('"+ti+"','YYYY-MM-DD'),to_date('"+tf+"','YYYY-MM-DD'), 'No se tienen los materiales necesarios', '"+id1+"', '"+id32+"')";
 						a = dao.conexion.prepareStatement(query6);
 						a.executeQuery();
+						
+
+						hacerCommit();
+						encenderAutoCommit();
 					}
 				}
 				
@@ -598,6 +627,8 @@ public class ProdAndesUsuario {
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			hacerRollback();
+			encenderAutoCommit();
 		}
 		finally 
 		{
@@ -626,8 +657,9 @@ public class ProdAndesUsuario {
 		PreparedStatement a = null;
 		try 
 		{
-			dao.inicializar();
 			
+			dao.inicializar();
+			apagarAutoCommit();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
 			ArrayList<String> infoPedido = new ArrayList<>();
@@ -756,10 +788,14 @@ public class ProdAndesUsuario {
 			query = "DELETE FROM PEDIDO WHERE ID = '"+idPedido+"'";
 			a = dao.conexion.prepareStatement(query);
 			a.executeQuery();
+			hacerCommit();
+			encenderAutoCommit();
 		} 
 		catch (SQLException e) 
 		{
 			// TODO Auto-generated catch block
+			hacerRollback();
+			encenderAutoCommit();
 			e.printStackTrace();
 		}
 		finally 
