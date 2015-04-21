@@ -105,7 +105,7 @@ public class ConsultarClientesServlet extends HttpServlet {
 		salida.println("            <div class=\"jumbotron\" style=\"padding-top:10px; margin-bottom:-10px;\">");
 		salida.println("               <h1>Consulta de Clientes ProdAndes:</h1>");
 		salida.println("               <br>");
-		salida.println("                <form class=\"form-horizontal\" action=\"/ProdAndes/consultar/clientes.html\" method=\"post\">");
+		salida.println("                <form class=\"form-horizontal\" action=\"/ProdAndes/consultar/cliente.html\" method=\"post\">");
 		salida.println("                    <div class=\"form-group\">");
 		
 		//idCliente
