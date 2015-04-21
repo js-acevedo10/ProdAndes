@@ -744,8 +744,8 @@ public class ProdAndesGerente {
 				ResultSet nuevooSet = a.executeQuery();
 				while(nuevooSet.next())
 				{
-					int numero = b.getInt("TONELADAS");
-					if(numero<0)
+					int numerox = b.getInt("TONELADAS");
+					if(numerox<0)
 					{
 						hacerRollback();
 						encenderAutoCommit();
@@ -768,8 +768,8 @@ public class ProdAndesGerente {
 				ResultSet nuevooSet = a.executeQuery();
 				while(nuevooSet.next())
 				{
-					int numero = b.getInt("NUMINVENTARIO");
-					if(numero<0)
+					int numerox = b.getInt("NUMINVENTARIO");
+					if(numerox<0)
 					{
 						hacerRollback();
 						encenderAutoCommit();
@@ -792,8 +792,8 @@ public class ProdAndesGerente {
 				ResultSet nuevooSet = a.executeQuery();
 				while(nuevooSet.next())
 				{
-					int numero = b.getInt("NUMINVENTARIO");
-					if(numero<0)
+					int numerox = b.getInt("NUMINVENTARIO");
+					if(numerox<0)
 					{
 						hacerRollback();
 						encenderAutoCommit();
