@@ -93,7 +93,7 @@ public class ConsultarMateriales2Servlet extends HttpServlet {
 		salida.println("                    <div class=\"form-group\">");
 		salida.println("                        <div class=\"row\">");
 		
-		salida.println("						<div class=\"col-md-6\">");
+		salida.println("						<div class=\"col-md-4\">");
 		salida.println("							<label for=\"tipoMat\">Tipo de Material:</label>");
 		salida.println("							<input type=\"text\" class=\"form-control input-lg\" name=\"idMaterial\" placeholder=\"ID del Material\">");
 		salida.println("						</div>");
