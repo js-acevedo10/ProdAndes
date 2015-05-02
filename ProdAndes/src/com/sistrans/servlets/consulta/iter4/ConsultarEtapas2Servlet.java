@@ -95,7 +95,7 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 		salida.println("            <div class=\"jumbotron\" style=\"padding-bottom:15px\">");
 		salida.println("               <h1>Consultar ejecucion etapas 2:</h1>");
 		salida.println("               <br>");
-		salida.println("                <form class=\"form-horizontal\" action=\"/ProdAndes/consulta/etapas1.html\" method=\"get\">");
+		salida.println("                <form class=\"form-horizontal\" action=\"/ProdAndes/consulta/etapas2.html\" method=\"get\">");
 		salida.println("                    <div class=\"form-group\">");
 		salida.println("                        <div class=\"row\">");
 		salida.println("                        <div class=\"col-md-4\">");
@@ -122,20 +122,14 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 		}
 		salida.println("							</select>");
 		salida.println("						</div>");
-		
-		ArrayList<String> tipoMateriales = ProdAndesGerente.darInstancia().darTipoMaterias();
-		
+				
 		salida.println("						<div class=\"col-md-4\">");
 		salida.println("							<label for=\"idMaterial\">Excluir Tipo de Material:</label>");
-		salida.println("							<select class=\"form-control input-lg\" name=\"tipoMateria\">");
-		salida.println("								<option value=\"null\" selected>Tipo de Materia Prima</option>");
-		if(materiales != null) {
-			for(String e : tipoMateriales) {
-				salida.println("								<option value=\"" + e + "\">" + e + "</option>");
-			}
-		} else {
-			salida.println("								<option value=\"null\" selected disabled>No hay Tipos</option>");
-		}
+		salida.println("							<select class=\"form-control input-lg\" name=\"tipoMat\">");
+		salida.println("								<option value=\"null\" selected>Tipo de Materiales</option>");
+		salida.println("								<option value=\"Materia Prima\">Materia Prima</option>");
+		salida.println("								<option value=\"Componente\">Componente</option>");
+		salida.println("								<option value=\"Producto\">Producto</option>");
 		salida.println("							</select>");
 		salida.println("						</div>");
 		
@@ -145,7 +139,7 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 		salida.println("							<label for=\"idPedido\">Excluir ID de Pedido:</label>");
 		salida.println("							<select class=\"form-control input-lg\" name=\"idPedido\">");
 		salida.println("								<option value=\"null\" selected>ID de Pedidos</option>");
-		if(materiales != null) {
+		if(pedidos != null) {
 			for(String e : pedidos) {
 				salida.println("								<option value=\"" + e + "\">" + e + "</option>");
 			}
@@ -157,7 +151,7 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 		
 		salida.println("						<div class=\"col-md-4\">");
 		salida.println("							<label for=\"cantidad\">Excluir Cantidad:</label>");
-		salida.println("							<input type=\"number\" class=\"form-control input-lg\" name=\"cantidad\">");
+		salida.println("							<input type=\"number\" class=\"form-control input-lg\" name=\"cantidad\" placeholder=\"Cantidad\">");
 		salida.println("						</div>");
 	}
 

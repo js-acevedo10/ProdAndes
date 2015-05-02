@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sistrans.fachada.ProdAndesGerente;
-import com.sistrans.mundo.MateriaPrima;
 
 /**
  * Servlet implementation class ConsultarEtapas1Servlet
@@ -123,20 +122,14 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 		}
 		salida.println("							</select>");
 		salida.println("						</div>");
-		
-		ArrayList<String> tipoMateriales = ProdAndesGerente.darInstancia().darTipoMaterias();
-		
+				
 		salida.println("						<div class=\"col-md-4\">");
 		salida.println("							<label for=\"idMaterial\">Incluir Tipo de Material:</label>");
-		salida.println("							<select class=\"form-control input-lg\" name=\"tipoMateria\">");
-		salida.println("								<option value=\"null\" selected>Tipo de Materia Prima</option>");
-		if(materiales != null) {
-			for(String e : tipoMateriales) {
-				salida.println("								<option value=\"" + e + "\">" + e + "</option>");
-			}
-		} else {
-			salida.println("								<option value=\"null\" selected disabled>No hay Tipos</option>");
-		}
+		salida.println("							<select class=\"form-control input-lg\" name=\"tipoMat\">");
+		salida.println("								<option value=\"null\" selected>Tipo de Materiales</option>");
+		salida.println("								<option value=\"Materia Prima\">Materia Prima</option>");
+		salida.println("								<option value=\"Componente\">Componente</option>");
+		salida.println("								<option value=\"Producto\">Producto</option>");
 		salida.println("							</select>");
 		salida.println("						</div>");
 		
@@ -146,7 +139,7 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 		salida.println("							<label for=\"idPedido\">Incluir ID de Pedido:</label>");
 		salida.println("							<select class=\"form-control input-lg\" name=\"idPedido\">");
 		salida.println("								<option value=\"null\" selected>ID de Pedidos</option>");
-		if(materiales != null) {
+		if(pedidos != null) {
 			for(String e : pedidos) {
 				salida.println("								<option value=\"" + e + "\">" + e + "</option>");
 			}

@@ -25,14 +25,12 @@ public class GerenteServlet extends HttpServlet {
      */
     public GerenteServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		procesarSolicitud(request, response);
 	}
 
@@ -40,7 +38,6 @@ public class GerenteServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		procesarSolicitud(request, response);
 	}
 	public void procesarSolicitud(HttpServletRequest request, HttpServletResponse response) throws IOException
@@ -89,10 +86,10 @@ public class GerenteServlet extends HttpServlet {
 			response.sendRedirect("/ProdAndes/consulta/etapas2.html?submit=no");
 			break;
 		case "material2":
-			response.sendRedirect("pages/gerente/search/material2.html");
+			response.sendRedirect("/ProdAndes/consulta/materiales2.html?submit=no");
 			break;
 		case "pedidos2":
-			response.sendRedirect("pages/gerente/search/pedidos2.html");
+			response.sendRedirect("/ProdAndes/consulta/pedidos2.html?submit=no");
 			break;
 		default:
 			response.sendRedirect("pages/error/404.html");
