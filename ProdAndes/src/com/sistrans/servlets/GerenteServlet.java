@@ -82,6 +82,18 @@ public class GerenteServlet extends HttpServlet {
 		case "proveedores":
 			realizarConsultaProveedores(out);
 			break;
+		case "ejecucion-et1":
+			response.sendRedirect("/ProdAndes/consulta/etapas1.html?submit=no");
+			break;
+		case "ejecucion-et2":
+			response.sendRedirect("/ProdAndes/consulta/etapas2.html?submit=no");
+			break;
+		case "material2":
+			response.sendRedirect("pages/gerente/search/material2.html");
+			break;
+		case "pedidos2":
+			response.sendRedirect("pages/gerente/search/pedidos2.html");
+			break;
 		default:
 			response.sendRedirect("pages/error/404.html");
 			break;

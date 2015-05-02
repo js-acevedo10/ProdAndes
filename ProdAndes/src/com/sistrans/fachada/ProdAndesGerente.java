@@ -1686,6 +1686,10 @@ public class ProdAndesGerente {
 		}
 		return resp;
 	}
+
+	public ArrayList<String> darTipoMaterias() {
+		return null;
+	}
 	
 	
 }
