@@ -1539,14 +1539,14 @@ public class ProdAndesAdmin {
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			a.executeQuery();
-			query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE ";	
+			query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION ";	
 			int numeroString = query.length();
 			int numeroString2=0;
 			int numeroString3=0;
 			int numeroString4=0;
 			if(idCom!=null&&idCom!="")
 			{
-				query=query+"ESTACIONDEPRODUCCION.IDCOMPONENTE='"+idCom+"'";
+				query=query+"WHERE ESTACIONDEPRODUCCION.IDCOMPONENTE='"+idCom+"'";
 				numeroString2=query.length();
 			}
 			if(idMP!=null&&idMP!="")
@@ -1558,7 +1558,7 @@ public class ProdAndesAdmin {
 				}
 				else
 				{
-					query=query+"ESTACIONDEPRODUCCION.IDMATERIAPRIMA='"+idMP+"'";
+					query=query+"WHERE ESTACIONDEPRODUCCION.IDMATERIAPRIMA='"+idMP+"'";
 					numeroString4=query.length();
 				}
 			}
@@ -1589,7 +1589,7 @@ public class ProdAndesAdmin {
 			{
 				if(numeroString==query.length())
 				{
-					query=query+" (ESTACIONDEPRODUCCION.NUMCOMPONENTE>="+numProd+" OR ESTACIONDEPRODUCCION.NUMMATERIAPRIMA>="+numProd+" OR ESTACIONDEPRODUCCION.NUMPRODUCTO>="+numProd+")";	
+					query=query+"WHERE (ESTACIONDEPRODUCCION.NUMCOMPONENTE>="+numProd+" OR ESTACIONDEPRODUCCION.NUMMATERIAPRIMA>="+numProd+" OR ESTACIONDEPRODUCCION.NUMPRODUCTO>="+numProd+")";	
 
 				}
 				else
@@ -1601,7 +1601,7 @@ public class ProdAndesAdmin {
 			{
 				if(numeroString==query.length())
 				{
-					query=query+" ESTACIONDEPRODUCCION.TIEMPOREALIZACION='"+tiempoReali+"'";
+					query=query+"WHERE ESTACIONDEPRODUCCION.TIEMPOREALIZACION='"+tiempoReali+"'";
 				}
 				else
 				{
