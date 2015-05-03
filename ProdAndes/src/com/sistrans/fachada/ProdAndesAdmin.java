@@ -728,7 +728,7 @@ public class ProdAndesAdmin {
 	public ArrayList<String> etapaMasActiva(String fechaInc, String fechaFin)
 	{
 		ArrayList<String> resultado=new ArrayList<>();
-		String query = "SELECT t.IDETAPA, count(*) as Cuenta FROM (SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInc+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFin+"','YYYY-MM-DD')) t group by t.IDETAPA order by count(*) DESC";
+		String query = "SELECT t.IDETAPA, count(*) as Cuenta FROM (SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInc+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFin+"','MM-DD-YYYY')) t group by t.IDETAPA order by count(*) DESC";
 		PreparedStatement a = null;
 		try 
 		{
@@ -1435,9 +1435,9 @@ public class ProdAndesAdmin {
 	}
 	
 	
-	public ArrayList<EstaciondeProducto> etapaDeProduccion2 (String fechaInicial, String fechaFinal, int pagina)
+	public ArrayList<EtapadeProduccion> etapaDeProduccion2 (String fechaInicial, String fechaFinal, int pagina)
 	{
-		ArrayList<EstaciondeProducto> resultado = new ArrayList<>();
+		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
 		String query="CREATE INDEX index1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
 		Timer timer = new Timer();
 		PreparedStatement a = null;
@@ -1453,7 +1453,7 @@ public class ProdAndesAdmin {
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			a.executeQuery();
-			query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFinal+"','YYYY-MM-DD')) table1 LEFT JOIN ESTACIONDEPRODUCCION table2 on table1.IDETAPA=table2.IDETAPAPRODUCCION)";			
+			query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN ESTACIONDEPRODUCCION table2 on table1.IDETAPA=table2.IDETAPAPRODUCCION)";			
 			a = dao.conexion.prepareStatement(query);
 			timer.start();
 			ResultSet b = a.executeQuery();
@@ -1487,7 +1487,6 @@ public class ProdAndesAdmin {
 						int numProducto = b.getInt(8);
 						z.setIdProducto(idProductoA);
 					}
-					resultado.add(z);
 						
 				}
 				i=i+1;
@@ -1522,9 +1521,9 @@ public class ProdAndesAdmin {
 		}		
 		return resultado;
 	}
-	public ArrayList<EstaciondeProducto> etapaDeProduccion1 (String fechaInicial, String fechaFinal, int pagina, String idCom, String idMP, String idProd, int numProd, String tiempoReali)
+	public ArrayList<EtapadeProduccion> etapaDeProduccion1 (String fechaInicial, String fechaFinal, int pagina, String idCom, String idMP, String idProd, int numProd, String tiempoReali)
 	{
-		ArrayList<EstaciondeProducto> resultado = new ArrayList<>();
+		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
 		String query="CREATE INDEX index1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
 		Timer timer = new Timer();
 		PreparedStatement a = null;
@@ -1540,7 +1539,7 @@ public class ProdAndesAdmin {
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			a.executeQuery();
-			query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFinal+"','YYYY-MM-DD')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION ";	
+			query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION ";	
 			int numeroString = query.length();
 			int numeroString2=0;
 			int numeroString3=0;
@@ -1554,7 +1553,7 @@ public class ProdAndesAdmin {
 			{
 				if(numeroString<query.length())
 				{
-					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFinal+"','YYYY-MM-DD')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE (ESTACIONDEPRODUCCION.IDCOMPONENTE='"+idCom+"' OR ESTACIONDEPRODUCCION.IDMATERIAPRIMA='"+idMP+"')";	
+					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE (ESTACIONDEPRODUCCION.IDCOMPONENTE='"+idCom+"' OR ESTACIONDEPRODUCCION.IDMATERIAPRIMA='"+idMP+"')";	
 					numeroString3=query.length();
 				}
 				else
@@ -1567,22 +1566,22 @@ public class ProdAndesAdmin {
 			{
 				if(numeroString3>0)
 				{
-					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFinal+"','YYYY-MM-DD')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE (ESTACIONDEPRODUCCION.IDCOMPONENTE='"+idCom+"' OR ESTACIONDEPRODUCCION.IDMATERIAPRIMA='"+idMP+"' OR ESTACIONDEPRODUCCION.IDPRODUCTO='"+idProd+"')";	
+					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE (ESTACIONDEPRODUCCION.IDCOMPONENTE='"+idCom+"' OR ESTACIONDEPRODUCCION.IDMATERIAPRIMA='"+idMP+"' OR ESTACIONDEPRODUCCION.IDPRODUCTO='"+idProd+"')";	
 
 				}
 				else if (numeroString2>0)
 				{
-					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFinal+"','YYYY-MM-DD')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE (ESTACIONDEPRODUCCION.IDCOMPONENTE='"+idCom+"' OR ESTACIONDEPRODUCCION.IDPRODUCTO='"+idProd+"')";	
+					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE (ESTACIONDEPRODUCCION.IDCOMPONENTE='"+idCom+"' OR ESTACIONDEPRODUCCION.IDPRODUCTO='"+idProd+"')";	
 
 				}
 				else if(numeroString4>0)
 				{
-					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFinal+"','YYYY-MM-DD')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE (ESTACIONDEPRODUCCION.IDMATERIAPRIMA='"+idMP+"' OR ESTACIONDEPRODUCCION.IDPRODUCTO='"+idProd+"')";	
+					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE (ESTACIONDEPRODUCCION.IDMATERIAPRIMA='"+idMP+"' OR ESTACIONDEPRODUCCION.IDPRODUCTO='"+idProd+"')";	
 
 				}
 				else
 				{
-					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFinal+"','YYYY-MM-DD')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDPRODUCTO='"+idProd+"'";	
+					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDPRODUCTO='"+idProd+"'";	
 
 				}
 			}
@@ -1614,7 +1613,7 @@ public class ProdAndesAdmin {
 			timer.start();
 			ResultSet b = a.executeQuery();
 			timer.stop();
-			System.out.println(timer.toString());
+			System.out.println(timer);
 			int i=0;
 			while(b.next()&&i<maximo)
 			{
@@ -1643,17 +1642,14 @@ public class ProdAndesAdmin {
 						int numProducto = b.getInt(8);
 						z.setIdProducto(idProductoA);
 					}
-<<<<<<< HEAD
-					
-					resultado.add(z);
 						
-=======
-											
->>>>>>> origin/master
 				}
 				i=i+1;
 			}
-
+			
+			query="DROP INDEX INDEX1";
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
 		} 
 		catch (SQLException e) 
 		{
