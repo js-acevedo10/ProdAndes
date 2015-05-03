@@ -1676,4 +1676,236 @@ public class ProdAndesAdmin {
 		}		
 		return resultado;
 	}
+	public ArrayList<Pedido> pedido1 (String tipoMaterial, int costo, int pagina)
+	{
+		ArrayList<Pedido> resultado = new ArrayList<>();
+		String query="CREATE INDEX index1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
+		Timer timer = new Timer();
+		PreparedStatement a = null;
+		int minimo =0;
+		int maximo =500;
+		if(pagina!=0)
+		{
+			minimo = 500*pagina;
+			maximo= minimo+500;
+		}
+		try 
+		{
+			dao.inicializar();	
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+			if(tipoMaterial=="PRODUCTO")
+			{
+				query="SELECT* FROM PEDIDO WHERE IDPRODUCTO IS NOT NULL AND COSTO>"+costo;
+			}
+			else if (tipoMaterial=="MATERIAPRIMA")
+			{
+				query="SELECT* FROM PEDIDO WHERE IDMATERIAPRIMA IS NOT NULL AND COSTO>"+costo;
+			}
+			else
+			{
+				query="SELECT* FROM PEDIDO WHERE IDCOMPONENTE IS NOT NULL AND COSTO>"+costo;
+			}
+			query ="";
+			a = dao.conexion.prepareStatement(query);
+			timer.start();
+			ResultSet b = a.executeQuery();
+			timer.stop();
+			System.out.println(timer);
+			int i=0;
+			while(b.next()&&i<maximo)
+			{
+				if (i>=minimo)
+				{
+					String idT = b.getString("ID");
+					String idClienteT = b.getString("IDCLIENTE");
+					String estadoPagoT = b.getString("ESTADOPAGO");
+					Date fechaCreacionT = b.getDate("FECHACREACION");
+					Date fechaRecibidoT = null;
+					if(b.getDate("FECHARECIBIDO")!=null)
+					{
+						fechaRecibidoT = b.getDate("FECHARECIBIDO");
+					}
+					Date deadlineT = b.getDate("DEADLINE");
+					String anotacionesT ="";
+					if(b.getString("ANOTACIONES")!=null&&b.getString("ANOTACIONES")!="")
+					{
+						anotacionesT = b.getString("ANOTACIONES");
+					}
+					
+					String idMateriaPrimaT = "";
+					
+					if(b.getString("IDMateriaPrima")!=null)
+					{
+						idMateriaPrimaT = b.getString("IDMateriaPrima");
+					}
+					int numMateriaPrimaT = b.getInt("NUMMateriaPrima");
+					
+					String idComponenteT = "";
+					
+					if(b.getString("IDComponente")!=null)
+					{
+						idComponenteT = b.getString("IDComponente");
+					}
+					int numComponenteT = b.getInt("NUMComponente");
+					
+					String idPrductoT = "";
+					
+					if(b.getString("IDPRODUCTO")!=null)
+					{
+						idPrductoT = b.getString("IDPRODUCTO");
+					}
+					int numProductoT = b.getInt("NUMPRODUCTO");
+					Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT);
+					resultado.add(z);
+						
+				}
+				i=i+1;
+			}
+			
+			query="DROP INDEX INDEX1";
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return resultado;
+	}
+	public ArrayList<Pedido> pedido2 (String tipoMaterial, int costo, int pagina, String idMaterial)
+	{
+		ArrayList<Pedido> resultado = new ArrayList<>();
+		String query="CREATE INDEX index1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
+		Timer timer = new Timer();
+		PreparedStatement a = null;
+		int minimo =0;
+		int maximo =500;
+		if(pagina!=0)
+		{
+			minimo = 500*pagina;
+			maximo= minimo+500;
+		}
+		try 
+		{
+			dao.inicializar();	
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+			if(tipoMaterial=="PRODUCTO")
+			{
+				query="SELECT* FROM PEDIDO WHERE IDPRODUCTO IS NOT NULL AND IDPRODUCTO='"+idMaterial+" AND COSTO>"+costo;
+			}
+			else if (tipoMaterial=="MATERIAPRIMA")
+			{
+				query="SELECT* FROM (SELECT ID,IDCLIENTE,ESTADOPAGO,FECHACREACION,FECHARECIBIDO,DEADLINE,ANOTACIONES,IDPRODUCTO,NUMPRODUCTO,COSTO FROM (SELECT table2.IDPEDIDO FROM (SELECT* FROM ESTACIONDEPRODUCCION WHERE IDMATERIAPRIMA='"+idMaterial+"') table1 LEFT JOIN ETAPAOPERARIO table2 ON table1.IDETAPAPRODUCCION=table2.IDETAPA WHERE table2.IDPEDIDO IS NOT NULL)table3 LEFT JOIN (SELECT* FROM PEDIDO WHERE COSTO>"+costo+")table4 on table3.IDPEDIDO = table4.ID) UNION (SELECT ID,IDCLIENTE,ESTADOPAGO,FECHACREACION,FECHARECIBIDO,DEADLINE,ANOTACIONES,IDPRODUCTO,NUMPRODUCTO,COSTO  FROM PEDIDO WHERE IDMATERIAPRIMA='"+idMaterial+"')";
+			}
+			else
+			{
+				query="SELECT* FROM (SELECT ID,IDCLIENTE,ESTADOPAGO,FECHACREACION,FECHARECIBIDO,DEADLINE,ANOTACIONES,IDPRODUCTO,NUMPRODUCTO,COSTO FROM (SELECT table2.IDPEDIDO FROM (SELECT* FROM ESTACIONDEPRODUCCION WHERE IDCOMPONENTE='"+idMaterial+"') table1 LEFT JOIN ETAPAOPERARIO table2 ON table1.IDETAPAPRODUCCION=table2.IDETAPA WHERE table2.IDPEDIDO IS NOT NULL)table3 LEFT JOIN (SELECT* FROM PEDIDO WHERE COSTO>"+costo+")table4 on table3.IDPEDIDO = table4.ID) UNION (SELECT ID,IDCLIENTE,ESTADOPAGO,FECHACREACION,FECHARECIBIDO,DEADLINE,ANOTACIONES,IDPRODUCTO,NUMPRODUCTO,COSTO  FROM PEDIDO WHERE IDCOMPONENTE='"+idMaterial+"')";				
+			}
+			query ="";
+			a = dao.conexion.prepareStatement(query);
+			timer.start();
+			ResultSet b = a.executeQuery();
+			timer.stop();
+			System.out.println(timer);
+			int i=0;
+			while(b.next()&&i<maximo)
+			{
+				if (i>=minimo)
+				{
+					String idT = b.getString("ID");
+					String idClienteT = b.getString("IDCLIENTE");
+					String estadoPagoT = b.getString("ESTADOPAGO");
+					Date fechaCreacionT = b.getDate("FECHACREACION");
+					Date fechaRecibidoT = null;
+					if(b.getDate("FECHARECIBIDO")!=null)
+					{
+						fechaRecibidoT = b.getDate("FECHARECIBIDO");
+					}
+					Date deadlineT = b.getDate("DEADLINE");
+					String anotacionesT ="";
+					if(b.getString("ANOTACIONES")!=null&&b.getString("ANOTACIONES")!="")
+					{
+						anotacionesT = b.getString("ANOTACIONES");
+					}
+					
+					String idMateriaPrimaT = "";
+					
+					if(b.getString("IDMateriaPrima")!=null)
+					{
+						idMateriaPrimaT = b.getString("IDMateriaPrima");
+					}
+					int numMateriaPrimaT = b.getInt("NUMMateriaPrima");
+					
+					String idComponenteT = "";
+					
+					if(b.getString("IDComponente")!=null)
+					{
+						idComponenteT = b.getString("IDComponente");
+					}
+					int numComponenteT = b.getInt("NUMComponente");
+					
+					String idPrductoT = "";
+					
+					if(b.getString("IDPRODUCTO")!=null)
+					{
+						idPrductoT = b.getString("IDPRODUCTO");
+					}
+					int numProductoT = b.getInt("NUMPRODUCTO");
+					Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT);
+					resultado.add(z);
+						
+				}
+				i=i+1;
+			}
+			
+			query="DROP INDEX INDEX1";
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return resultado;
+	}
 }
