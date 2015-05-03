@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sistrans.fachada.ProdAndesAdmin;
 import com.sistrans.fachada.ProdAndesGerente;
+import com.sistrans.mundo.EtapadeProduccion;
 
 /**
  * Servlet implementation class ConsultarEtapas1Servlet
@@ -18,6 +20,7 @@ import com.sistrans.fachada.ProdAndesGerente;
 @WebServlet("/consulta/etapas1.html")
 public class ConsultarEtapas1Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public int pag;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -50,11 +53,16 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 		String action = request.getParameter("submit");
 		printHeader(salida);
 		if(action != null && !action.equals("no")) {
+			pag = Integer.parseInt(request.getParameter("p"));
+			String fechIn = request.getParameter("fecha-inicio");
+			String fechFin = request.getParameter("fecha-final");
 			String idMat = request.getParameter("idMateria");
 			String tipoMat = request.getParameter("tipoMateria");
 			String idPedido = request.getParameter("idPedido");
 			String cantidad = request.getParameter("cantidad");
-			printTables(salida, idMat, tipoMat, idPedido, cantidad);
+			printTables(fechIn, fechFin, salida, idMat, tipoMat, idPedido, cantidad);
+		} else {
+			pag = 0;
 		}
 		printFooter(salida);
 	}
@@ -107,33 +115,22 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 		salida.println("            <input type=\"date\" class=\"form-control input-lg\" id=\"fecha-final\" required>");
 		salida.println("                        </div>");
 		
-		ArrayList<String> materiales = ProdAndesGerente.darInstancia().darTipoMaterias();
-		
 		salida.println("						<div class=\"col-md-4\">");
 		salida.println("							<label for=\"idMaterial\">Incluir ID del Material:</label>");
-		salida.println("							<select class=\"form-control input-lg\" name=\"idMateria\">");
-		salida.println("								<option value=\"null\" selected>ID Materia Prima</option>");
-		if(materiales != null) {
-			for(String e : materiales) {
-				salida.println("								<option value=\"" + e + "\">" + e + "</option>");
-			}
-		} else {
-			salida.println("								<option value=\"null\" selected disabled>No hay Materias Primas</option>");
-		}
-		salida.println("							</select>");
+		salida.println("							<input type=\"text\" class=\"form-control input-lg\" name=\"idMaterial\" placeholder=\"Id del material\">");
 		salida.println("						</div>");
 				
 		salida.println("						<div class=\"col-md-4\">");
 		salida.println("							<label for=\"idMaterial\">Incluir Tipo de Material:</label>");
 		salida.println("							<select class=\"form-control input-lg\" name=\"tipoMat\">");
 		salida.println("								<option value=\"null\" selected>Tipo de Materiales</option>");
-		salida.println("								<option value=\"Materia Prima\">Materia Prima</option>");
+		salida.println("								<option value=\"Materia-Prima\">Materia Prima</option>");
 		salida.println("								<option value=\"Componente\">Componente</option>");
 		salida.println("								<option value=\"Producto\">Producto</option>");
 		salida.println("							</select>");
 		salida.println("						</div>");
 		
-		ArrayList<String> pedidos = ProdAndesGerente.darInstancia().darTipoMaterias();
+		ArrayList<String> pedidos = ProdAndesGerente.darInstancia().darPedidos();
 		
 		salida.println("						<div class=\"col-md-4\">");
 		salida.println("							<label for=\"idPedido\">Incluir ID de Pedido:</label>");
@@ -153,10 +150,59 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 		salida.println("							<label for=\"cantidad\">Incluir Cantidad:</label>");
 		salida.println("							<input type=\"number\" class=\"form-control input-lg\" name=\"cantidad\">");
 		salida.println("						</div>");
+//		salida.println("						<input type=\"number\" class=\"form-control\" name=\"p\" value=\"" + pag+1 +"\" style=\"diaplay:none;\"");
 	}
 
-	private void printTables(PrintWriter salida, String idMat, String tipoMat, String idPedido, String cantidad) {
+	private void printTables(String fechIn, String fechFin, PrintWriter salida, String idMat, String tipoMat, String idPedido, String cantidadS) {
+		String idCom = null;
+		String idMP = null;
+		String idProd = null;
+		switch (tipoMat) {
+		case "Materia-Prima":
+			idMP = idMat;
+			break;
+		case "Componente":
+			idCom = idMat;
+			break;
+		case "Producto":
+			idProd = idMat;
+			break;
+		default:
+			break;
+		}
 		
+		int cantidad = Integer.parseInt(cantidadS);
+		
+		ArrayList<EtapadeProduccion> etapas = ProdAndesAdmin.darInstancia().etapaDeProduccion1(fechIn, fechFin, pag, idCom, idMP, idProd, cantidad, null);
+		
+		if(etapas != null && etapas.size() != 0) {
+			
+			salida.println("                    <thead>");
+			salida.println("                        <tr>");
+			salida.println("                            <th>Nombre</th>");
+			salida.println("                            <th>Estado</th>");
+			salida.println("                            <th>Num</th>");
+			salida.println("                        </tr>");
+			salida.println("                    </thead>");
+			salida.println("                    <tbody>");
+			
+			for(EtapadeProduccion et : etapas) {
+				salida.println("                        <tr>");
+				salida.println("							<td>" + et.getNombre() + "</td>");
+				salida.println("							<td>" + et.getEstado() + "</td>");
+				salida.println("							<td>" + et.getNum() + "</td>");
+				salida.println("                        </tr>");
+			}
+			
+			salida.println("                    </tbody>");
+			salida.println("                </table>");
+			
+		} else {
+			salida.println("						<h1>No hay</h1>");
+		}
+		
+		
+				
 	}
 
 	private void printFooter(PrintWriter salida) {

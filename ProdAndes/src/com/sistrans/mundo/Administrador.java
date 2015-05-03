@@ -16,8 +16,17 @@ public class Administrador extends Usuario
 	 * @ordered
 	 */
 	
+	public int pagEtapa1, pagEtapa2, pagPedido2, pagMaterial2;
+	
 	public Inventario inventario;
 
+	public Administrador() {
+		pagEtapa1 = 0;
+		pagEtapa2 = 0;
+		pagPedido2 = 0;
+		pagMaterial2 = 0;
+	}
+	
 	public Administrador(Inventario inventario) {
 		super();
 		this.inventario = inventario;
@@ -36,8 +45,5 @@ public class Administrador extends Usuario
 	public void setInventario(Inventario inventario) {
 		this.inventario = inventario;
 	}
-	
-
-
 }
 
