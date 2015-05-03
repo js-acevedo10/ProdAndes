@@ -1612,7 +1612,7 @@ public class ProdAndesAdmin {
 			System.out.println(query);
 			ResultSet b = a.executeQuery();
 			timer.stop();
-			System.out.println(timer);
+			System.out.println(timer.toString());
 			int i=0;
 			while(b.next()&&i<maximo)
 			{
@@ -1641,14 +1641,13 @@ public class ProdAndesAdmin {
 						int numProducto = b.getInt(8);
 						z.setIdProducto(idProductoA);
 					}
+					
+					resultado.add(z);
 						
 				}
 				i=i+1;
 			}
-			
-			query="DROP INDEX INDEX1";
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
+
 		} 
 		catch (SQLException e) 
 		{
