@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sistrans.fachada.ProdAndesAdmin;
 import com.sistrans.fachada.ProdAndesGerente;
+import com.sistrans.mundo.EstaciondeProducto;
 import com.sistrans.mundo.EtapadeProduccion;
 
 /**
@@ -154,6 +155,15 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 		salida.println("							<input type=\"number\" class=\"form-control input-lg\" name=\"cantidad\">");
 		salida.println("						</div>");
 //		salida.println("						<input type=\"number\" class=\"form-control\" name=\"p\" value=\"" + pag+1 +"\" style=\"diaplay:none;\"");
+		salida.println("                        </div>");
+		salida.println("                        <div class=\"row\">");
+		salida.println("                        <div class=\"col-md-1\">");
+		salida.println("            <br><button type=\"submit\" class=\"btn btn-default btn-lg\" id=\"search-input\" placeholder= \"Buscar\">Buscar y Filtrar</button>");
+		salida.println("                        </div>");
+		salida.println("                        </div>");
+		salida.println("                    </div>");
+		salida.println("                </form>");
+		salida.println("            </div>");
 	}
 
 	private void printTables(String fechIn, String fechFin, PrintWriter salida, String idMat, String tipoMat, String idPedido, String cantidadS) {
@@ -183,24 +193,33 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 		}
 		
 		
-		ArrayList<EtapadeProduccion> etapas = ProdAndesAdmin.darInstancia().etapaDeProduccion1(fechIn, fechFin, pag, idCom, idMP, idProd, cantidad, null);
+		ArrayList<EstaciondeProducto> etapas = ProdAndesAdmin.darInstancia().etapaDeProduccion1(fechIn, fechFin, pag, idCom, idMP, idProd, cantidad, null);
+			
+		salida.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:black; padding-top:20px; margin-top:-10px;\">");
 		
 		if(etapas != null && etapas.size() != 0) {
 			
+			salida.println("                <table class=\"table table-hover\">");
 			salida.println("                    <thead>");
 			salida.println("                        <tr>");
-			salida.println("                            <th>Nombre</th>");
-			salida.println("                            <th>Estado</th>");
-			salida.println("                            <th>Num</th>");
+			salida.println("                            <th>Codigo</th>");
+			salida.println("                            <th>Estapa de Produccion</th>");
+			salida.println("                            <th>Tiempo Realizacion</th>");
+			salida.println("                            <th>#Componente</th>");
+			salida.println("                            <th>#Materia Prima</th>");
+			salida.println("                            <th>#Producto</th>");
 			salida.println("                        </tr>");
 			salida.println("                    </thead>");
 			salida.println("                    <tbody>");
 			
-			for(EtapadeProduccion et : etapas) {
+			for(EstaciondeProducto et : etapas) {
 				salida.println("                        <tr>");
-				salida.println("							<td>" + et.getNombre() + "</td>");
-				salida.println("							<td>" + et.getEstado() + "</td>");
-				salida.println("							<td>" + et.getNum() + "</td>");
+				salida.println("							<td>" + et.getCodigo() + "</td>");
+				salida.println("							<td>" + et.getIdEtapadeProduccion() + "</td>");
+				salida.println("							<td>" + et.getTiempoRealizacion() + "</td>");
+				salida.println("							<td>" + et.getNumComponente() + "</td>");
+				salida.println("							<td>" + et.getNumMateriaPrima() + "</td>");
+				salida.println("							<td>" + et.getNumProducto() + "</td>");
 				salida.println("                        </tr>");
 			}
 			
@@ -210,18 +229,11 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 		} else {
 			salida.println("						<h1>No hay</h1>");
 		}	
+		
+		salida.println("            </div>");
 	}
 
 	private void printFooter(PrintWriter salida) {
-		salida.println("                        </div>");
-		salida.println("                        <div class=\"row\">");
-		salida.println("                        <div class=\"col-md-1\">");
-		salida.println("            <br><button type=\"submit\" class=\"btn btn-default btn-lg\" id=\"search-input\" placeholder= \"Buscar\">Buscar y Filtrar</button>");
-		salida.println("                        </div>");
-		salida.println("                        </div>");
-		salida.println("                    </div>");
-		salida.println("                </form>");
-		salida.println("            </div>");
 		salida.println("        </div>");
 		salida.println("    </body>");
 		salida.println("</html>");

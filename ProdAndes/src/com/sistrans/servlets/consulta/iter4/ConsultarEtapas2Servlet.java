@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sistrans.fachada.ProdAndesAdmin;
 import com.sistrans.fachada.ProdAndesGerente;
+import com.sistrans.mundo.EstaciondeProducto;
 
 /**
  * Servlet implementation class ConsultarEtapas2Servlet
@@ -18,6 +20,7 @@ import com.sistrans.fachada.ProdAndesGerente;
 @WebServlet("/consulta/etapas2.html")
 public class ConsultarEtapas2Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	int pag = 0;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -49,12 +52,19 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 		PrintWriter salida = response.getWriter();
 		String action = request.getParameter("submit");
 		printHeader(salida);
-		if(action != null && !action.equals("no")) {
+		if(action == null) {
+			action = "si";
+		}
+		if(!action.equals("no")) {
+			String fechIn = request.getParameter("fecha-inicio");
+			String fechFin = request.getParameter("fecha-final");
 			String idMat = request.getParameter("idMateria");
 			String tipoMat = request.getParameter("tipoMateria");
 			String idPedido = request.getParameter("idPedido");
 			String cantidad = request.getParameter("cantidad");
-			printTables(salida, idMat, tipoMat, idPedido, cantidad);
+			printTables(fechIn, fechFin, salida, idMat, tipoMat, idPedido, cantidad);
+		} else {
+			pag = 0;
 		}
 		printFooter(salida);
 	}
@@ -100,11 +110,11 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 		salida.println("                        <div class=\"row\">");
 		salida.println("                        <div class=\"col-md-4\">");
 		salida.println("            <label for=\"fecha-inicio\">Fecha de Inicio:</label>");
-		salida.println("            <input type=\"date\" class=\"form-control input-lg\" id=\"fecha-inicio\" required>");
+		salida.println("            <input type=\"date\" class=\"form-control input-lg\" name=\"fecha-inicio\" required>");
 		salida.println("                        </div>");
 		salida.println("                        <div class=\"col-md-4\">");
 		salida.println("            <label for=\"fecha-final\">Fecha Final:</label>");
-		salida.println("            <input type=\"date\" class=\"form-control input-lg\" id=\"fecha-final\" required>");
+		salida.println("            <input type=\"date\" class=\"form-control input-lg\" name=\"fecha-final\" required>");
 		salida.println("                        </div>");
 		
 		ArrayList<String> materiales = ProdAndesGerente.darInstancia().darTipoMaterias();
@@ -153,13 +163,6 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 		salida.println("							<label for=\"cantidad\">Excluir Cantidad:</label>");
 		salida.println("							<input type=\"number\" class=\"form-control input-lg\" name=\"cantidad\" placeholder=\"Cantidad\">");
 		salida.println("						</div>");
-	}
-
-	private void printTables(PrintWriter salida, String idMat, String tipoMat, String idPedido, String cantidad) {
-		
-	}
-
-	private void printFooter(PrintWriter salida) {
 		salida.println("                        </div>");
 		salida.println("                        <div class=\"row\">");
 		salida.println("                        <div class=\"col-md-1\">");
@@ -169,6 +172,76 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 		salida.println("                    </div>");
 		salida.println("                </form>");
 		salida.println("            </div>");
+	}
+
+	private void printTables(String fechIn, String fechFin, PrintWriter salida, String idMat, String tipoMat, String idPedido, String cantidadS) {
+		String idCom = null;
+		String idMP = null;
+		String idProd = null;
+		if(tipoMat != null) {
+			switch (tipoMat) {
+			case "Materia-Prima":
+				idMP = idMat;
+				break;
+			case "Componente":
+				idCom = idMat;
+				break;
+			case "Producto":
+				idProd = idMat;
+				break;
+			default:
+				break;
+			}
+		}
+		int cantidad = 0;
+		try {
+			cantidad = Integer.parseInt(cantidadS);
+		} catch (Exception e ) {
+			
+		}
+		
+		
+		ArrayList<EstaciondeProducto> etapas = ProdAndesAdmin.darInstancia().etapaDeProduccion2(fechIn, fechFin, pag);
+			
+		salida.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:black; padding-top:20px; margin-top:-10px;\">");
+		
+		if(etapas != null && etapas.size() != 0) {
+			
+			salida.println("                <table class=\"table table-hover\">");
+			salida.println("                    <thead>");
+			salida.println("                        <tr>");
+			salida.println("                            <th>Codigo</th>");
+			salida.println("                            <th>Estapa de Produccion</th>");
+			salida.println("                            <th>Tiempo Realizacion</th>");
+			salida.println("                            <th>#Componente</th>");
+			salida.println("                            <th>#Materia Prima</th>");
+			salida.println("                            <th>#Producto</th>");
+			salida.println("                        </tr>");
+			salida.println("                    </thead>");
+			salida.println("                    <tbody>");
+			
+			for(EstaciondeProducto et : etapas) {
+				salida.println("                        <tr>");
+				salida.println("							<td>" + et.getCodigo() + "</td>");
+				salida.println("							<td>" + et.getIdEtapadeProduccion() + "</td>");
+				salida.println("							<td>" + et.getTiempoRealizacion() + "</td>");
+				salida.println("							<td>" + et.getNumComponente() + "</td>");
+				salida.println("							<td>" + et.getNumMateriaPrima() + "</td>");
+				salida.println("							<td>" + et.getNumProducto() + "</td>");
+				salida.println("                        </tr>");
+			}
+			
+			salida.println("                    </tbody>");
+			salida.println("                </table>");
+			
+		} else {
+			salida.println("						<h1>No hay</h1>");
+		}	
+		
+		salida.println("            </div>");
+	}
+
+	private void printFooter(PrintWriter salida) {
 		salida.println("        </div>");
 		salida.println("    </body>");
 		salida.println("</html>");

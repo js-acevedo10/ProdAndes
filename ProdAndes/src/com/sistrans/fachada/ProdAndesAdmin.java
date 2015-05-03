@@ -1438,7 +1438,7 @@ public class ProdAndesAdmin {
 	public ArrayList<EstaciondeProducto> etapaDeProduccion2 (String fechaInicial, String fechaFinal, int pagina)
 	{
 		ArrayList<EstaciondeProducto> resultado = new ArrayList<>();
-		String query="CREATE INDEX index1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
+		String query="CREATE INDEX indexABC&&& ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
 		Timer timer = new Timer();
 		PreparedStatement a = null;
 		int minimo =0;
@@ -1451,8 +1451,6 @@ public class ProdAndesAdmin {
 		try 
 		{
 			dao.inicializar();
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
 			query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFinal+"','YYYY-MM-DD')) table1 LEFT JOIN ESTACIONDEPRODUCCION table2 on table1.IDETAPA=table2.IDETAPAPRODUCCION)";			
 			a = dao.conexion.prepareStatement(query);
 			timer.start();
@@ -1493,9 +1491,6 @@ public class ProdAndesAdmin {
 				i=i+1;
 			}
 			
-			query="DROP INDEX INDEX1";
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
 		} 
 		catch (SQLException e) 
 		{
@@ -1525,7 +1520,7 @@ public class ProdAndesAdmin {
 	public ArrayList<EstaciondeProducto> etapaDeProduccion1 (String fechaInicial, String fechaFinal, int pagina, String idCom, String idMP, String idProd, int numProd, String tiempoReali)
 	{
 		ArrayList<EstaciondeProducto> resultado = new ArrayList<>();
-		String query="CREATE INDEX index1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
+		String query="CREATE INDEX indexET1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
 		Timer timer = new Timer();
 		PreparedStatement a = null;
 		int minimo =0;
@@ -1538,8 +1533,6 @@ public class ProdAndesAdmin {
 		try 
 		{
 			dao.inicializar();
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
 			query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFinal+"','YYYY-MM-DD')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION ";	
 			int numeroString = query.length();
 			int numeroString2=0;
@@ -1612,6 +1605,7 @@ public class ProdAndesAdmin {
 			query = query+")table2 on table1.IDETAPA=table2.IDETAPAPRODUCCION)  WHERE CODIGO IS NOT NULL";
 			a = dao.conexion.prepareStatement(query);
 			timer.start();
+			System.out.println(query);
 			ResultSet b = a.executeQuery();
 			timer.stop();
 			System.out.println(timer.toString());
@@ -1643,13 +1637,8 @@ public class ProdAndesAdmin {
 						int numProducto = b.getInt(8);
 						z.setIdProducto(idProductoA);
 					}
-<<<<<<< HEAD
-					
 					resultado.add(z);
-						
-=======
-											
->>>>>>> origin/master
+
 				}
 				i=i+1;
 			}
