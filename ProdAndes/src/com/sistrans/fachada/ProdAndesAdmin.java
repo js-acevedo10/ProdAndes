@@ -1608,7 +1608,7 @@ public class ProdAndesAdmin {
 					query=query+" AND ESTACIONDEPRODUCCION.TIEMPOREALIZACION='"+tiempoReali+"'";
 				}
 			}
-			query = query+")table2 on table1.IDETAPA=table2.IDETAPAPRODUCCION)";
+			query = query+")table2 on table1.IDETAPA=table2.IDETAPAPRODUCCION)  WHERE CODIGO IS NOT NULL";
 			a = dao.conexion.prepareStatement(query);
 			timer.start();
 			ResultSet b = a.executeQuery();
