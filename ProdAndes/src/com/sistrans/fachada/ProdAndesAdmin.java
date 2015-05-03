@@ -1435,9 +1435,9 @@ public class ProdAndesAdmin {
 	}
 	
 	
-	public ArrayList<EtapadeProduccion> etapaDeProduccion2 (String fechaInicial, String fechaFinal, int pagina)
+	public ArrayList<EstaciondeProducto> etapaDeProduccion2 (String fechaInicial, String fechaFinal, int pagina)
 	{
-		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
+		ArrayList<EstaciondeProducto> resultado = new ArrayList<>();
 		String query="CREATE INDEX indexABC&&& ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
 		Timer timer = new Timer();
 		PreparedStatement a = null;
@@ -1485,6 +1485,8 @@ public class ProdAndesAdmin {
 						int numProducto = b.getInt(8);
 						z.setIdProducto(idProductoA);
 					}
+					
+					resultado.add(z);
 						
 				}
 				i=i+1;
