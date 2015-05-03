@@ -6,8 +6,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.management.timer.Timer;
+
 import com.sistrans.dao.ConsultaDAOUsuario;
 import com.sistrans.mundo.Componente;
+import com.sistrans.mundo.EstaciondeProducto;
 import com.sistrans.mundo.EtapadeProduccion;
 import com.sistrans.mundo.MateriaPrima;
 import com.sistrans.mundo.Pedido;
@@ -1429,5 +1432,248 @@ public class ProdAndesAdmin {
 
 		}
 		return pedidos;
+	}
+	
+	
+	public ArrayList<EtapadeProduccion> etapaDeProduccion2 (String fechaInicial, String fechaFinal, int pagina)
+	{
+		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
+		String query="CREATE INDEX index1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
+		Timer timer = new Timer();
+		PreparedStatement a = null;
+		int minimo =0;
+		int maximo =500;
+		if(pagina!=0)
+		{
+			minimo = 500*pagina;
+			maximo= minimo+500;
+		}
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+			query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN ESTACIONDEPRODUCCION table2 on table1.IDETAPA=table2.IDETAPAPRODUCCION)";			
+			a = dao.conexion.prepareStatement(query);
+			timer.start();
+			ResultSet b = a.executeQuery();
+			timer.stop();
+			System.out.println(timer);
+			int i=0;
+			while(b.next()&&i<maximo)
+			{
+				if (i>=minimo)
+				{
+					String codigo = b.getString(1);
+					int tiempoRealizacion = Integer.parseInt(b.getString(2));
+					EstaciondeProducto z = new EstaciondeProducto(codigo, "0", tiempoRealizacion);
+					String idComponente = b.getString(3);
+					if(!b.wasNull())
+					{
+						int numComponente = b.getInt(4);
+						z.setIdComponente(idComponente);
+						z.setNumComponente(numComponente);
+					}
+					String idMateriaPrima = b.getString(5);
+					if(!b.wasNull())
+					{
+						int numMateriaPrima = b.getInt(6);
+						z.setIdMateriaPrima(idMateriaPrima);
+						z.setNumMateriaPrima(numMateriaPrima);
+					}
+					String idProductoA = b.getString(7);
+					if(!b.wasNull())
+					{
+						int numProducto = b.getInt(8);
+						z.setIdProducto(idProductoA);
+					}
+						
+				}
+				i=i+1;
+			}
+			
+			query="DROP INDEX INDEX1";
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return resultado;
+	}
+	public ArrayList<EtapadeProduccion> etapaDeProduccion1 (String fechaInicial, String fechaFinal, int pagina, String idCom, String idMP, String idProd, int numProd, String tiempoReali)
+	{
+		ArrayList<EtapadeProduccion> resultado = new ArrayList<>();
+		String query="CREATE INDEX index1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
+		Timer timer = new Timer();
+		PreparedStatement a = null;
+		int minimo =0;
+		int maximo =500;
+		if(pagina!=0)
+		{
+			minimo = 500*pagina;
+			maximo= minimo+500;
+		}
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+			query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE ";	
+			int numeroString = query.length();
+			int numeroString2=0;
+			int numeroString3=0;
+			int numeroString4=0;
+			if(idCom!=null&&idCom!="")
+			{
+				query=query+"ESTACIONDEPRODUCCION.IDCOMPONENTE='"+idCom+"'";
+				numeroString2=query.length();
+			}
+			if(idMP!=null&&idMP!="")
+			{
+				if(numeroString<query.length())
+				{
+					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE (ESTACIONDEPRODUCCION.IDCOMPONENTE='"+idCom+"' OR ESTACIONDEPRODUCCION.IDMATERIAPRIMA='"+idMP+"')";	
+					numeroString3=query.length();
+				}
+				else
+				{
+					query=query+"ESTACIONDEPRODUCCION.IDMATERIAPRIMA='"+idMP+"'";
+					numeroString4=query.length();
+				}
+			}
+			if(idProd!=null&&idProd!="")
+			{
+				if(numeroString3>0)
+				{
+					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE (ESTACIONDEPRODUCCION.IDCOMPONENTE='"+idCom+"' OR ESTACIONDEPRODUCCION.IDMATERIAPRIMA='"+idMP+"' OR ESTACIONDEPRODUCCION.IDPRODUCTO='"+idProd+"')";	
+
+				}
+				else if (numeroString2>0)
+				{
+					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE (ESTACIONDEPRODUCCION.IDCOMPONENTE='"+idCom+"' OR ESTACIONDEPRODUCCION.IDPRODUCTO='"+idProd+"')";	
+
+				}
+				else if(numeroString4>0)
+				{
+					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE (ESTACIONDEPRODUCCION.IDMATERIAPRIMA='"+idMP+"' OR ESTACIONDEPRODUCCION.IDPRODUCTO='"+idProd+"')";	
+
+				}
+				else
+				{
+					query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDPRODUCTO='"+idProd+"'";	
+
+				}
+			}
+			if(numProd!=0)
+			{
+				if(numeroString==query.length())
+				{
+					query=query+" (ESTACIONDEPRODUCCION.NUMCOMPONENTE>="+numProd+" OR ESTACIONDEPRODUCCION.NUMMATERIAPRIMA>="+numProd+" OR ESTACIONDEPRODUCCION.NUMPRODUCTO>="+numProd+")";	
+
+				}
+				else
+				{
+					query=query+" AND (ESTACIONDEPRODUCCION.NUMCOMPONENTE>="+numProd+" OR ESTACIONDEPRODUCCION.NUMMATERIAPRIMA>="+numProd+" OR ESTACIONDEPRODUCCION.NUMPRODUCTO>="+numProd+")";	
+				}
+			}
+			if(tiempoReali!=null&&tiempoReali!="")
+			{
+				if(numeroString==query.length())
+				{
+					query=query+" ESTACIONDEPRODUCCION.TIEMPOREALIZACION='"+tiempoReali+"'";
+				}
+				else
+				{
+					query=query+" AND ESTACIONDEPRODUCCION.TIEMPOREALIZACION='"+tiempoReali+"'";
+				}
+			}
+			query = query+")table2 on table1.IDETAPA=table2.IDETAPAPRODUCCION)";
+			a = dao.conexion.prepareStatement(query);
+			timer.start();
+			ResultSet b = a.executeQuery();
+			timer.stop();
+			System.out.println(timer);
+			int i=0;
+			while(b.next()&&i<maximo)
+			{
+				if (i>=minimo)
+				{
+					String codigo = b.getString(1);
+					int tiempoRealizacion = Integer.parseInt(b.getString(2));
+					EstaciondeProducto z = new EstaciondeProducto(codigo, "0", tiempoRealizacion);
+					String idComponente = b.getString(3);
+					if(!b.wasNull())
+					{
+						int numComponente = b.getInt(4);
+						z.setIdComponente(idComponente);
+						z.setNumComponente(numComponente);
+					}
+					String idMateriaPrima = b.getString(5);
+					if(!b.wasNull())
+					{
+						int numMateriaPrima = b.getInt(6);
+						z.setIdMateriaPrima(idMateriaPrima);
+						z.setNumMateriaPrima(numMateriaPrima);
+					}
+					String idProductoA = b.getString(7);
+					if(!b.wasNull())
+					{
+						int numProducto = b.getInt(8);
+						z.setIdProducto(idProductoA);
+					}
+						
+				}
+				i=i+1;
+			}
+			
+			query="DROP INDEX INDEX1";
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return resultado;
 	}
 }
