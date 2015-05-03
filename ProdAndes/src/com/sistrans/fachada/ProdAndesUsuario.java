@@ -870,6 +870,5 @@ public class ProdAndesUsuario {
 
 		}		
 		return resultado;
-	}
-	
+	}	
 }
