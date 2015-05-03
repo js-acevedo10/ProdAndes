@@ -52,8 +52,11 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 		PrintWriter salida = response.getWriter();
 		String action = request.getParameter("submit");
 		printHeader(salida);
-		if(action != null && !action.equals("no")) {
-			pag = Integer.parseInt(request.getParameter("p"));
+		System.out.println(action);
+		if(action == null)
+			action = "si";
+		if(!action.equals("no")) {
+//			pag = Integer.parseInt(request.getParameter("p"));
 			String fechIn = request.getParameter("fecha-inicio");
 			String fechFin = request.getParameter("fecha-final");
 			String idMat = request.getParameter("idMateria");
@@ -108,11 +111,11 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 		salida.println("                        <div class=\"row\">");
 		salida.println("                        <div class=\"col-md-4\">");
 		salida.println("            <label for=\"fecha-inicio\">Fecha de Inicio:</label>");
-		salida.println("            <input type=\"date\" class=\"form-control input-lg\" id=\"fecha-inicio\" required>");
+		salida.println("            <input type=\"date\" class=\"form-control input-lg\" name=\"fecha-inicio\" required>");
 		salida.println("                        </div>");
 		salida.println("                        <div class=\"col-md-4\">");
 		salida.println("            <label for=\"fecha-final\">Fecha Final:</label>");
-		salida.println("            <input type=\"date\" class=\"form-control input-lg\" id=\"fecha-final\" required>");
+		salida.println("            <input type=\"date\" class=\"form-control input-lg\" name=\"fecha-final\" required>");
 		salida.println("                        </div>");
 		
 		salida.println("						<div class=\"col-md-4\">");
@@ -157,21 +160,28 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 		String idCom = null;
 		String idMP = null;
 		String idProd = null;
-		switch (tipoMat) {
-		case "Materia-Prima":
-			idMP = idMat;
-			break;
-		case "Componente":
-			idCom = idMat;
-			break;
-		case "Producto":
-			idProd = idMat;
-			break;
-		default:
-			break;
+		if(tipoMat != null) {
+			switch (tipoMat) {
+			case "Materia-Prima":
+				idMP = idMat;
+				break;
+			case "Componente":
+				idCom = idMat;
+				break;
+			case "Producto":
+				idProd = idMat;
+				break;
+			default:
+				break;
+			}
+		}
+		int cantidad = 0;
+		try {
+			cantidad = Integer.parseInt(cantidadS);
+		} catch (Exception e ) {
+			
 		}
 		
-		int cantidad = Integer.parseInt(cantidadS);
 		
 		ArrayList<EtapadeProduccion> etapas = ProdAndesAdmin.darInstancia().etapaDeProduccion1(fechIn, fechFin, pag, idCom, idMP, idProd, cantidad, null);
 		
@@ -199,10 +209,7 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 			
 		} else {
 			salida.println("						<h1>No hay</h1>");
-		}
-		
-		
-				
+		}	
 	}
 
 	private void printFooter(PrintWriter salida) {

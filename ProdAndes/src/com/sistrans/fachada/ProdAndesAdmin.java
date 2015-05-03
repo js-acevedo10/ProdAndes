@@ -1537,8 +1537,6 @@ public class ProdAndesAdmin {
 		try 
 		{
 			dao.inicializar();
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
 			query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','MM-DD-YYYY') and FECHAFINAL<=to_date('"+fechaFinal+"','MM-DD-YYYY')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE ";	
 			int numeroString = query.length();
 			int numeroString2=0;
@@ -1611,6 +1609,7 @@ public class ProdAndesAdmin {
 			query = query+")table2 on table1.IDETAPA=table2.IDETAPAPRODUCCION)";
 			a = dao.conexion.prepareStatement(query);
 			timer.start();
+			System.out.println(query);
 			ResultSet b = a.executeQuery();
 			timer.stop();
 			System.out.println(timer);
