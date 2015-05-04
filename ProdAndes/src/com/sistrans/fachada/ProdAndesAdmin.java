@@ -1444,7 +1444,6 @@ public class ProdAndesAdmin {
 	{
 		ArrayList<EstaciondeProducto> resultado = new ArrayList<>();
 		String query="CREATE INDEX indexABC&&& ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
-		Timer timer = new Timer();
 		PreparedStatement a = null;
 		int minimo =0;
 		int maximo =500;
@@ -1527,7 +1526,6 @@ public class ProdAndesAdmin {
 	{
 		ArrayList<EstaciondeProducto> resultado = new ArrayList<>();
 		String query="CREATE INDEX indexET1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
-		Timer timer = new Timer();
 		PreparedStatement a = null;
 		int minimo =0;
 		int maximo =500;
@@ -1611,7 +1609,6 @@ public class ProdAndesAdmin {
 			}
 			query = query+")table2 on table1.IDETAPA=table2.IDETAPAPRODUCCION)  WHERE CODIGO IS NOT NULL";
 			a = dao.conexion.prepareStatement(query);
-			timer.start();
 			long startTime = System.nanoTime();
 			ResultSet b = a.executeQuery();
 			long endTime = System.nanoTime();
@@ -1650,8 +1647,6 @@ public class ProdAndesAdmin {
 			}
 			
 			query="DROP INDEX INDEX1";
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
 		} 
 		catch (SQLException e) 
 		{
@@ -1794,7 +1789,6 @@ public class ProdAndesAdmin {
 	{
 		ArrayList<Pedido> resultado = new ArrayList<>();
 		String query="CREATE INDEX index1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
-		Timer timer = new Timer();
 		PreparedStatement a = null;
 		int minimo =0;
 		int maximo =500;
