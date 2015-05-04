@@ -937,6 +937,7 @@ public class ProdAndesAdmin {
 				String idClienteT = b.getString("IDCLIENTE");
 				String estadoPagoT = b.getString("ESTADOPAGO");
 				Date fechaCreacionT = b.getDate("FECHACREACION");
+				int costo = b.getInt("COSTO");
 				Date fechaRecibidoT = null;
 				if(b.getDate("FECHARECIBIDO")!=null)
 				{
@@ -972,7 +973,7 @@ public class ProdAndesAdmin {
 					idPrductoT = b.getString("IDPRODUCTO");
 				}
 				int numProductoT = b.getInt("NUMPRODUCTO");
-				Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT);
+				Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT, costo);
 				resultado.add(z);
 			}
 		} 
@@ -1116,13 +1117,14 @@ public class ProdAndesAdmin {
 					int numComponenteT = c.getInt("NUMComponente");
 					
 					String idPrductoT = "";
+					int costo = c.getInt("COSTO");
 					
 					if(c.getString("IDPRODUCTO")!=null)
 					{
 						idPrductoT = c.getString("IDPRODUCTO");
 					}
 					int numProductoT = c.getInt("NUMPRODUCTO");
-					Pedido zz = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT);
+					Pedido zz = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT, costo);
 					z.agregarPedido(zz);
 				}
 				
@@ -1271,12 +1273,14 @@ public class ProdAndesAdmin {
 					
 					String idPrductoT = "";
 					
+					int costo = c.getInt("COSTO");
+					
 					if(c.getString("IDPRODUCTO")!=null)
 					{
 						idPrductoT = c.getString("IDPRODUCTO");
 					}
 					int numProductoT = c.getInt("NUMPRODUCTO");
-					Pedido zz = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT);
+					Pedido zz = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT, costo);
 					z.agregarPedido(zz);
 				}
 				
@@ -1398,13 +1402,14 @@ public class ProdAndesAdmin {
 				int numComponenteT = b.getInt("NUMComponente");
 				
 				String idPrductoT = "";
+				int costo = b.getInt("COSTO");
 				
 				if(b.getString("IDPRODUCTO")!=null)
 				{
 					idPrductoT = b.getString("IDPRODUCTO");
 				}
 				int numProductoT = b.getInt("NUMPRODUCTO");
-				Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT);
+				Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT, costo);
 				pedidos.add(z);
 			}
 		} 
@@ -1453,10 +1458,10 @@ public class ProdAndesAdmin {
 			dao.inicializar();
 			query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFinal+"','YYYY-MM-DD')) table1 LEFT JOIN ESTACIONDEPRODUCCION table2 on table1.IDETAPA=table2.IDETAPAPRODUCCION)";			
 			a = dao.conexion.prepareStatement(query);
-			timer.start();
+			long startTime = System.nanoTime();
 			ResultSet b = a.executeQuery();
-			timer.stop();
-			System.out.println(timer);
+			long endTime = System.nanoTime();
+			System.out.println(endTime-startTime);
 			int i=0;
 			while(b.next()&&i<maximo)
 			{
@@ -1607,10 +1612,10 @@ public class ProdAndesAdmin {
 			query = query+")table2 on table1.IDETAPA=table2.IDETAPAPRODUCCION)  WHERE CODIGO IS NOT NULL";
 			a = dao.conexion.prepareStatement(query);
 			timer.start();
-			System.out.println(query);
+			long startTime = System.nanoTime();
 			ResultSet b = a.executeQuery();
-			timer.stop();
-			System.out.println(timer);
+			long endTime = System.nanoTime();
+			System.out.println(endTime-startTime);
 			int i=0;
 			while(b.next()&&i<maximo)
 			{
@@ -1689,13 +1694,11 @@ public class ProdAndesAdmin {
 		try 
 		{
 			dao.inicializar();	
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
-			if(tipoMaterial=="PRODUCTO")
+			if(tipoMaterial.equals("PRODUCTO"))
 			{
-				query="SELECT* FROM PEDIDO WHERE IDPRODUCTO IS NOT NULL AND COSTO>"+costo;
+				query="SELECT* FROM PEDIDO P JOIN PRODUCTO B ON P.IDPRODUCTO = B.ID WHERE B.COSTOVENTA>"+costo;
 			}
-			else if (tipoMaterial=="MATERIAPRIMA")
+			else if (tipoMaterial.equals("MATERIAPRIMA"))
 			{
 				query="SELECT* FROM PEDIDO WHERE IDMATERIAPRIMA IS NOT NULL AND COSTO>"+costo;
 			}
@@ -1703,12 +1706,11 @@ public class ProdAndesAdmin {
 			{
 				query="SELECT* FROM PEDIDO WHERE IDCOMPONENTE IS NOT NULL AND COSTO>"+costo;
 			}
-			query ="";
 			a = dao.conexion.prepareStatement(query);
-			timer.start();
+			long startTime = System.nanoTime();
 			ResultSet b = a.executeQuery();
-			timer.stop();
-			System.out.println(timer);
+			long endTime = System.nanoTime();
+			System.out.println(endTime-startTime);
 			int i=0;
 			while(b.next()&&i<maximo)
 			{
@@ -1747,13 +1749,14 @@ public class ProdAndesAdmin {
 					int numComponenteT = b.getInt("NUMComponente");
 					
 					String idPrductoT = "";
+					int costoa = b.getInt("COSTO");
 					
 					if(b.getString("IDPRODUCTO")!=null)
 					{
 						idPrductoT = b.getString("IDPRODUCTO");
 					}
 					int numProductoT = b.getInt("NUMPRODUCTO");
-					Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT);
+					Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT, costoa);
 					resultado.add(z);
 						
 				}
@@ -1761,8 +1764,6 @@ public class ProdAndesAdmin {
 			}
 			
 			query="DROP INDEX INDEX1";
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
 		} 
 		catch (SQLException e) 
 		{
@@ -1789,7 +1790,7 @@ public class ProdAndesAdmin {
 		}		
 		return resultado;
 	}
-	public ArrayList<Pedido> pedido2 (String tipoMaterial, int costo, int pagina, String idMaterial)
+	public ArrayList<Pedido> pedido2 (String tipoMaterial, int pagina, String idMaterial)
 	{
 		ArrayList<Pedido> resultado = new ArrayList<>();
 		String query="CREATE INDEX index1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
@@ -1804,26 +1805,24 @@ public class ProdAndesAdmin {
 		}
 		try 
 		{
-			dao.inicializar();	
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
-			if(tipoMaterial=="PRODUCTO")
+			dao.inicializar();
+			if(tipoMaterial.equals("PRODUCTO"))
 			{
-				query="SELECT* FROM PEDIDO WHERE IDPRODUCTO IS NOT NULL AND IDPRODUCTO='"+idMaterial+" AND COSTO>"+costo;
+				query="SELECT* FROM PEDIDO WHERE IDPRODUCTO IS NOT NULL AND IDPRODUCTO='"+idMaterial+"'";
 			}
-			else if (tipoMaterial=="MATERIAPRIMA")
+			else if (tipoMaterial.equals("MATERIAPRIMA"))
 			{
-				query="SELECT* FROM (SELECT ID,IDCLIENTE,ESTADOPAGO,FECHACREACION,FECHARECIBIDO,DEADLINE,ANOTACIONES,IDPRODUCTO,NUMPRODUCTO,COSTO FROM (SELECT table2.IDPEDIDO FROM (SELECT* FROM ESTACIONDEPRODUCCION WHERE IDMATERIAPRIMA='"+idMaterial+"') table1 INNER JOIN ETAPAOPERARIO table2 ON table1.IDETAPAPRODUCCION=table2.IDETAPA)table3 LEFT JOIN (SELECT* FROM PEDIDO WHERE COSTO>"+costo+")table4 on table3.IDPEDIDO = table4.ID) UNION (SELECT ID,IDCLIENTE,ESTADOPAGO,FECHACREACION,FECHARECIBIDO,DEADLINE,ANOTACIONES,IDPRODUCTO,NUMPRODUCTO,COSTO  FROM PEDIDO WHERE IDMATERIAPRIMA='"+idMaterial+"')";
+				query="SELECT* FROM (SELECT ID,IDCLIENTE,ESTADOPAGO,FECHACREACION,FECHARECIBIDO,DEADLINE,ANOTACIONES,IDPRODUCTO,NUMPRODUCTO,COSTO FROM (SELECT table2.IDPEDIDO FROM (SELECT* FROM ESTACIONDEPRODUCCION WHERE IDMATERIAPRIMA='"+idMaterial+"') table1 INNER JOIN ETAPAOPERARIO table2 ON table1.IDETAPAPRODUCCION=table2.IDETAPA)table3 LEFT JOIN (SELECT* FROM PEDIDO)table4 on table3.IDPEDIDO = table4.ID) UNION (SELECT ID,IDCLIENTE,ESTADOPAGO,FECHACREACION,FECHARECIBIDO,DEADLINE,ANOTACIONES,IDPRODUCTO,NUMPRODUCTO,COSTO  FROM PEDIDO WHERE IDMATERIAPRIMA='"+idMaterial+"')";
 			}
 			else
 			{
-				query="SELECT* FROM (SELECT ID,IDCLIENTE,ESTADOPAGO,FECHACREACION,FECHARECIBIDO,DEADLINE,ANOTACIONES,IDPRODUCTO,NUMPRODUCTO,COSTO FROM (SELECT table2.IDPEDIDO FROM (SELECT* FROM ESTACIONDEPRODUCCION WHERE IDCOMPONENTE='"+idMaterial+"') table1 INNER JOIN ETAPAOPERARIO table2 ON table1.IDETAPAPRODUCCION=table2.IDETAPA)table3 LEFT JOIN (SELECT* FROM PEDIDO WHERE COSTO>"+costo+")table4 on table3.IDPEDIDO = table4.ID) UNION (SELECT ID,IDCLIENTE,ESTADOPAGO,FECHACREACION,FECHARECIBIDO,DEADLINE,ANOTACIONES,IDPRODUCTO,NUMPRODUCTO,COSTO  FROM PEDIDO WHERE IDCOMPONENTE='"+idMaterial+"')";				
+				query="SELECT* FROM (SELECT ID,IDCLIENTE,ESTADOPAGO,FECHACREACION,FECHARECIBIDO,DEADLINE,ANOTACIONES,IDPRODUCTO,NUMPRODUCTO,COSTO FROM (SELECT table2.IDPEDIDO FROM (SELECT* FROM ESTACIONDEPRODUCCION WHERE IDCOMPONENTE='"+idMaterial+"') table1 INNER JOIN ETAPAOPERARIO table2 ON table1.IDETAPAPRODUCCION=table2.IDETAPA)table3 LEFT JOIN (SELECT* FROM PEDIDO)table4 on table3.IDPEDIDO = table4.ID) UNION (SELECT ID,IDCLIENTE,ESTADOPAGO,FECHACREACION,FECHARECIBIDO,DEADLINE,ANOTACIONES,IDPRODUCTO,NUMPRODUCTO,COSTO  FROM PEDIDO WHERE IDCOMPONENTE='"+idMaterial+"')";				
 			}
 			a = dao.conexion.prepareStatement(query);
-			timer.start();
+			long startTime = System.nanoTime();
 			ResultSet b = a.executeQuery();
-			timer.stop();
-			System.out.println(timer);
+			long endTime = System.nanoTime();
+			System.out.println(endTime-startTime);
 			int i=0;
 			while(b.next()&&i<maximo)
 			{
@@ -1861,6 +1860,8 @@ public class ProdAndesAdmin {
 					}
 					int numComponenteT = b.getInt("NUMComponente");
 					
+					int costa = b.getInt("COSTO");
+					
 					String idPrductoT = "";
 					
 					if(b.getString("IDPRODUCTO")!=null)
@@ -1868,7 +1869,7 @@ public class ProdAndesAdmin {
 						idPrductoT = b.getString("IDPRODUCTO");
 					}
 					int numProductoT = b.getInt("NUMPRODUCTO");
-					Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT);
+					Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT, costa);
 					resultado.add(z);
 						
 				}
@@ -1876,8 +1877,6 @@ public class ProdAndesAdmin {
 			}
 			
 			query="DROP INDEX INDEX1";
-			a = dao.conexion.prepareStatement(query);
-			a.executeQuery();
 		} 
 		catch (SQLException e) 
 		{

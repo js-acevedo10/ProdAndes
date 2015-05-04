@@ -2,6 +2,7 @@ package com.sistrans.servlets.consulta.iter4;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,12 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sistrans.fachada.ProdAndesAdmin;
+import com.sistrans.mundo.Pedido;
+
 /**
  * Servlet implementation class ConsultarMateriales2Servlet
  */
 @WebServlet("/consulta/materiales2.html")
 public class ConsultarMateriales2Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public int pag = 0;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -46,9 +51,15 @@ public class ConsultarMateriales2Servlet extends HttpServlet {
 		PrintWriter salida = response.getWriter();
 		String action = request.getParameter("submit");
 		printHeader(salida);
-		if(action != null && !action.equals("no")) {
+		if(action == null) {
+			action = "si";
+		}
+		if(!action.equals("no")) {
 			String id = request.getParameter("idMaterial");
-			printTables(salida, id);
+			String tipo = request.getParameter("tipoMat");
+			printTables(salida, id, tipo);
+		} else {
+			pag = 0;
 		}
 		printFooter(salida);
 	}
@@ -93,17 +104,19 @@ public class ConsultarMateriales2Servlet extends HttpServlet {
 		salida.println("                    <div class=\"form-group\">");
 		salida.println("                        <div class=\"row\">");
 		
-		salida.println("						<div class=\"col-md-4\">");
-		salida.println("							<label for=\"tipoMat\">Tipo de Material:</label>");
-		salida.println("							<input type=\"text\" class=\"form-control input-lg\" name=\"idMaterial\" placeholder=\"ID del Material\">");
+		salida.println("						<div class=\"col-md-6\">");
+		salida.println("							<label for=\"tipoMat\">Contiene tipo de Material:</label>");
+		salida.println("							<select class=\"form-control input-lg\" name=\"tipoMat\" required>");
+		salida.println("								<option value=\"MATERIAPRIMA\">Materia Prima</option>");
+		salida.println("								<option value=\"COMPONENTE\">Componente</option>");
+		salida.println("								<option value=\"PRODUCTO\">Producto</option>");
+		salida.println("							</select>");
 		salida.println("						</div>");
-	}
-
-	private void printTables(PrintWriter salida, String id) {
 		
-	}
-
-	private void printFooter(PrintWriter salida) {
+		salida.println("						<div class=\"col-md-4\">");
+		salida.println("							<label for=\"tipoMat\">ID del Material:</label>");
+		salida.println("							<input type=\"text\" class=\"form-control input-lg\" name=\"idMaterial\" placeholder=\"ID del Material\" required>");
+		salida.println("						</div>");
 		salida.println("                        </div>");
 		salida.println("                        <div class=\"row\">");
 		salida.println("                        <div class=\"col-md-1\">");
@@ -113,6 +126,56 @@ public class ConsultarMateriales2Servlet extends HttpServlet {
 		salida.println("                    </div>");
 		salida.println("                </form>");
 		salida.println("            </div>");
+	}
+
+	private void printTables(PrintWriter salida, String id, String tipo) {	
+		ArrayList<Pedido> etapas = ProdAndesAdmin.darInstancia().pedido2(tipo, pag, id);
+			
+		salida.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:black; padding-top:20px; margin-top:-10px;\">");
+		
+		if(etapas != null && etapas.size() != 0) {
+			
+			salida.println("                <table class=\"table table-hover\">");
+			salida.println("                    <thead>");
+			salida.println("                        <tr>");
+			salida.println("                            <th>ID</th>");
+			salida.println("                            <th>Estado Pago</th>");
+			salida.println("                            <th>ID Cliente</th>");
+			salida.println("                            <th>Fecha Creacion</th>");
+			salida.println("                            <th>Deadline</th>");
+			salida.println("                            <th>#Componente</th>");
+			salida.println("                            <th>#Producto</th>");
+			salida.println("                            <th>#Materia Prima</th>");
+			salida.println("                            <th>Costo</th>");
+			salida.println("                        </tr>");
+			salida.println("                    </thead>");
+			salida.println("                    <tbody>");
+			
+			for(Pedido et : etapas) {
+				salida.println("                        <tr>");
+				salida.println("							<td>" + et.getId() + "</td>");
+				salida.println("							<td>" + et.getEstadoPago() + "</td>");
+				salida.println("							<td>" + et.getIdCliente() + "</td>");
+				salida.println("							<td>" + et.getFechaCreacion() + "</td>");
+				salida.println("							<td>" + et.getDeadLine() + "</td>");
+				salida.println("							<td>" + et.getNumComponente() + "</td>");
+				salida.println("							<td>" + et.getNumProducto() + "</td>");
+				salida.println("							<td>" + et.getNumMateriaPrima() + "</td>");
+				salida.println("							<td>" + et.costo + "</td>");
+				salida.println("                        </tr>");
+			}
+			
+			salida.println("                    </tbody>");
+			salida.println("                </table>");
+			
+		} else {
+			salida.println("						<h1>No hay</h1>");
+		}	
+		
+		salida.println("            </div>");
+	}
+
+	private void printFooter(PrintWriter salida) {
 		salida.println("        </div>");
 		salida.println("    </body>");
 		salida.println("</html>");

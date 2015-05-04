@@ -16,7 +16,7 @@ public class Pedido
 
 
 
-	public Pedido(String iD, String idCliente, String estadoPago, Date fechaCreacion, Date fechaRecibido, Date deadLine, String anotaciones, String idMateriaPrima, int numMateriaPrima, String idComponente, int numComponente, String idProducto, int numProducto) {
+	public Pedido(String iD, String idCliente, String estadoPago, Date fechaCreacion, Date fechaRecibido, Date deadLine, String anotaciones, String idMateriaPrima, int numMateriaPrima, String idComponente, int numComponente, String idProducto, int numProducto, int costo) {
 		super();
 		 this.id = iD;
 		 this.setIdCliente(idCliente);
@@ -31,7 +31,10 @@ public class Pedido
 		 this.setNumComponente(numComponente);
 		 this.setIdProducto(idProducto);
 		 this.setNumProducto(numProducto);
+		 this.costo = costo;
 	}
+	
+	public int costo;
 
 	public String getId() {
 		return id;

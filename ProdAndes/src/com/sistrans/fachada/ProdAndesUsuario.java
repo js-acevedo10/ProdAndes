@@ -830,6 +830,7 @@ public class ProdAndesUsuario {
 				String estadoPagoT = b.getString("ESTADOPAGO");
 				Date fechaCreacionT = b.getDate("FECHACREACION");
 				Date fechaRecibidoT = null;
+				int costa = b.getInt("COSTO");
 				if(b.getDate("FECHARECIBIDO")!=null)
 				{
 					fechaRecibidoT = b.getDate("FECHARECIBIDO");
@@ -842,7 +843,7 @@ public class ProdAndesUsuario {
 				}
 				String idPrductoT = b.getString("IDPRODUCTO");
 				int numProductoT = b.getInt("NUMPRODUCTO");
-				Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, null, 0, null, 0, idPrductoT, numProductoT);
+				Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, null, 0, null, 0, idPrductoT, numProductoT, costa);
 				resultado.add(z);
 			}
 		} 
