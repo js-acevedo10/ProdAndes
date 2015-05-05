@@ -79,6 +79,7 @@ public class ProdAndesAdmin {
 			}
 		}
 	}
+	@SuppressWarnings("resource")
 	public void crearIndices()
 	{
 		String query = "CREATE INDEX indexq ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
