@@ -906,13 +906,15 @@ public class ProdAndesGerente {
 		String query = "SELECT * FROM PEDIDO";
 		PreparedStatement a = null;
 		ArrayList<String> pedidos = new ArrayList<String>();
+		int y = 0;
 		try 
 		{
 			dao.inicializar();
 			a = dao.conexion.prepareStatement(query);
 			ResultSet b = a.executeQuery();
-			while(b.next()) {
+			while(b.next() && y < 500) {
 				String x = "Pedido " + b.getString("ID");
+				y++;
 				pedidos.add(x);
 			}
 		} 
