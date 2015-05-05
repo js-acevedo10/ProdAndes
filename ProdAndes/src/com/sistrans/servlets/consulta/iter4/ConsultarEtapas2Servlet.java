@@ -56,6 +56,7 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 			action = "si";
 		}
 		if(!action.equals("no")) {
+			pag = Integer.parseInt(request.getParameter("p"));
 			String fechIn = request.getParameter("fecha-inicio");
 			String fechFin = request.getParameter("fecha-final");
 			String idMat = request.getParameter("idMateria");
@@ -65,8 +66,8 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 			printTables(fechIn, fechFin, salida, idMat, tipoMat, idPedido, cantidad);
 		} else {
 			pag = 0;
-		}
-		printFooter(salida);
+			printFooter(salida);
+		}		
 	}
 
 	private void printHeader(PrintWriter salida) {
@@ -153,6 +154,7 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 		salida.println("							<input type=\"number\" class=\"form-control input-lg\" name=\"cantidad\" placeholder=\"Cantidad\">");
 		salida.println("						</div>");
 		salida.println("                        </div>");
+		salida.println("					<input type=\"text\" name=\"p\" value=\"0\" style=\"display:none;\"");
 		salida.println("                        <div class=\"row\">");
 		salida.println("                        <div class=\"col-md-1\">");
 		salida.println("            <br><button type=\"submit\" class=\"btn btn-default btn-lg\" id=\"search-input\" placeholder= \"Buscar\">Buscar y Filtrar</button>");
@@ -190,7 +192,7 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 		}
 		
 		
-		ArrayList<EstaciondeProducto> etapas = ProdAndesAdmin.darInstancia().etapaDeProduccion2(fechIn, fechFin, pag);
+		ArrayList<EstaciondeProducto> etapas = ProdAndesAdmin.darInstancia().etapaDeProduccion2(fechIn, fechFin, pag, idCom, idMP, idProd, cantidad, null);
 			
 		salida.println("            <div class=\"jumbotron\" style=\"background-color:WHITE; color:black; padding-top:20px; margin-top:-10px;\">");
 		
@@ -200,7 +202,6 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 			salida.println("                    <thead>");
 			salida.println("                        <tr>");
 			salida.println("                            <th>Codigo</th>");
-			salida.println("                            <th>Estapa de Produccion</th>");
 			salida.println("                            <th>Tiempo Realizacion</th>");
 			salida.println("                            <th>#Componente</th>");
 			salida.println("                            <th>#Materia Prima</th>");
@@ -212,7 +213,6 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 			for(EstaciondeProducto et : etapas) {
 				salida.println("                        <tr>");
 				salida.println("							<td>" + et.getCodigo() + "</td>");
-				salida.println("							<td>" + et.getIdEtapadeProduccion() + "</td>");
 				salida.println("							<td>" + et.getTiempoRealizacion() + "</td>");
 				salida.println("							<td>" + et.getNumComponente() + "</td>");
 				salida.println("							<td>" + et.getNumMateriaPrima() + "</td>");
@@ -228,6 +228,29 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 		}	
 		
 		salida.println("            </div>");
+		
+		printFooterPag(salida, fechIn, fechFin, idMat, tipoMat, idPedido, cantidad, etapas.size());
+	}
+	
+	private void printFooterPag(PrintWriter salida, String fin, String ffin, String idMaterial, String tipoMat, String idPedido, int cantidad, int tam) {
+		pag += 1;
+		salida.println("			<form action=\"/ProdAndes/consulta/pedidos2.html\" method=\"get\">");
+		salida.println("				<input name=\"fecha-inicio\" value=\"" + fin + "\" style=\"display:none;\">");
+		salida.println("				<input name=\"fecha-final\" value=\"" + ffin + "\" style=\"display:none;\">");
+		salida.println("				<input name=\"idMaterial\" value=\"" + idMaterial + "\" style=\"display:none;\">");
+		salida.println("				<input name=\"tipoMat\" value=\"" + tipoMat + "\" style=\"display:none;\">");
+		salida.println("				<input name=\"idPedido\" value=\"" + idPedido + "\" style=\"display:none;\">");
+		salida.println("				<input name=\"cantidad\" value=\"" + cantidad + "\" style=\"display:none;\">");
+		salida.println("				<input name=\"p\" value=\"" + pag + "\" style=\"display:none;\">");
+		if(tam == 500) {
+			salida.println("				<button class=\"btn btn-default btn-lg\" type=\"submit\" name=\"submit\" value=\"si\">Siguiente Pagina</button>");
+		} else {
+			salida.println("				<button disabled class=\"btn btn-default btn-lg\" type=\"submit\" name=\"submit\" value=\"si\">Siguiente Pagina</button>");
+		}
+		salida.println("			</form>");
+		salida.println("        </div>");
+		salida.println("    </body>");
+		salida.println("</html>");
 	}
 
 	private void printFooter(PrintWriter salida) {

@@ -179,12 +179,13 @@ public class ConsultarMateriales2Servlet extends HttpServlet {
 		printFooterPag(salida, tipo, id, etapas.size());
 	}
 	
-	private void printFooterPag(PrintWriter salida, String tipoMat, String id, int tam) {		
+	private void printFooterPag(PrintWriter salida, String tipoMat, String id, int tam) {
+		pag += 1;
 		salida.println("        </div>");
 		salida.println("			<form action=\"/ProdAndes/consulta/pedidos2.html\" method=\"get\">");
 		salida.println("				<input name=\"tipoMat\" value=\"" + tipoMat + "\" style=\"display:none;\">");
 		salida.println("				<input name=\"idMaterial\" value=\"" + id + "\" style=\"display:none;\">");
-		salida.println("				<input name=\"p\" value=\"" + pag+1 + "\" style=\"display:none;\">");
+		salida.println("				<input name=\"p\" value=\"" + pag + "\" style=\"display:none;\">");
 		if(tam == 500) {
 			salida.println("				<button class=\"btn btn-default btn-lg\" type=\"submit\" name=\"submit\" value=\"si\">Siguiente Pagina</button>");
 		} else {

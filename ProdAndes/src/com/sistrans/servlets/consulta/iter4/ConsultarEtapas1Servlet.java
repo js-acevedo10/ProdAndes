@@ -60,10 +60,14 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 			pag = Integer.parseInt(request.getParameter("p"));
 			String fechIn = request.getParameter("fecha-inicio");
 			String fechFin = request.getParameter("fecha-final");
-			String idMat = request.getParameter("idMateria");
-			String tipoMat = request.getParameter("tipoMateria");
+			String idMat = request.getParameter("idMaterial");
+			String tipoMat = request.getParameter("tipoMat");
 			String idPedido = request.getParameter("idPedido");
 			String cantidad = request.getParameter("cantidad");
+			System.out.println("idmat " + idMat);
+			System.out.println("tipoMat " + tipoMat);
+			System.out.println("idpedido " + idPedido);
+			System.out.println("cantidad " + cantidad);
 			printTables(fechIn, fechFin, salida, idMat, tipoMat, idPedido, cantidad);
 		} else {
 			pag = 0;
@@ -128,9 +132,9 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 		salida.println("							<label for=\"idMaterial\">Incluir Tipo de Material:</label>");
 		salida.println("							<select class=\"form-control input-lg\" name=\"tipoMat\">");
 		salida.println("								<option value=\"null\" selected>Tipo de Materiales</option>");
-		salida.println("								<option value=\"Materia-Prima\">Materia Prima</option>");
-		salida.println("								<option value=\"Componente\">Componente</option>");
-		salida.println("								<option value=\"Producto\">Producto</option>");
+		salida.println("								<option value=\"MATERIAPRIMA\">Materia Prima</option>");
+		salida.println("								<option value=\"COMPONENTE\">Componente</option>");
+		salida.println("								<option value=\"PRODUCTO\">Producto</option>");
 		salida.println("							</select>");
 		salida.println("						</div>");
 		
@@ -172,13 +176,13 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 		String idProd = null;
 		if(tipoMat != null) {
 			switch (tipoMat) {
-			case "Materia-Prima":
+			case "MATERIAPRIMA":
 				idMP = idMat;
 				break;
-			case "Componente":
+			case "COMPONENTE":
 				idCom = idMat;
 				break;
-			case "Producto":
+			case "PRODUCTO":
 				idProd = idMat;
 				break;
 			default:
@@ -203,7 +207,6 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 			salida.println("                    <thead>");
 			salida.println("                        <tr>");
 			salida.println("                            <th>Codigo</th>");
-			salida.println("                            <th>Estapa de Produccion</th>");
 			salida.println("                            <th>Tiempo Realizacion</th>");
 			salida.println("                            <th>#Componente</th>");
 			salida.println("                            <th>#Materia Prima</th>");
@@ -215,7 +218,6 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 			for(EstaciondeProducto et : etapas) {
 				salida.println("                        <tr>");
 				salida.println("							<td>" + et.getCodigo() + "</td>");
-				salida.println("							<td>" + et.getIdEtapadeProduccion() + "</td>");
 				salida.println("							<td>" + et.getTiempoRealizacion() + "</td>");
 				salida.println("							<td>" + et.getNumComponente() + "</td>");
 				salida.println("							<td>" + et.getNumMateriaPrima() + "</td>");
@@ -236,6 +238,7 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 	}
 	
 	private void printFooterPag(PrintWriter salida, String fin, String ffin, String idMaterial, String tipoMat, String idPedido, int cantidad, int tam) {
+		pag += 1;
 		salida.println("			<form action=\"/ProdAndes/consulta/pedidos2.html\" method=\"get\">");
 		salida.println("				<input name=\"fecha-inicio\" value=\"" + fin + "\" style=\"display:none;\">");
 		salida.println("				<input name=\"fecha-final\" value=\"" + ffin + "\" style=\"display:none;\">");
@@ -243,7 +246,7 @@ public class ConsultarEtapas1Servlet extends HttpServlet {
 		salida.println("				<input name=\"tipoMat\" value=\"" + tipoMat + "\" style=\"display:none;\">");
 		salida.println("				<input name=\"idPedido\" value=\"" + idPedido + "\" style=\"display:none;\">");
 		salida.println("				<input name=\"cantidad\" value=\"" + cantidad + "\" style=\"display:none;\">");
-		salida.println("				<input name=\"p\" value=\"" + pag+1 + "\" style=\"display:none;\">");
+		salida.println("				<input name=\"p\" value=\"" + pag + "\" style=\"display:none;\">");
 		if(tam == 500) {
 			salida.println("				<button class=\"btn btn-default btn-lg\" type=\"submit\" name=\"submit\" value=\"si\">Siguiente Pagina</button>");
 		} else {
