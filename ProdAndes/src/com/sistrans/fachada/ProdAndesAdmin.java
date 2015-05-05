@@ -1502,6 +1502,7 @@ public class ProdAndesAdmin {
 		{
 			crearIndices();
 		}
+		String query="";
 		PreparedStatement a = null;
 		int minimo =0;
 		int maximo =500;
