@@ -22,7 +22,7 @@ public class ProdAndesAdmin {
 	private ConsultaDAOUsuario dao;
 		
 	private static ProdAndesAdmin instancia;
-	
+	private boolean indices=false;
 	public static ProdAndesAdmin darInstancia()
 	{
 		if(instancia == null)
@@ -79,7 +79,62 @@ public class ProdAndesAdmin {
 			}
 		}
 	}
-	
+	public void crearIndices()
+	{
+		String query = "CREATE INDEX index1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
+		String query2 = "CREATE INDEX index1 ON ESTACIONDEPRODUCCION(IDMATERIAPRIMA)";
+		String query3 = "CREATE INDEX index1 ON ESTACIONDEPRODUCCION(IDPRODUCTO)";
+		String query4 = "CREATE INDEX index1 ON ESTACIONDEPRODUCCION(IDCOMPONENTE)";
+		String query5 = "CREATE INDEX index1 ON PEDIDO(COSTO)";
+		String query6 = "CREATE INDEX index1 ON PEDIDO(IDMATERIAPRIMA)";
+		String query7 = "CREATE INDEX index1 ON PEDIDO(IDPRODUCTO)";
+		String query8 = "CREATE INDEX index1 ON PEDIDO(IDCOMPONENTE)";
+		PreparedStatement a = null;
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			a.executeQuery();
+			a = dao.conexion.prepareStatement(query2);
+			a.executeQuery();
+			a = dao.conexion.prepareStatement(query3);
+			a.executeQuery();
+			a = dao.conexion.prepareStatement(query4);
+			a.executeQuery();
+			a = dao.conexion.prepareStatement(query5);
+			a.executeQuery();
+			a = dao.conexion.prepareStatement(query6);
+			a.executeQuery();
+			a = dao.conexion.prepareStatement(query7);
+			a.executeQuery();
+			a = dao.conexion.prepareStatement(query8);
+			a.executeQuery();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}	
+		indices = true;
+	}
 	public ArrayList<MateriaPrima> consultarExistenciasMatPrima(String tipo,
 			String existenciasMin, String existenciasMax, String estacion) {
 		// TODO Auto-generated method stub
@@ -1443,7 +1498,10 @@ public class ProdAndesAdmin {
 	public ArrayList<EstaciondeProducto> etapaDeProduccion2 (String fechaInicial, String fechaFinal, int pagina)
 	{
 		ArrayList<EstaciondeProducto> resultado = new ArrayList<>();
-		String query="CREATE INDEX indexABC&&& ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
+		if(!indices)
+		{
+			crearIndices();
+		}
 		PreparedStatement a = null;
 		int minimo =0;
 		int maximo =500;
@@ -1525,7 +1583,10 @@ public class ProdAndesAdmin {
 	public ArrayList<EstaciondeProducto> etapaDeProduccion1 (String fechaInicial, String fechaFinal, int pagina, String idCom, String idMP, String idProd, int numProd, String tiempoReali)
 	{
 		ArrayList<EstaciondeProducto> resultado = new ArrayList<>();
-		String query="CREATE INDEX indexET1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
+		if(!indices)
+		{
+			crearIndices();
+		}
 		PreparedStatement a = null;
 		int minimo =0;
 		int maximo =500;
@@ -1537,7 +1598,7 @@ public class ProdAndesAdmin {
 		try 
 		{
 			dao.inicializar();
-			query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFinal+"','YYYY-MM-DD')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION ";	
+			String query="SELECT CODIGO, TIEMPOREALIZACION, IDCOMPONENTE, NUMCOMPONENTE, IDMATERIAPRIMA, NUMMATERIAPRIMA, IDPRODUCTO, NUMPRODUCTO  FROM ((SELECT* FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaInicial+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFinal+"','YYYY-MM-DD')) table1 LEFT JOIN (SELECT* FROM ESTACIONDEPRODUCCION ";	
 
 			int numeroString = query.length();
 			int numeroString2=0;
@@ -1676,7 +1737,11 @@ public class ProdAndesAdmin {
 	public ArrayList<Pedido> pedido1 (String tipoMaterial, int costo, int pagina)
 	{
 		ArrayList<Pedido> resultado = new ArrayList<>();
-		String query="CREATE INDEX index1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
+		if(!indices)
+		{
+			crearIndices();
+		}
+		String query ="";
 		Timer timer = new Timer();
 		PreparedStatement a = null;
 		int minimo =0;
@@ -1788,7 +1853,11 @@ public class ProdAndesAdmin {
 	public ArrayList<Pedido> pedido2 (String tipoMaterial, int pagina, String idMaterial)
 	{
 		ArrayList<Pedido> resultado = new ArrayList<>();
-		String query="CREATE INDEX index1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
+		if(!indices)
+		{
+			crearIndices();
+		}
+		String query="";
 		PreparedStatement a = null;
 		int minimo =0;
 		int maximo =500;
