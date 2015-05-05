@@ -55,13 +55,14 @@ public class ConsultarMateriales2Servlet extends HttpServlet {
 			action = "si";
 		}
 		if(!action.equals("no")) {
+			pag = Integer.parseInt(request.getParameter("p"));
 			String id = request.getParameter("idMaterial");
 			String tipo = request.getParameter("tipoMat");
 			printTables(salida, id, tipo);
 		} else {
 			pag = 0;
+			printFooter(salida);
 		}
-		printFooter(salida);
 	}
 
 	private void printHeader(PrintWriter salida) {
@@ -98,7 +99,7 @@ public class ConsultarMateriales2Servlet extends HttpServlet {
 		salida.println("        </nav>");
 		salida.println("        <div class=\"container\" id=\"search\">");
 		salida.println("            <div class=\"jumbotron\" style=\"padding-bottom:15px\">");
-		salida.println("               <h1>Consultar ejecucion etapas 2:</h1>");
+		salida.println("               <h1>Consultar Materiales 2:</h1>");
 		salida.println("               <br>");
 		salida.println("                <form class=\"form-horizontal\" action=\"/ProdAndes/consulta/materiales2.html\" method=\"get\">");
 		salida.println("                    <div class=\"form-group\">");
@@ -118,6 +119,7 @@ public class ConsultarMateriales2Servlet extends HttpServlet {
 		salida.println("							<input type=\"text\" class=\"form-control input-lg\" name=\"idMaterial\" placeholder=\"ID del Material\" required>");
 		salida.println("						</div>");
 		salida.println("                        </div>");
+		salida.println("					<input type=\"text\" name=\"p\" value=\"0\" style=\"display:none;\"");
 		salida.println("                        <div class=\"row\">");
 		salida.println("                        <div class=\"col-md-1\">");
 		salida.println("            <br><button type=\"submit\" class=\"btn btn-default btn-lg\" id=\"search-input\" placeholder= \"Buscar\">Buscar y Filtrar</button>");
@@ -173,6 +175,24 @@ public class ConsultarMateriales2Servlet extends HttpServlet {
 		}	
 		
 		salida.println("            </div>");
+		
+		printFooterPag(salida, tipo, id, etapas.size());
+	}
+	
+	private void printFooterPag(PrintWriter salida, String tipoMat, String id, int tam) {		
+		salida.println("        </div>");
+		salida.println("			<form action=\"/ProdAndes/consulta/pedidos2.html\" method=\"get\">");
+		salida.println("				<input name=\"tipoMat\" value=\"" + tipoMat + "\" style=\"display:none;\">");
+		salida.println("				<input name=\"idMaterial\" value=\"" + id + "\" style=\"display:none;\">");
+		salida.println("				<input name=\"p\" value=\"" + pag+1 + "\" style=\"display:none;\">");
+		if(tam == 500) {
+			salida.println("				<button class=\"btn btn-default btn-lg\" type=\"submit\" name=\"submit\" value=\"si\">Siguiente Pagina</button>");
+		} else {
+			salida.println("				<button disabled class=\"btn btn-default btn-lg\" type=\"submit\" name=\"submit\" value=\"si\">Siguiente Pagina</button>");
+		}
+		salida.println("			</form>");
+		salida.println("    </body>");
+		salida.println("</html>");
 	}
 
 	private void printFooter(PrintWriter salida) {

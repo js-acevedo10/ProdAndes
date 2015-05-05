@@ -1343,7 +1343,7 @@ public class ProdAndesGerente {
 				{
 					String codigo = b.getString(1);
 					String etapaProduccion = b.getString(2);
-					int tiempoRealizacion = Integer.parseInt(b.getString(3));
+					String tiempoRealizacion = (b.getString(3));
 					EstaciondeProducto z = new EstaciondeProducto(codigo, etapaProduccion, tiempoRealizacion);
 					String idComponente = b.getString(4);
 					if(!b.wasNull())
@@ -1547,7 +1547,7 @@ public class ProdAndesGerente {
 					{
 						String codigo = b.getString(1);
 						String etapaProduccion = b.getString(2);
-						int tiempoRealizacion = Integer.parseInt(b.getString(3));
+						String tiempoRealizacion = (b.getString(3));
 						EstaciondeProducto z = new EstaciondeProducto(codigo, etapaProduccion, tiempoRealizacion);
 						String idComponente = b.getString(4);
 						if(!b.wasNull())

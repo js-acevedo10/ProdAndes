@@ -116,21 +116,10 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 		salida.println("            <label for=\"fecha-final\">Fecha Final:</label>");
 		salida.println("            <input type=\"date\" class=\"form-control input-lg\" name=\"fecha-final\" required>");
 		salida.println("                        </div>");
-		
-		ArrayList<String> materiales = ProdAndesGerente.darInstancia().darTipoMaterias();
-		
+				
 		salida.println("						<div class=\"col-md-4\">");
 		salida.println("							<label for=\"idMaterial\">Excluir ID del Material:</label>");
-		salida.println("							<select class=\"form-control input-lg\" name=\"idMateria\">");
-		salida.println("								<option value=\"null\" selected>ID Materia Prima</option>");
-		if(materiales != null) {
-			for(String e : materiales) {
-				salida.println("								<option value=\"" + e + "\">" + e + "</option>");
-			}
-		} else {
-			salida.println("								<option value=\"null\" selected disabled>No hay Materias Primas</option>");
-		}
-		salida.println("							</select>");
+		salida.println("							<input type=\"text\" class=\"form-control input-lg\" name=\"idMateria\">");
 		salida.println("						</div>");
 				
 		salida.println("						<div class=\"col-md-4\">");
@@ -143,7 +132,7 @@ public class ConsultarEtapas2Servlet extends HttpServlet {
 		salida.println("							</select>");
 		salida.println("						</div>");
 		
-		ArrayList<String> pedidos = ProdAndesGerente.darInstancia().darTipoMaterias();
+		ArrayList<String> pedidos = ProdAndesGerente.darInstancia().darPedidos();
 		
 		salida.println("						<div class=\"col-md-4\">");
 		salida.println("							<label for=\"idPedido\">Excluir ID de Pedido:</label>");

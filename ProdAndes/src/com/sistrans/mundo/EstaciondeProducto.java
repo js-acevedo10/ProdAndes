@@ -10,11 +10,11 @@ package com.sistrans.mundo;
 public class EstaciondeProducto
 {
 	
-	public EstaciondeProducto(String codigo, String idEtapaProduccion, int tiempoRealizacion) {
+	public EstaciondeProducto(String codigo, String idEtapaProduccion, String tiempoRealizacion2) {
 		super();
 		this.codigo = codigo;
 		this.idEtapadeProduccion = idEtapaProduccion;
-		this.tiempoRealizacion = tiempoRealizacion;
+		this.tiempoRealizacion = tiempoRealizacion2;
 	}
 
 	/**
@@ -41,11 +41,11 @@ public class EstaciondeProducto
 	}
 
 
-	public int getTiempoRealizacion() {
+	public String getTiempoRealizacion() {
 		return tiempoRealizacion;
 	}
 
-	public void setTiempoRealizacion(int tiempoRealizacion) {
+	public void setTiempoRealizacion(String tiempoRealizacion) {
 		this.tiempoRealizacion = tiempoRealizacion;
 	}
 
@@ -106,7 +106,7 @@ public class EstaciondeProducto
 
 	private String idEtapadeProduccion;
 	private String codigo;
-	private int tiempoRealizacion;
+	private String tiempoRealizacion;
 	private String idComponente;
 	private int numComponente;
 	private String idMateriaPrima;

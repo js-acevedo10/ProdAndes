@@ -81,14 +81,14 @@ public class ProdAndesAdmin {
 	}
 	public void crearIndices()
 	{
-		String query = "CREATE INDEX index1 ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
-		String query2 = "CREATE INDEX index2 ON ESTACIONDEPRODUCCION(IDMATERIAPRIMA)";
-		String query3 = "CREATE INDEX index3 ON ESTACIONDEPRODUCCION(IDPRODUCTO)";
-		String query4 = "CREATE INDEX index4 ON ESTACIONDEPRODUCCION(IDCOMPONENTE)";
-		String query5 = "CREATE INDEX index5 ON PEDIDO(COSTO)";
-		String query6 = "CREATE INDEX index6 ON PEDIDO(IDMATERIAPRIMA)";
-		String query7 = "CREATE INDEX index7 ON PEDIDO(IDPRODUCTO)";
-		String query8 = "CREATE INDEX index8 ON PEDIDO(IDCOMPONENTE)";
+		String query = "CREATE INDEX indexq ON ETAPAOPERARIO(FECHAINICIAL, FECHAFINAL)";
+		String query2 = "CREATE INDEX indexr ON ESTACIONDEPRODUCCION(IDMATERIAPRIMA)";
+		String query3 = "CREATE INDEX indexs ON ESTACIONDEPRODUCCION(IDPRODUCTO)";
+		String query4 = "CREATE INDEX indext ON ESTACIONDEPRODUCCION(IDCOMPONENTE)";
+		String query5 = "CREATE INDEX indexu ON PEDIDO(COSTO)";
+		String query6 = "CREATE INDEX indexv ON PEDIDO(IDMATERIAPRIMA)";
+		String query7 = "CREATE INDEX indexw ON PEDIDO(IDPRODUCTO)";
+		String query8 = "CREATE INDEX indexx ON PEDIDO(IDCOMPONENTE)";
 		PreparedStatement a = null;
 		try 
 		{
@@ -112,8 +112,6 @@ public class ProdAndesAdmin {
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		finally 
 		{
@@ -535,7 +533,7 @@ public class ProdAndesAdmin {
 			}		
 			return resultado;
 		}
-		else if(tipo.equals("producto"))
+		else if(tipo.equalsIgnoreCase("producto"))
 		{
 			queer = "SELECT* FROM PRODUCTO WHERE ID = '" + query + "'";
 			ArrayList<String> resultado = new ArrayList<>();
@@ -1446,7 +1444,7 @@ public class ProdAndesAdmin {
 				{
 					idMateriaPrimaT = b.getString("IDMateriaPrima");
 				}
-				int numMateriaPrimaT = b.getInt("NUMMateriaPrima");
+				int numMateriaPrimaT = (int) b.getLong("NUMMateriaPrima");
 				
 				String idComponenteT = "";
 				
@@ -1454,16 +1452,16 @@ public class ProdAndesAdmin {
 				{
 					idComponenteT = b.getString("IDComponente");
 				}
-				int numComponenteT = b.getInt("NUMComponente");
+				int numComponenteT = (int) b.getLong("NUMComponente");
 				
 				String idPrductoT = "";
-				int costo = b.getInt("COSTO");
+				int costo = (int) b.getLong("COSTO");
 				
 				if(b.getString("IDPRODUCTO")!=null)
 				{
 					idPrductoT = b.getString("IDPRODUCTO");
 				}
-				int numProductoT = b.getInt("NUMPRODUCTO");
+				int numProductoT = (int) b.getLong("NUMPRODUCTO");
 				Pedido z = new Pedido(idT, idClienteT, estadoPagoT, fechaCreacionT, fechaRecibidoT, deadlineT, anotacionesT, idMateriaPrimaT, numMateriaPrimaT, idComponenteT, numComponenteT, idPrductoT, numProductoT, costo);
 				pedidos.add(z);
 			}
@@ -1526,7 +1524,7 @@ public class ProdAndesAdmin {
 				if (i>=minimo)
 				{
 					String codigo = b.getString(1);
-					int tiempoRealizacion = Integer.parseInt(b.getString(2));
+					String tiempoRealizacion = b.getString(2);
 					EstaciondeProducto z = new EstaciondeProducto(codigo, "0", tiempoRealizacion);
 					String idComponente = b.getString(3);
 					if(!b.wasNull())
@@ -1681,7 +1679,7 @@ public class ProdAndesAdmin {
 				if (i>=minimo)
 				{
 					String codigo = b.getString(1);
-					int tiempoRealizacion = Integer.parseInt(b.getString(2));
+					String tiempoRealizacion = (b.getString(2));
 					EstaciondeProducto z = new EstaciondeProducto(codigo, "0", tiempoRealizacion);
 					String idComponente = b.getString(3);
 					if(!b.wasNull())

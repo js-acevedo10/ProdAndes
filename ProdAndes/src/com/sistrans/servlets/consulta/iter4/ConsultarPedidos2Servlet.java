@@ -56,13 +56,14 @@ public class ConsultarPedidos2Servlet extends HttpServlet {
 			action = "si";
 		}
 		if(!action.equals("no")) {
+			pag = Integer.parseInt(request.getParameter("p"));
 			String tipo = request.getParameter("tipoMat");
 			String costo = request.getParameter("costo");
 			printTables(salida, tipo, costo);
 		} else {
 			pag = 0;
+			printFooter(salida);
 		}
-		printFooter(salida);
 	}
 
 	private void printHeader(PrintWriter salida) {
@@ -120,6 +121,7 @@ public class ConsultarPedidos2Servlet extends HttpServlet {
 		salida.println("							<input type=\"number\" class=\"form-control input-lg\" name=\"costo\" placeholder=\"Costo\" required>");
 		salida.println("						</div>");
 		salida.println("                        </div>");
+		salida.println("					<input type=\"text\" name=\"p\" value=\"0\" style=\"display:none;\"");
 		salida.println("                        <div class=\"row\">");
 		salida.println("                        <div class=\"col-md-1\">");
 		salida.println("            <br><button type=\"submit\" class=\"btn btn-default btn-lg\" id=\"search-input\" placeholder= \"Buscar\">Buscar y Filtrar</button>");
@@ -182,8 +184,25 @@ public class ConsultarPedidos2Servlet extends HttpServlet {
 		}	
 		
 		salida.println("            </div>");
+		printFooterPag(salida, tipo, cantidad, etapas.size());
 	}
 
+	private void printFooterPag(PrintWriter salida, String tipoMat, int costo, int tam) {
+		salida.println("			<form action=\"/ProdAndes/consulta/pedidos2.html\" method=\"get\">");
+		salida.println("				<input name=\"tipoMat\" value=\"" + tipoMat + "\" style=\"display:none;\">");
+		salida.println("				<input name=\"costo\" value=\"" + costo + "\" style=\"display:none;\">");
+		salida.println("				<input name=\"p\" value=\"" + pag+1 + "\" style=\"display:none;\">");
+		if(tam == 500) {
+			salida.println("				<button class=\"btn btn-default btn-lg\" type=\"submit\" name=\"submit\" value=\"si\">Siguiente Pagina</button>");
+		} else {
+			salida.println("				<button disabled class=\"btn btn-default btn-lg\" type=\"submit\" name=\"submit\" value=\"si\">Siguiente Pagina</button>");
+		}
+		salida.println("			</form>");
+		salida.println("        </div>");
+		salida.println("    </body>");
+		salida.println("</html>");
+	}
+	
 	private void printFooter(PrintWriter salida) {
 		salida.println("        </div>");
 		salida.println("    </body>");
