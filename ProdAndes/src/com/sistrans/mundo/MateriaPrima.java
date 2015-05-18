@@ -46,15 +46,10 @@ public class MateriaPrima
 	public void setTonelada(int tonelada) {
 		this.tonelada = tonelada;
 	}
-	
 
-
-
-
-
-
-	public MateriaPrima(String nombre, int tonelada) {
+	public MateriaPrima(String nombre, int tonelada, String id) {
 		super();
+		this.id = id;
 		this.nombre = nombre;
 		this.tonelada = tonelada;
 	}
@@ -69,8 +64,7 @@ public class MateriaPrima
 	
 	private int tonelada;
 	
-
-
+	public String id;
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -79,6 +73,10 @@ public class MateriaPrima
 	 */
 	public MateriaPrima(){
 		super();
+	}
+
+	public String getId() {
+		return id;
 	}
 
 }

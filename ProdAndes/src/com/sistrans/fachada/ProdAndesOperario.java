@@ -92,9 +92,10 @@ public class ProdAndesOperario {
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
+				String id = b.getString(1);
 				String nombreT = b.getString("NOMBRE");
 				int toneladasT = b.getInt("TONELADAS");
-				MateriaPrima z = new MateriaPrima(nombreT, toneladasT);
+				MateriaPrima z = new MateriaPrima(nombreT, toneladasT, id);
 				resultado.add(z);
 			}
 		} 
@@ -162,10 +163,11 @@ public class ProdAndesOperario {
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
+				String id = b.getString(1);
 				String nombreT = b.getString("NOMBRE");
 				int numInventarioT = b.getInt("NUMINVENTARIO");
 				String toneladasT = b.getString("UNIDADMEDIDA");
-				Componente z = new Componente(nombreT, numInventarioT, toneladasT);
+				Componente z = new Componente(nombreT, numInventarioT, toneladasT, id);
 				resultado.add(z);
 			}
 		} 
@@ -305,10 +307,11 @@ public class ProdAndesOperario {
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
+				String id = b.getString(1);
 				String nombreT = b.getString("NOMBRE");
 				int costoVenta = b.getInt("COSTOVENTA");
 				int numInventarioT = b.getInt("NUMINVENTARIO");
-				Producto z = new Producto(nombreT, costoVenta, numInventarioT);
+				Producto z = new Producto(nombreT, costoVenta, numInventarioT, id);
 				resultado.add(z);
 			}
 		} 

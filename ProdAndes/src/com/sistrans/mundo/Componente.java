@@ -9,8 +9,9 @@ package com.sistrans.mundo;
 
 public class Componente
 {
-	public Componente(String nombre, int numInventario, String unidadMedida) {
+	public Componente(String nombre, int numInventario, String unidadMedida, String id) {
 		super();
+		this.id = id;
 		this.nombre = nombre;
 		this.numInventario = numInventario;
 		this.unidadMedida = unidadMedida;
@@ -67,6 +68,8 @@ public class Componente
 	 * @ordered
 	 */
 	
+	public String id;
+	
 	private String nombre;
 	
 	/**
@@ -86,6 +89,10 @@ public class Componente
 	 */
 	
 	private String unidadMedida;
+
+	public String getId() {
+		return id;
+	}
 	
 
 

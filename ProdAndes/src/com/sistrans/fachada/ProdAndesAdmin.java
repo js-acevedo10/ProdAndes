@@ -172,10 +172,11 @@ public class ProdAndesAdmin {
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
+				String id = b.getString("ID");
 				String nombreT = b.getString("NOMBRE");
 				int toneladasT = b.getInt("TONELADAS");
 
-				MateriaPrima z = new MateriaPrima(nombreT, toneladasT);
+				MateriaPrima z = new MateriaPrima(nombreT, toneladasT, id);
 				resultado.add(z);
 			}
 		} 
@@ -244,11 +245,12 @@ public class ProdAndesAdmin {
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
+				String id = b.getString(1);
 				String nombreT = b.getString("NOMBRE");
 				String toneladasT = b.getString("UNIDADMEDIDA");
 				int numInventarioT = b.getInt("NUMINVENTARIO");
 
-				Componente z = new Componente(nombreT, numInventarioT, toneladasT);
+				Componente z = new Componente(nombreT, numInventarioT, toneladasT, id);
 				resultado.add(z);
 			}
 		} 
@@ -388,10 +390,11 @@ public class ProdAndesAdmin {
 			ResultSet b = a.executeQuery();
 			while(b.next())
 			{
+				String id = b.getString(1);
 				String nombreT = b.getString("NOMBRE");
 				int costoVenta = b.getInt("COSTOVENTA");
 				int numInventarioT = b.getInt("NUMINVENTARIO");
-				Producto z = new Producto(nombreT, costoVenta, numInventarioT);
+				Producto z = new Producto(nombreT, costoVenta, numInventarioT, id);
 				resultado.add(z);
 			}
 		} 
@@ -1343,9 +1346,10 @@ public class ProdAndesAdmin {
 				c = x.executeQuery();
 				while(c.next())
 				{
+					String id = c.getString(1);
 					String nombreAA = c.getString(2);
 					int toneladas = c.getInt(3);
-					MateriaPrima zz = new MateriaPrima(nombreAA, toneladas);
+					MateriaPrima zz = new MateriaPrima(nombreAA, toneladas, id);
 					z.agregarMateriaPrima(zz);
 				}
 				
@@ -1354,10 +1358,11 @@ public class ProdAndesAdmin {
 				c = x.executeQuery();
 				while(c.next())
 				{
+					String id = c.getString(1);
 					String nombreAA = c.getString(2);
 					int numInventario = c.getInt(3);
 					String unidadMedida = c.getString(4);
-					Componente zz = new Componente(nombreAA, numInventario, unidadMedida);
+					Componente zz = new Componente(nombreAA, numInventario, unidadMedida, id);
 					z.agregarComponente(zz);
 				}
 				
@@ -1366,10 +1371,11 @@ public class ProdAndesAdmin {
 				c = x.executeQuery();
 				while(c.next())
 				{
+					String id = c.getString(1);
 					String nombreAA = c.getString("NOMBRE");
 					int costoVenta = c.getInt("COSTOVENTA");
 					int numInventarioT = c.getInt("NUMINVENTARIO");
-					Producto zz = new Producto(nombreAA, costoVenta, numInventarioT);
+					Producto zz = new Producto(nombreAA, costoVenta, numInventarioT, id);
 					z.agregarProducto(zz);
 				}
 				
@@ -1378,10 +1384,11 @@ public class ProdAndesAdmin {
 				c = x.executeQuery();
 				while(c.next())
 				{
+					String id = c.getString(1);
 					String nombreAA = c.getString("NOMBRE");
 					int costoVenta = c.getInt("COSTOVENTA");
 					int numInventarioT = c.getInt("NUMINVENTARIO");
-					Producto zz = new Producto(nombreAA, costoVenta, numInventarioT);
+					Producto zz = new Producto(nombreAA, costoVenta, numInventarioT, id);
 					z.agregarProducto(zz);
 				}
 				resultado.add(z);
@@ -2047,5 +2054,9 @@ public class ProdAndesAdmin {
 
 		}		
 		return resultado;
+	}
+
+	public ArrayList fusionMateriales(String tipo, String fechaIn, String fechaFin) {
+		return null;
 	}
 }

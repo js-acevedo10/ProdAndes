@@ -91,6 +91,12 @@ public class GerenteServlet extends HttpServlet {
 		case "pedidos2":
 			response.sendRedirect("/ProdAndes/consulta/pedidos2.html?submit=no");
 			break;
+		case "etapas-dos":
+			response.sendRedirect("/ProdAndes/consulta/fusion/etapas.html?submit=no");
+			break;
+		case "mat-dos":
+			response.sendRedirect("/ProdAndes/consulta/fusion/materiales.html?submit=no");
+			break;
 		default:
 			response.sendRedirect("pages/error/404.html");
 			break;
@@ -112,9 +118,11 @@ public class GerenteServlet extends HttpServlet {
 			break;
 		case "prod-place":
 			break;
-		case "prod-stage":
+		case "estacion-dos":
+			response.sendRedirect("/ProdAndes/registro/fusion/cambioEstaciones.html?submit=\"\"");
 			break;
-		case "new-prod":
+		case "prod-dos":
+			response.sendRedirect("/ProdAndes/registro/fusion/pedidoProductos.html?submit=\"\"");
 			break;
 		case "estado-etapa":
 			response.sendRedirect("/ProdAndes/etapas/cambio.html?submit=\"\"");

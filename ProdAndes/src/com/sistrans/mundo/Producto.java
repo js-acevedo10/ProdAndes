@@ -127,8 +127,9 @@ public class Producto
 	}
 
 
-	public Producto(String nombre, int costoVenta, int numInventario) {
+	public Producto(String nombre, int costoVenta, int numInventario, String id) {
 		super();
+		this.id = id;
 		this.nombre = nombre;
 		this.costoVenta = costoVenta;
 		this.materiaPrima = new ArrayList<>();
@@ -173,6 +174,12 @@ public class Producto
 	 */
 	public Producto(){
 		super();
+	}
+	
+	public String id;
+
+	public String getId() {
+		return id;
 	}
 
 }
