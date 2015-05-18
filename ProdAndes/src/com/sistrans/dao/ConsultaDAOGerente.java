@@ -22,6 +22,29 @@ public class ConsultaDAOGerente {
 	
 	private String cadenaConexion;
 	
+	
+	private DataSource ds2;
+	private Connection conn2;
+	private InitialContext context;
+	
+	/**
+	 * Fabrica de conexiones para el envio de mensajes a la cola
+	 */
+	
+	private ConnectionFactory cf;
+	
+	/**
+	 * Conexion a la cola de mensajes
+	 */
+	
+	private javax.jms.Connection comm;
+	
+	/**
+	 * Cola definida para la recepcion de mensajes.
+	 */
+	
+	private Queue colaDefinida;
+	
 	public ConsultaDAOGerente()
 	{
 		
@@ -32,13 +55,22 @@ public class ConsultaDAOGerente {
 	public void inicializar()
 	{
 		try {			
-			cadenaConexion = "jdbc:oracle:thin:@prod.oracle.virtual.uniandes.edu.co:1531:prod";
+			ds2 = (DataSource) context.lookup("java:XAChie2");
+			cf = (ConnectionFactory) context.lookup("java:JmsXA");
+			colaDefinida = (Queue) context.lookup("queue/WebApp2");
 			
-			usuario = "ISIS2304171510";
-			clave = "mmoefacet";
-			final String driver = "oracle.jdbc.driver.OracleDriver";
-			Class.forName(driver);
-			establecer();
+			
+			
+			
+			
+			
+//			cadenaConexion = "jdbc:oracle:thin:@prod.oracle.virtual.uniandes.edu.co:1531:prod";
+//			
+//			usuario = "ISIS2304171510";
+//			clave = "mmoefacet";
+//			final String driver = "oracle.jdbc.driver.OracleDriver";
+//			Class.forName(driver);
+//			establecer();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
