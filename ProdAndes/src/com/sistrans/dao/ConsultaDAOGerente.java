@@ -5,6 +5,11 @@ import java.io.FileInputStream;
 import java.sql.*;
 import java.util.Properties;
 
+import javax.jms.ConnectionFactory;
+import javax.jms.Queue;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 public class ConsultaDAOGerente {
 	
 	//Constantes

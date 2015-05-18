@@ -2,6 +2,11 @@ package com.sistrans.dao;
 
 import java.sql.*;
 
+import javax.jms.ConnectionFactory;
+import javax.jms.Queue;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 public class ConsultaDAOUsuario {
 		
 	//Consultas
@@ -59,7 +64,7 @@ public class ConsultaDAOUsuario {
 //			clave = "mmoefacet";
 //			final String driver = "oracle.jdbc.driver.OracleDriver";
 //			Class.forName(driver);
-//			establecer();
+			establecer();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
