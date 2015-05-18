@@ -2059,4 +2059,9 @@ public class ProdAndesAdmin {
 	public ArrayList fusionMateriales(String tipo, String fechaIn, String fechaFin) {
 		return null;
 	}
+
+	public String fusionPedido(String prod1, String cantidad1, String prod2,
+			String cantidad2, String prod3, String cantidad3) {
+		return null;
+	}
 }

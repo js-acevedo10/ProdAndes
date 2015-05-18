@@ -33,9 +33,14 @@
         <div class="container">
             <div class="jumbotron">
                 <form class="form" action="/ProdAndes/registro/pedido/usuario.html" method="get">
-                    <div class="form-group">
-                        <label for="prod1" class="sr-only">ID del producto 1</label>
-                        <input class="form-control" type="text" name="prod1" placeholder="ID del producto 1" required>
+                    <div class="row">
+                    	<div class="col-md-7">
+                    		<label for="prod1" class="sr-only">ID del producto 1</label>
+                        	<input class="form-control" type="text" name="prod1" placeholder="ID del producto 1" required>
+                    	</div>
+                    	<div class="col-md-4">
+                    		<input class="form-control" type="number" name="cantidad1" placeholder="Cantidad" required>
+                    	</div>
                     </div>
                     <div class="form-group">
                         <label for="prod2" class="sr-only">ID del producto 2</label>
