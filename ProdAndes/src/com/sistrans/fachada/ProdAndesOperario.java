@@ -611,8 +611,16 @@ public class ProdAndesOperario {
 					int numInventario = c.getInt("TONELADAS");
 					if(numInventario<numero)
 					{
-						System.out.println("1");
-						flag = false;
+						dao.enviarMensaje("P,18,MATERIAPRIMA,"+idMP+","+numInventario);
+						String respuesta = dao.recibirMensaje();
+						if(respuesta.equals("FALSE"))
+						{
+							flag2=false;	
+						}
+						else
+						{
+							dao.enviarMensaje("P,U,MATERIAPRIMA,"+idMP+","+numInventario);
+						}
 					}
 				}
 			}
@@ -631,8 +639,17 @@ public class ProdAndesOperario {
 					int numInventario = c.getInt("NUMINVENTARIO");
 					if(numInventario<numero)
 					{
-						System.out.println("2");
-						flag = false;
+						
+						dao.enviarMensaje("P,18,COMPONENTE,"+idMP+","+numInventario);
+						String respuesta = dao.recibirMensaje();
+						if(respuesta.equals("FALSE"))
+						{
+							flag2=false;	
+						}
+						else
+						{
+							dao.enviarMensaje("P,U,COMPONENTE,"+idMP+","+numInventario);
+						}
 					}
 				}
 			}
@@ -651,7 +668,16 @@ public class ProdAndesOperario {
 					int numInventario = c.getInt("NUMINVENTARIO");
 					if(numInventario<numero)
 					{
-						flag = false;
+						dao.enviarMensaje("P,18,PRODUCTO,"+idMP+","+numInventario);
+						String respuesta = dao.recibirMensaje();
+						if(respuesta.equals("FALSE"))
+						{
+							flag2=false;	
+						}
+						else
+						{
+							dao.enviarMensaje("P,U,PRODUCTO,"+idMP+","+numInventario);
+						}
 					}
 				}
 			}
@@ -744,16 +770,14 @@ public class ProdAndesOperario {
 				}
 				
 			}
-			System.out.println(query);
-			hacerCommit();
-			encenderAutoCommit();
+			else
+			{
+				dao.enviarMensaje("P,R");
+			}
 		} 
 		catch (SQLException e) 
 		{
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			hacerRollback();
-			encenderAutoCommit();
 		}
 		finally 
 		{

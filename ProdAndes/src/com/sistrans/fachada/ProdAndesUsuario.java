@@ -486,6 +486,7 @@ public class ProdAndesUsuario {
 		}
 		
 	}
+	
 
 	public boolean registrarPedido(String id1, String id2, String id3,
 			String id32, String id4) {
@@ -556,11 +557,17 @@ public class ProdAndesUsuario {
 					b = a.executeQuery();
 					while(b.next()&&flag2)
 					{
+						String nombre =b.getString("NOMBRE");
 						int disponibles=b.getInt("TONELADAS");
 						int requeridas=b.getInt("NUMMATERIAPRIMA");
 						if(requeridas>disponibles)
 						{
-							flag2=false;
+							dao.enviarMensaje("P,18,MATERIAPRIMA,"+nombre+","+toneladas);
+							String respuesta = dao.recibirMensaje();
+							if(respuesta.equals("FALSE"))
+							{
+								flag2=false;	
+							}
 						}
 					}
 					String query4 = "SELECT dataRight.NOMBRE, dataRight.NUMINVENTARIO, dataLeft.NUMCOMPONENTE FROM (SELECT dataTwo.IDCOMPONENTE, dataTwo.NUMCOMPONENTE FROM (SELECT* FROM ETAPAPRODUCCION WHERE ETAPAPRODUCCION.IDPRODUCTO ='"+idProducto+"') dataOne INNER JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDCOMPONENTE is not null) dataTwo on dataOne.ID = dataTwo.IDETAPAPRODUCCION) dataLeft INNER JOIN COMPONENTE dataRight on dataLeft.IDCOMPONENTE=dataRight.ID";
@@ -568,11 +575,17 @@ public class ProdAndesUsuario {
 					b = a.executeQuery();
 					while(b.next()&&flag2)
 					{
+						String nombre =b.getString("NOMBRE");
 						int disponibles=b.getInt("NUMINVENTARIO");
 						int requeridas=b.getInt("NUMCOMPONENTE");
 						if(requeridas>disponibles)
 						{
-							flag2=false;
+							dao.enviarMensaje("P,18,COMPONENTE,"+nombre+","+toneladas);
+							String respuesta = dao.recibirMensaje();
+							if(respuesta.equals("FALSE"))
+							{
+								flag2=false;	
+							}
 						}
 					}
 					String query5 = "SELECT dataRight.NOMBRE, dataRight.NUMINVENTARIO, dataLeft.NUMPRODUCTO FROM (SELECT dataTwo.IDPRODUCTO, dataTwo.NUMPRODUCTO FROM (SELECT* FROM ETAPAPRODUCCION WHERE ETAPAPRODUCCION.IDPRODUCTO ='"+idProducto+"') dataOne INNER JOIN (SELECT* FROM ESTACIONDEPRODUCCION WHERE ESTACIONDEPRODUCCION.IDPRODUCTO is not null) dataTwo on dataOne.ID = dataTwo.IDETAPAPRODUCCION) dataLeft INNER JOIN PRODUCTO dataRight on dataLeft.IDPRODUCTO=dataRight.ID";
@@ -580,11 +593,17 @@ public class ProdAndesUsuario {
 					b = a.executeQuery();
 					while(b.next()&&flag2)
 					{
+						String nombre =b.getString("NOMBRE");
 						int disponibles=b.getInt("NUMINVENTARIO");
 						int requeridas=b.getInt("NUMPRODUCTO");
 						if(requeridas>disponibles)
 						{
-							flag2=false;
+							dao.enviarMensaje("P,18,PRODUCTO,"+nombre+","+toneladas);
+							String respuesta = dao.recibirMensaje();
+							if(respuesta.equals("FALSE"))
+							{
+								flag2=false;	
+							}
 						}
 					}
 					if(flag2)

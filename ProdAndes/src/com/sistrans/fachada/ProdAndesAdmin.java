@@ -2057,7 +2057,183 @@ public class ProdAndesAdmin {
 	}
 
 	public ArrayList fusionMateriales(String tipo, String fechaIn, String fechaFin) {
-		return null;
+		//EL ID EN LAS MATERIAS PRIMAS Y LOS COMPONENTES VA A SER LA COLUMNA CONTAR, ESTA COLUMNA ES CUANTAS VECES SE USO EL MATERIAL (ya esta organizado de mayor a menor)
+		String query="";
+		if(tipo.equals("MATERIAPRIMA"))
+		{
+			query="SELECT NOMBRE, CONTAR, TONELADAS FROM ((SELECT IDMATERIAPRIMA, COUNT(*) as CONTAR FROM (SELECT IDETAPA FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaIn+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFin+"','YYYY-MM-DD'))one LEFT JOIN ESTACIONDEPRODUCCION two on one.IDETAPA=two.CODIGO WHERE IDMATERIAPRIMA IS NOT NULL GROUP BY IDMATERIAPRIMA) ORDER BY CONTAR desc) INNER JOIN MATERIAPRIMA on IDMATERIAPRIMA=MATERIAPRIMA.ID";
+					
+		}
+		else
+		{
+			query="SELECT NOMBRE, CONTAR, NUMINVENTARIO FROM ((SELECT IDCOMPONENTE, COUNT(*) as CONTAR FROM (SELECT IDETAPA FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaIn+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFin+"','YYYY-MM-DD'))one LEFT JOIN ESTACIONDEPRODUCCION two on one.IDETAPA=two.CODIGO WHERE IDCOMPONENTE IS NOT NULL GROUP BY IDCOMPONENTE) ORDER BY CONTAR desc) INNER JOIN COMPONENTE on IDCOMPONENTE=COMPONENTE.ID";
+		}
+		
+		ArrayList resultado = new ArrayList();
+		PreparedStatement a = null;
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next())
+			{
+				if(tipo.equals("MATERIAPRIMA"))
+				{
+					String nombreT = b.getString("NOMBRE");
+					int toneladasT = b.getInt("TONELADAS");
+					int contar = b.getInt("CONTAR");
+					MateriaPrima z = new MateriaPrima(nombreT, toneladasT, contar);
+					resultado.add(z);
+				}
+				else
+				{
+					String nombreT = b.getString("NOMBRE");
+					int numInventarioT = b.getInt("NUMINVENTARIO");
+					String toneladasT = b.getString("CONTAR");
+					Componente z = new Componente(nombreT, numInventarioT, "hola", toneladasT);
+					resultado.add(z);
+				}
+			}
+			ArrayList resultado2 = new ArrayList();
+			dao.enviarMensaje("P,13,"+tipo+","+fechaIn+","+fechaFin);
+			String ob = dao.recibirMensaje();
+			String[] ob2= ob.split("]");
+			for(int i=0; i<ob2.lenght();i++)
+			{
+				String actual = ob2[i];
+				String[] ob3 = actual.split(",");
+				if(tipo.equals("MATERIAPRIMA"))
+				{
+					MateriaPrima zz = new MateriaPrima(ob3[0], ob3[1], ob3[2]);
+					resultado2.add(zz);
+				}
+				else
+				{
+					Componente zz = new Componente(ob3[0], ob3[1], "hola", ob3[2]);
+					resultado2.add(zz);
+				}
+			}
+			for(int i=0; i<resultado.size()&&!resultado2.isEmpty();i++)
+			{
+				if(tipo.equals("MATERIAPRIMA"))
+				{
+					MateriaPrima actual1 = resultado.get(i);
+					MateriaPrima actual2 = resultado2.get(0);
+					int co1 = Integer.parseInt(actual1.id);
+					int co2 = Integer.parseInt(actual2.id);
+					if(co2>co1)
+					{
+						resultado.add(i,co2);
+						resultado2.remove(0);
+					}
+				}
+				else
+				{
+					Componente actual1 = resultado.get(i);
+					Componente actual2 = resultado2.get(0);
+					int co1 = Integer.parseInt(actual1.id);
+					int co2 = Integer.parseInt(actual2.id);
+					if(co2>co1)
+					{
+						resultado.add(i,co2);
+						resultado2.remove(0);
+					}
+				}
+			}
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return resultado;
+	}
+	public String fusionMaterialesRespuesta(String tipo, String fechaIn, String fechaFin) {
+		//EL ID EN LAS MATERIAS PRIMAS Y LOS COMPONENTES VA A SER LA COLUMNA CONTAR, ESTA COLUMNA ES CUANTAS VECES SE USO EL MATERIAL (ya esta organizado de mayor a menor)
+		String query="";
+		if(tipo.equals("MATERIAPRIMA"))
+		{
+			query="SELECT NOMBRE, CONTAR, TONELADAS FROM ((SELECT IDMATERIAPRIMA, COUNT(*) as CONTAR FROM (SELECT IDETAPA FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaIn+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFin+"','YYYY-MM-DD'))one LEFT JOIN ESTACIONDEPRODUCCION two on one.IDETAPA=two.CODIGO WHERE IDMATERIAPRIMA IS NOT NULL GROUP BY IDMATERIAPRIMA) ORDER BY CONTAR desc) INNER JOIN MATERIAPRIMA on IDMATERIAPRIMA=MATERIAPRIMA.ID";
+					
+		}
+		else
+		{
+			query="SELECT NOMBRE, CONTAR, NUMINVENTARIO FROM ((SELECT IDCOMPONENTE, COUNT(*) as CONTAR FROM (SELECT IDETAPA FROM ETAPAOPERARIO WHERE FECHAINICIAL>=to_date('"+fechaIn+"','YYYY-MM-DD') and FECHAFINAL<=to_date('"+fechaFin+"','YYYY-MM-DD'))one LEFT JOIN ESTACIONDEPRODUCCION two on one.IDETAPA=two.CODIGO WHERE IDCOMPONENTE IS NOT NULL GROUP BY IDCOMPONENTE) ORDER BY CONTAR desc) INNER JOIN COMPONENTE on IDCOMPONENTE=COMPONENTE.ID";
+		}
+		
+		String resultado="";
+		PreparedStatement a = null;
+		try 
+		{
+			dao.inicializar();
+			a = dao.conexion.prepareStatement(query);
+			ResultSet b = a.executeQuery();
+			while(b.next())
+			{
+				if(tipo.equals("MATERIAPRIMA"))
+				{
+					String nombreT = b.getString("NOMBRE");
+					int toneladasT = b.getInt("TONELADAS");
+					int contar = b.getInt("CONTAR");
+					resultado+=nombreT+","+toneladasT+","+contar+"]";
+				}
+				else
+				{
+					String nombreT = b.getString("NOMBRE");
+					int numInventarioT = b.getInt("NUMINVENTARIO");
+					String toneladasT = b.getString("CONTAR");
+					resultado+=nombreT+","+numInventarioT+","+toneladasT+"]";
+				}
+			}
+			
+			if (resultado.length() > 0) {
+			      resultado = resultado.substring(0, str.length()-1);
+			    }
+			
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (a != null) 
+			{
+				try {
+					a.close();
+				} catch (SQLException exception) {
+					
+					try {
+						throw new Exception("ERROR: ConsultaDAO: loadRow() =  cerrando una conexión.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}		
+		return resultado;
 	}
 
 	public String fusionPedido(String prod1, String cantidad1, String prod2,
