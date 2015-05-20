@@ -558,9 +558,9 @@ public class ProdAndesUsuario {
 					while(b.next()&&flag2)
 					{
 						String nombre =b.getString("NOMBRE");
-						int disponibles=b.getInt("TONELADAS");
+						int toneladas=b.getInt("TONELADAS");
 						int requeridas=b.getInt("NUMMATERIAPRIMA");
-						if(requeridas>disponibles)
+						if(requeridas>toneladas)
 						{
 							dao.enviarMensaje("P,18,MATERIAPRIMA,"+nombre+","+toneladas);
 							String respuesta = dao.recibirMensaje();
@@ -576,9 +576,9 @@ public class ProdAndesUsuario {
 					while(b.next()&&flag2)
 					{
 						String nombre =b.getString("NOMBRE");
-						int disponibles=b.getInt("NUMINVENTARIO");
+						int toneladas=b.getInt("NUMINVENTARIO");
 						int requeridas=b.getInt("NUMCOMPONENTE");
-						if(requeridas>disponibles)
+						if(requeridas>toneladas)
 						{
 							dao.enviarMensaje("P,18,COMPONENTE,"+nombre+","+toneladas);
 							String respuesta = dao.recibirMensaje();
@@ -594,9 +594,9 @@ public class ProdAndesUsuario {
 					while(b.next()&&flag2)
 					{
 						String nombre =b.getString("NOMBRE");
-						int disponibles=b.getInt("NUMINVENTARIO");
+						int toneladas=b.getInt("NUMINVENTARIO");
 						int requeridas=b.getInt("NUMPRODUCTO");
-						if(requeridas>disponibles)
+						if(requeridas>toneladas)
 						{
 							dao.enviarMensaje("P,18,PRODUCTO,"+nombre+","+toneladas);
 							String respuesta = dao.recibirMensaje();

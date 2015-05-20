@@ -2082,7 +2082,7 @@ public class ProdAndesAdmin {
 				{
 					String nombreT = b.getString("NOMBRE");
 					int toneladasT = b.getInt("TONELADAS");
-					int contar = b.getInt("CONTAR");
+					String contar = b.getString("CONTAR");
 					MateriaPrima z = new MateriaPrima(nombreT, toneladasT, contar);
 					resultado.add(z);
 				}
@@ -2099,18 +2099,18 @@ public class ProdAndesAdmin {
 			dao.enviarMensaje("P,13,"+tipo+","+fechaIn+","+fechaFin);
 			String ob = dao.recibirMensaje();
 			String[] ob2= ob.split("]");
-			for(int i=0; i<ob2.lenght();i++)
+			for(int i=0; i<ob2.length;i++)
 			{
 				String actual = ob2[i];
 				String[] ob3 = actual.split(",");
 				if(tipo.equals("MATERIAPRIMA"))
 				{
-					MateriaPrima zz = new MateriaPrima(ob3[0], ob3[1], ob3[2]);
+					MateriaPrima zz = new MateriaPrima(ob3[0], Integer.parseInt(ob3[1]), ob3[2]);
 					resultado2.add(zz);
 				}
 				else
 				{
-					Componente zz = new Componente(ob3[0], ob3[1], "hola", ob3[2]);
+					Componente zz = new Componente(ob3[0], Integer.parseInt(ob3[1]), "hola", ob3[2]);
 					resultado2.add(zz);
 				}
 			}
@@ -2118,8 +2118,8 @@ public class ProdAndesAdmin {
 			{
 				if(tipo.equals("MATERIAPRIMA"))
 				{
-					MateriaPrima actual1 = resultado.get(i);
-					MateriaPrima actual2 = resultado2.get(0);
+					MateriaPrima actual1 = (MateriaPrima) resultado.get(i);
+					MateriaPrima actual2 = (MateriaPrima) resultado2.get(0);
 					int co1 = Integer.parseInt(actual1.id);
 					int co2 = Integer.parseInt(actual2.id);
 					if(co2>co1)
@@ -2130,8 +2130,8 @@ public class ProdAndesAdmin {
 				}
 				else
 				{
-					Componente actual1 = resultado.get(i);
-					Componente actual2 = resultado2.get(0);
+					Componente actual1 = (Componente) resultado.get(i);
+					Componente actual2 = (Componente) resultado2.get(0);
 					int co1 = Integer.parseInt(actual1.id);
 					int co2 = Integer.parseInt(actual2.id);
 					if(co2>co1)
@@ -2206,8 +2206,8 @@ public class ProdAndesAdmin {
 			}
 			
 			if (resultado.length() > 0) {
-			      resultado = resultado.substring(0, str.length()-1);
-			    }
+			      resultado = resultado.substring(0, resultado.length()-1);
+			}
 			
 		} 
 		catch (SQLException e) 

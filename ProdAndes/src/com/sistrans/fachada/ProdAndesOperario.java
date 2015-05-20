@@ -592,6 +592,7 @@ public class ProdAndesOperario {
 		String fechaInicial = cod;
 		PreparedStatement a = null;
 		boolean flag = true;
+		boolean flag2 = true;
 		try 
 		{
 			apagarAutoCommit();

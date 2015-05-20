@@ -2,12 +2,7 @@ package com.sistrans.dao;
 
 import java.sql.*;
 
-import com.sistrans.fachada.Exception;
-import com.sistrans.fachada.PreparedStatement;
 import com.sistrans.fachada.ProdAndesAdmin;
-import com.sistrans.fachada.ResultSet;
-import com.sistrans.fachada.SQLException;
-import com.sistrans.fachada.String;
 
 public class ConsultaDAOUsuario {
 		
@@ -103,17 +98,19 @@ public class ConsultaDAOUsuario {
 			e.printStackTrace();
 		}
 	}
-	public String enviarMensaje(String mensaje);
+	public String enviarMensaje(String mensaje)
 	{
+		return mensaje;
 		
 	}
 	public String recibirMensaje()
 	{
+		return cadenaConexion;
 		//LLAME INTERPRETAR MENSAJE SI ES PREGUNTA
 	}
 	public String interpretarMensaje(String a)
 	{
-		PreparedStatement a = null;
+		PreparedStatement b1 = null;
 		String[] mensaje = a.split(",");
 		String requerimiento = mensaje[1];
 		String query="";
@@ -179,8 +176,8 @@ public class ConsultaDAOUsuario {
 		try 
 		{
 			inicializar();
-			a = conexion.prepareStatement(query);
-			ResultSet b = a.executeQuery();
+			b1 = conexion.prepareStatement(query);
+			ResultSet b = b1.executeQuery();
 			while(b.next())
 			{
 				if(requerimiento.equals("18"))
@@ -212,7 +209,7 @@ public class ConsultaDAOUsuario {
 			if (a != null) 
 			{
 				try {
-					a.close();
+					b1.close();
 				} catch (SQLException exception) {
 					
 					try {
