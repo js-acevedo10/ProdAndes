@@ -1,5 +1,4 @@
-package com.sistrans.dao;
-
+package com.sistrans.mundo;
 import java.util.Date;
 import java.util.Properties;
 
@@ -13,7 +12,7 @@ public class SendMessage {
 	private static final String INITIAL_CONTEXT_FACTORY = "org.jboss.naming.remote.client.InitialContextFactory";
 	private static final String PROVIDER_URL = "http-remoting://localhost:8080";
 	
-	public static void main(String[] args) throws Exception {		
+	public static void main(String[] args) throws Exception {
 		final Properties env = new Properties();
 		env.put(Context.INITIAL_CONTEXT_FACTORY, INITIAL_CONTEXT_FACTORY);
 		env.put(Context.PROVIDER_URL, System.getProperty(Context.PROVIDER_URL, PROVIDER_URL));

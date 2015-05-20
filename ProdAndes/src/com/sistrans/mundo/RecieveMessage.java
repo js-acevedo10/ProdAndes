@@ -1,4 +1,5 @@
-package com.sistrans.dao;
+package com.sistrans.mundo;
+
 
 import java.util.Properties;
 
@@ -13,6 +14,7 @@ public class RecieveMessage implements MessageListener {
 	private static final String QUEUE_DESTINATION = "jms/queue/prodandesescribir";
 	private static final String INITIAL_CONTEXT_FACTORY = "org.jboss.naming.remote.client.InitialContextFactory";
 	private static final String PROVIDER_URL = "http-remoting://127.0.0.1:8080";
+	private static JMSConsumer consumer;
 	
 	
 	public static void main(String[] args) throws NamingException, JMSException {
@@ -37,7 +39,7 @@ public class RecieveMessage implements MessageListener {
 	        context = connectionFactory.createContext("juano", "123456"); // again, don't do this in production
 	        
 	        // Read a message.  If nothing is there, this will return null
-	        JMSConsumer consumer = context.createConsumer(destination);
+	        consumer = context.createConsumer(destination);
 	        RecieveMessage asyncReader = new RecieveMessage();
 	        consumer.setMessageListener(asyncReader);
 	        System.in.read();
