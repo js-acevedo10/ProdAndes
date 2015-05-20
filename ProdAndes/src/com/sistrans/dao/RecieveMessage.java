@@ -1,6 +1,5 @@
 package com.sistrans.dao;
 
-import java.util.Date;
 import java.util.Properties;
 
 import javax.jms.*;
@@ -14,6 +13,7 @@ public class RecieveMessage implements MessageListener {
 	private static final String QUEUE_DESTINATION = "jms/queue/prodandesescribir";
 	private static final String INITIAL_CONTEXT_FACTORY = "org.jboss.naming.remote.client.InitialContextFactory";
 	private static final String PROVIDER_URL = "http-remoting://127.0.0.1:8080";
+	
 	
 	public static void main(String[] args) throws NamingException, JMSException {
 		System.out.println("LEER");
@@ -38,23 +38,20 @@ public class RecieveMessage implements MessageListener {
 	        
 	        // Read a message.  If nothing is there, this will return null
 	        JMSConsumer consumer = context.createConsumer(destination);
-	        String text = consumer.receiveBodyNoWait(String.class);
-	        System.out.println("Received message: " + text );
-		} finally {
-			if (namingContext != null) {
-        		namingContext.close();
-        	}
-        	if (context != null) {
-        		context.close();
-        	}
+	        RecieveMessage asyncReader = new RecieveMessage();
+	        consumer.setMessageListener(asyncReader);
+	        System.in.read();
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
 	@Override
 	public void onMessage(Message message) {
+		TextMessage msg = (TextMessage) message;
 		try {
-			System.out.println("Incoming messages: " + ((TextMessage)message).getText());
-		} catch(JMSException e) {
+			System.out.println(msg.getText());
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
