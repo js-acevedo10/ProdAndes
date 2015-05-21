@@ -2096,47 +2096,50 @@ public class ProdAndesAdmin {
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
-			String[] ob2= ob.split("]");
-			System.out.println(ob2[0]);
-			for(int i=0; i<ob2.length;i++)
+			if(!ob.equals("ERROR"))
 			{
-				String actual = ob2[i];
-				String[] ob3 = actual.split(",");
-				if(tipo.equals("MATERIAPRIMA"))
+				String[] ob2= ob.split("]");
+				System.out.println(ob2[0]);
+				for(int i=0; i<ob2.length;i++)
 				{
-					MateriaPrima zz = new MateriaPrima(ob3[0], Integer.parseInt(ob3[1]), ob3[2]);
-					resultado2.add(zz);
-				}
-				else
-				{
-					Componente zz = new Componente(ob3[0], Integer.parseInt(ob3[1]), "hola", ob3[2]);
-					resultado2.add(zz);
-				}
-			}
-			for(int i=0; i<resultado.size()&&!resultado2.isEmpty();i++)
-			{
-				if(tipo.equals("MATERIAPRIMA"))
-				{
-					MateriaPrima actual1 = (MateriaPrima) resultado.get(i);
-					MateriaPrima actual2 = (MateriaPrima) resultado2.get(0);
-					int co1 = Integer.parseInt(actual1.getId());
-					int co2 = Integer.parseInt(actual2.getId());
-					if(co2>co1)
+					String actual = ob2[i];
+					String[] ob3 = actual.split(",");
+					if(tipo.equals("MATERIAPRIMA"))
 					{
-						resultado.add(i,actual2);
-						resultado2.remove(0);
+						MateriaPrima zz = new MateriaPrima(ob3[0], Integer.parseInt(ob3[1]), ob3[2]);
+						resultado2.add(zz);
+					}
+					else
+					{
+						Componente zz = new Componente(ob3[0], Integer.parseInt(ob3[1]), "hola", ob3[2]);
+						resultado2.add(zz);
 					}
 				}
-				else
+				for(int i=0; i<resultado.size()&&!resultado2.isEmpty();i++)
 				{
-					Componente actual1 = (Componente) resultado.get(i);
-					Componente actual2 = (Componente) resultado2.get(0);
-					int co1 = Integer.parseInt(actual1.getId());
-					int co2 = Integer.parseInt(actual2.getId());
-					if(co2>co1)
+					if(tipo.equals("MATERIAPRIMA"))
 					{
-						resultado.add(i,actual2);
-						resultado2.remove(0);
+						MateriaPrima actual1 = (MateriaPrima) resultado.get(i);
+						MateriaPrima actual2 = (MateriaPrima) resultado2.get(0);
+						int co1 = Integer.parseInt(actual1.getId());
+						int co2 = Integer.parseInt(actual2.getId());
+						if(co2>co1)
+						{
+							resultado.add(i,actual2);
+							resultado2.remove(0);
+						}
+					}
+					else
+					{
+						Componente actual1 = (Componente) resultado.get(i);
+						Componente actual2 = (Componente) resultado2.get(0);
+						int co1 = Integer.parseInt(actual1.getId());
+						int co2 = Integer.parseInt(actual2.getId());
+						if(co2>co1)
+						{
+							resultado.add(i,actual2);
+							resultado2.remove(0);
+						}
 					}
 				}
 			}
@@ -2207,6 +2210,10 @@ public class ProdAndesAdmin {
 			if (resultado.length() > 0) {
 			      resultado = resultado.substring(0, resultado.length()-1);
 			    }
+			else
+			{
+				resultado="ERROR";
+			}
 			
 		} 
 		catch (SQLException e) 
@@ -2247,30 +2254,51 @@ public class ProdAndesAdmin {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		String[] ob2= ob.split("]");
-		for(int i=0; i<ob2.length;i++)
+		if(!ob.equals("ERROR"))
 		{
-			String actual = ob2[i];
-			String[] ob3 = actual.split(",");
-			EstaciondeProducto coso = new EstaciondeProducto(ob3[0], "0", ob3[1]);
-			coso.setIdComponente(ob3[2]);
-			coso.setNumComponente(Integer.parseInt(ob3[3]));
-			coso.setIdMateriaPrima(ob3[4]);
-			coso.setNumMateriaPrima(Integer.parseInt(ob3[5]));
-			coso.setIdProducto(ob3[6]);
-			coso.setNumProducto(Integer.parseInt(ob3[7]));
-			respuesta2.add(coso);
-		}
-		int total = respuesta1.size();
-		int i=1;
-		while(i<total&&!respuesta2.isEmpty())
+			String[] ob2= ob.split("]");
+			for(int i=0; i<ob2.length;i++)
+			{
+				String actual = ob2[i];
+				String[] ob3 = actual.split(",");
+				EstaciondeProducto coso = new EstaciondeProducto(ob3[0], "0", ob3[1]);
+				coso.setIdComponente(ob3[2]);
+				coso.setNumComponente(Integer.parseInt(ob3[3]));
+				coso.setIdMateriaPrima(ob3[4]);
+				coso.setNumMateriaPrima(Integer.parseInt(ob3[5]));
+				coso.setIdProducto(ob3[6]);
+				coso.setNumProducto(Integer.parseInt(ob3[7]));
+				respuesta2.add(coso);
+			}
+			int total = respuesta1.size();
+			int i=1;
+			while(i<total&&!respuesta2.isEmpty())
+			{
+				respuesta1.add(i, respuesta2.get(0));
+				respuesta2.remove(0);
+				i=i+2;
+			}
+		}		
+		return respuesta1;
+	}
+	public String etapa1Respuesta(String a)
+	{
+		String[] mensaje = a.split(",");
+		String respuesta="";
+		ArrayList<EstaciondeProducto> etapas = etapaDeProduccion1(mensaje[2], mensaje[3], 0, mensaje[4], mensaje[4], mensaje[5], Integer.parseInt(mensaje[6]), "");
+		for(int i=0;i<etapas.size();i++)
 		{
-			respuesta1.add(i, respuesta2.get(0));
-			respuesta2.remove(0);
-			i=i+2;
+			EstaciondeProducto actual = etapas.get(i);
+			respuesta+= actual.getCodigo()+","+actual.getTiempoRealizacion()+","+actual.getIdComponente()+","+actual.getNumComponente()+","+actual.getIdMateriaPrima()+","+actual.getNumMateriaPrima()+","+actual.getIdProducto()+","+actual.getNumProducto()+"]";
 		}
 		
-		return respuesta1;
+		if (respuesta.length() > 0) {
+		      return respuesta.substring(0, respuesta.length()-1);
+		    }
+		else
+		{
+			return "ERROR";
+		}
 	}
 
 }
