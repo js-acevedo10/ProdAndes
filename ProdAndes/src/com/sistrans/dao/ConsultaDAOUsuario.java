@@ -2,14 +2,9 @@ package com.sistrans.dao;
 
 import java.sql.*;
 
-import com.sistrans.fachada.Exception;
-import com.sistrans.fachada.PreparedStatement;
 import com.sistrans.fachada.ProdAndesAdmin;
 import com.sistrans.fachada.ProdAndesGerente;
 import com.sistrans.fachada.ProdAndesUsuario;
-import com.sistrans.fachada.ResultSet;
-import com.sistrans.fachada.SQLException;
-import com.sistrans.fachada.String;
 
 public class ConsultaDAOUsuario {
 		
@@ -109,11 +104,11 @@ public class ConsultaDAOUsuario {
 	}
 	public String enviarMensaje(String mensaje)
 	{
-		
+		return null;
 	}
 	public String recibirMensaje()
 	{
-		
+		return null;
 	}
 	public String interpretarMensaje(String f)
 	{

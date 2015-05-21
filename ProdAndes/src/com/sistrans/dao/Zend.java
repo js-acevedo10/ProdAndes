@@ -1,7 +1,7 @@
 package com.sistrans.dao;
 
 //ZEND JS
-public class zend {
+public class Zend {
 
 	public static void main(String[] args) {
 		try {

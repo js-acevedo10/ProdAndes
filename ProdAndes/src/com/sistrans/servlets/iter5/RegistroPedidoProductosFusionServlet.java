@@ -66,13 +66,13 @@ public class RegistroPedidoProductosFusionServlet extends HttpServlet {
 				cantidad3 = request.getParameter("cantidad3");
 			}
 			
-			String id = ProdAndesAdmin.darInstancia().fusionPedido(prod1, cantidad1, prod2, cantidad2, prod3, cantidad3);
-			
-			if( id == null || id.equals("error") || id.equals("0")) {
-				salida.println("<h1>ERROR</h1>");
-			} else {
-				salida.println("<h1>Su pedido se realizo con exito, este es el numero de guia: " + id + "</h1>");
-			}
+//			String id = ProdAndesAdmin.darInstancia().fusionPedido(prod1, cantidad1, prod2, cantidad2, prod3, cantidad3);
+//			
+//			if( id == null || id.equals("error") || id.equals("0")) {
+//				salida.println("<h1>ERROR</h1>");
+//			} else {
+//				salida.println("<h1>Su pedido se realizo con exito, este es el numero de guia: " + id + "</h1>");
+//			}
 			
 		} else {
 			printHeader(salida);
