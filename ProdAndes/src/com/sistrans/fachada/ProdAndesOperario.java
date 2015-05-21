@@ -592,7 +592,6 @@ public class ProdAndesOperario {
 		String fechaInicial = cod;
 		PreparedStatement a = null;
 		boolean flag = true;
-		boolean flag2 = true;
 		try 
 		{
 			apagarAutoCommit();
@@ -616,7 +615,7 @@ public class ProdAndesOperario {
 						String respuesta = dao.recibirMensaje();
 						if(respuesta.equals("FALSE"))
 						{
-							flag2=false;	
+							flag=false;	
 						}
 						else
 						{
@@ -645,7 +644,7 @@ public class ProdAndesOperario {
 						String respuesta = dao.recibirMensaje();
 						if(respuesta.equals("FALSE"))
 						{
-							flag2=false;	
+							flag=false;	
 						}
 						else
 						{
@@ -673,7 +672,7 @@ public class ProdAndesOperario {
 						String respuesta = dao.recibirMensaje();
 						if(respuesta.equals("FALSE"))
 						{
-							flag2=false;	
+							flag=false;	
 						}
 						else
 						{

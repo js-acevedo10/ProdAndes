@@ -1660,14 +1660,6 @@ public class ProdAndesAdmin {
 	}
 	public ArrayList<EstaciondeProducto> etapaDeProduccion1 (String fechaInicial, String fechaFinal, int pagina, String idCom, String idMP, String idProd, int numProd, String tiempoReali)
 	{
-		System.out.println("fechaIn " + fechaInicial);
-		System.out.println("fechafin " + fechaFinal);
-		System.out.println("pag " + pagina);
-		System.out.println("idcom " + idCom);
-		System.out.println("idmp " + idMP);
-		System.out.println("idprod " + idProd);
-		System.out.println("numprod " + numProd);
-		System.out.println("tiempo " + tiempoReali);
 		ArrayList<EstaciondeProducto> resultado = new ArrayList<>();
 		if(!indices)
 		{
@@ -2082,8 +2074,8 @@ public class ProdAndesAdmin {
 				{
 					String nombreT = b.getString("NOMBRE");
 					int toneladasT = b.getInt("TONELADAS");
-					String contar = b.getString("CONTAR");
-					MateriaPrima z = new MateriaPrima(nombreT, toneladasT, contar);
+					int contar = b.getInt("CONTAR");
+					MateriaPrima z = new MateriaPrima(nombreT, toneladasT, contar+"");
 					resultado.add(z);
 				}
 				else
@@ -2207,7 +2199,7 @@ public class ProdAndesAdmin {
 			
 			if (resultado.length() > 0) {
 			      resultado = resultado.substring(0, resultado.length()-1);
-			}
+			    }
 			
 		} 
 		catch (SQLException e) 
@@ -2236,8 +2228,4 @@ public class ProdAndesAdmin {
 		return resultado;
 	}
 
-	public String fusionPedido(String prod1, String cantidad1, String prod2,
-			String cantidad2, String prod3, String cantidad3) {
-		return null;
-	}
 }
