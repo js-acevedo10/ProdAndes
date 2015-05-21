@@ -169,7 +169,7 @@ public class ConsultaDAOUsuario {
 				query = "SELECT * FROM ETAPAPRODUCCION WHERE ID='" + mensaje[2]
 						+ "'";
 			} else if (requerimiento.equals("12")) {
-
+				return proAdmin.etapa1Respuesta(f);
 			} else if (requerimiento.equals("13")) {
 				return proAdmin.fusionMaterialesRespuesta(mensaje[2],
 						mensaje[3], mensaje[4]);
@@ -189,9 +189,7 @@ public class ConsultaDAOUsuario {
 				commit();
 			} else if (requerimiento.equals("R")) {
 				rollback();
-			} else if (requerimiento.equals("A")) {
-
-			} else if (requerimiento.equals("D")) {
+			}  else if (requerimiento.equals("D")) {
 				String tipo = mensaje[2];
 				String nombre = mensaje[3];
 				query = "DELETE FROM " + tipo + "' WHERE NOMBRE='" + mensaje[3]
