@@ -19,7 +19,6 @@ public class SendMessage {
 	private QueueSender queueSender;
 	String user, pass;
 	
-	
 	public SendMessage(String user, String pass, String url, String queue) throws Exception {
 		this.user = user;
 		this.pass = pass;

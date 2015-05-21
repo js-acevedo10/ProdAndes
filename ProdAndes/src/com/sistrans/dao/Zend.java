@@ -1,6 +1,6 @@
 package com.sistrans.dao;
 
-public class Zend {
+public class zend {
 
 	public static void main(String[] args) {
 		try {
@@ -8,10 +8,7 @@ public class Zend {
 			sendMessage.sendMessage("Este es el mensaje 0");
 			ReceiveMessage receiveMessage = new ReceiveMessage("juano", "123456", "http-remoting://localhost:8080", "jms/queue/prodandesescribir");
 			receiveMessage.startReceiving();
-			for (int i = 0; i < 10; i++) {
-				sendMessage.sendMessage("Este es el mensaje " + i);
-			}
-			
+			receiveMessage.closeConnection();
 		} catch(Exception e)
 		{
 			e.printStackTrace();

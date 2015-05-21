@@ -47,6 +47,7 @@ public class ReceiveMessage implements MessageListener {
 			consumer = context.createConsumer(destination);
 			consumer.setMessageListener(this);
 			System.out.println("Servicio asíncrono funcionando.");
+			System.in.read();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -56,9 +57,14 @@ public class ReceiveMessage implements MessageListener {
 	public void onMessage(Message message) {
 		TextMessage msg = (TextMessage) message;
 		try {
-			System.out.println(msg.getText());
+			System.out.println("Mensaje recibido: " + msg.getText());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void closeConnection() throws Exception {
+		consumer.close();
+		namingContext.close();
 	}
 }
