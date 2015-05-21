@@ -201,6 +201,10 @@ public class ConsultaDAOUsuario {
 				inicializar();
 				a = conexion.prepareStatement(query);
 				ResultSet b = a.executeQuery();
+				if (requerimiento.equals("U")||requerimiento.equals("C")||requerimiento.equals("R")||requerimiento.equals("A")||requerimiento.equals("D"))
+				{
+					return "R,TRUE";
+				}
 				String idProducto = "";
 				String estado = "";
 				while (b.next()) {

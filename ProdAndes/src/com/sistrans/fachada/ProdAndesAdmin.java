@@ -2234,5 +2234,43 @@ public class ProdAndesAdmin {
 		}		
 		return resultado;
 	}
+	
+	public ArrayList<EstaciondeProducto> etapa1Fusion(String fechaInicial, String fechaFinal, int pagina, String idCom, String idMP, String idProd, int numProd, String tiempoReali)
+	{
+		ArrayList<EstaciondeProducto> respuesta1 = etapaDeProduccion1(fechaInicial, fechaFinal, pagina, idCom, idMP, idProd, numProd, tiempoReali);
+		ArrayList<EstaciondeProducto> respuesta2 = new ArrayList<EstaciondeProducto>();
+		String msgEnviado = "P,12,"+fechaInicial+","+fechaFinal+","+idCom+","+idProd+","+numProd;
+		dao.enviarMensaje(msgEnviado);
+		String ob = "";
+		try {
+			ob = dao.recibirMensaje(msgEnviado);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		String[] ob2= ob.split("]");
+		for(int i=0; i<ob2.length;i++)
+		{
+			String actual = ob2[i];
+			String[] ob3 = actual.split(",");
+			EstaciondeProducto coso = new EstaciondeProducto(ob3[0], "0", ob3[1]);
+			coso.setIdComponente(ob3[2]);
+			coso.setNumComponente(Integer.parseInt(ob3[3]));
+			coso.setIdMateriaPrima(ob3[4]);
+			coso.setNumMateriaPrima(Integer.parseInt(ob3[5]));
+			coso.setIdProducto(ob3[6]);
+			coso.setNumProducto(Integer.parseInt(ob3[7]));
+			respuesta2.add(coso);
+		}
+		int total = respuesta1.size();
+		int i=1;
+		while(i<total&&!respuesta2.isEmpty())
+		{
+			respuesta1.add(i, respuesta2.get(0));
+			respuesta2.remove(0);
+			i=i+2;
+		}
+		
+		return respuesta1;
+	}
 
 }

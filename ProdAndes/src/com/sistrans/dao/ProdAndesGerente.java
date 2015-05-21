@@ -1775,9 +1775,15 @@ public class ProdAndesGerente {
 		}
 		else
 		{
-			dao.enviarMensaje("P,19,"+id);
-			String respuesta = dao.recibirMensaje();
-			String[] mensaje = respuesta.split(",");
+			String msgEnviado = "P,19,"+id;
+			dao.enviarMensaje(msgEnviado);
+			String ob = "";
+			try {
+				ob = dao.recibirMensaje(msgEnviado);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			String[] mensaje = ob.split(",");
 			if(mensaje[1].equals("ERROR"))
 			{
 				return "La etapa con ID: "+id+" de PRODANDES2 no existe";
