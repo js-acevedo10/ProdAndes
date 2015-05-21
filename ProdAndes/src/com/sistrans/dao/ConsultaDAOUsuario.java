@@ -108,6 +108,7 @@ public class ConsultaDAOUsuario {
 			SendMessage emisor = new SendMessage(USUARIO, CONTRASEÑA, URL,
 					QUEUE_SEND);
 			emisor.sendMessage(mensaje);
+			emisor.closeSender();
 			return "TRUE";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -145,6 +146,7 @@ public class ConsultaDAOUsuario {
 	}
 
 	public String interpretarMensaje(String f) {
+		System.out.println("Interpretando: " + f);
 		PreparedStatement a = null;
 		String[] mensaje = f.split(",");
 
@@ -154,10 +156,12 @@ public class ConsultaDAOUsuario {
 			String requerimiento = mensaje[1];
 			String query = "";
 			if (requerimiento.equals("18")) {
+				System.out.println("18");
 				String tipo = mensaje[2];
 				String nombre = mensaje[3];
 				String cantidad = mensaje[4];
 				if (tipo.equals("MATERIAPRIMA")) {
+					System.out.println("MATERIAPRIMA");
 					query = "SELECT TONELADAS as NUM FROM " + tipo
 							+ " WHERE NOMBRE='" + nombre + "'";
 				} else {

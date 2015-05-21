@@ -52,4 +52,15 @@ public class SendMessage {
 			e.printStackTrace();
 		}
 	}
+	
+	public void closeSender() {
+		try {
+			queueSender.close();
+			queueSession.close();
+			queueConn.close();
+			ctx.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

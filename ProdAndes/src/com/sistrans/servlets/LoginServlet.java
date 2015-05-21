@@ -9,12 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sistrans.dao.ConsultaDAOUsuario;
+import com.sistrans.dao.ReceiveMessage;
+import com.sistrans.dao.SendMessage;
+import com.sistrans.dao.Zizas;
+
 /**
  * Servlet implementation class LoginServlet
  */
 @WebServlet("/login.html")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String USER = "juano";
+	private static final String PASS = "123456";
+	private static final String URL = "http-remoting://localhost:8080";
+	private static final String QUEUE = "jms/queue/prodandesleer";
+	public Zizas zz;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -50,8 +60,9 @@ public class LoginServlet extends HttpServlet {
 		{
 			if(username.contains("admin")) {
 				response.sendRedirect("./pages/admin/dashboard.html");
-			} else if(username.contains("gerente")) {
+			} else if(username.contains("gerente")) {				
 				response.sendRedirect("./pages/gerente/dashboard.html");
+				prender();
 			} else if(username.contains("cliente")) {
 				response.sendRedirect("./pages/user/dashboard.html");
 			} else if(username.contains("operario")) {
@@ -70,5 +81,41 @@ public class LoginServlet extends HttpServlet {
 				out.println("Recuerde que no es necesaria una contraseña.");
 			}
 		}
+	}
+
+	private void prender() {
+		ReceiveMessage receiver = new ReceiveMessage(USER, PASS, URL, QUEUE);
+		System.out.println("Listening...");
+		while(true)
+		 {
+			zz = receiver.startReceiving();
+			System.out.println(zz.newMessage);
+			while(zz.newMessage) {
+				System.out.println("Nuevo mensaje");
+				String received = zz.darMensaje();
+				ConsultaDAOUsuario dao = new ConsultaDAOUsuario();
+				dao.inicializar();
+				String x = dao.interpretarMensaje(received);
+				if(x.equals(received)) {
+					
+				} else {
+					System.out.println("Enviar Respuesta...");
+					SendMessage sender = null;
+					try{
+						sender = new SendMessage(USER, PASS, URL, QUEUE);
+					} catch(Exception e) {
+						
+					}
+					sender.sendMessage(x);
+					sender.closeSender();
+				}
+			}
+			try {
+				Thread.sleep(1000);
+				receiver.closeConnection();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		 }
 	}
 }

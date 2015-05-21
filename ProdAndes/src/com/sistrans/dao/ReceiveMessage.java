@@ -23,6 +23,7 @@ public class ReceiveMessage implements MessageListener {
 	public boolean newMessageHere;
 	public String lastMessage;
 	public ArrayList<String> msgArray;
+	public Zizas zz;
 	
 	public ReceiveMessage(String user, String pass, String url, String cola) 
 	{
@@ -50,24 +51,25 @@ public class ReceiveMessage implements MessageListener {
 		System.out.println("Recibir mensajes listo " + new Date());
 	}
 	
-	public void startReceiving() {
+	public Zizas startReceiving() {
 		try (JMSContext context = connectionFactory.createContext(user, pass);) {
 			consumer = context.createConsumer(destination);
 			consumer.setMessageListener(this);
 			System.in.read();
+			zz = new Zizas();
+			return zz;
 		} catch(Exception e) {
-			e.printStackTrace();
 		}
+		return zz;
 	}
 	
 	@Override
 	public void onMessage(Message message) {
 		TextMessage msg = (TextMessage) message;
 		try {
-			System.out.println("Mensaje recibido: " + msg.getText() + " " + new Date());
-			newMessageHere = true;
-			lastMessage = msg.getText();
-			msgArray.add(lastMessage);
+			System.out.println("Mensaje recibido: " + msg.getText());
+			zz.newMessage = true;
+			zz.message = msg.getText();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -76,5 +78,11 @@ public class ReceiveMessage implements MessageListener {
 	public void closeConnection() throws Exception {
 		consumer.close();
 		namingContext.close();
+	}
+
+	public String getLastMessage() {
+		newMessageHere = false;
+		lastMessage = "";
+		return lastMessage;
 	}
 }
