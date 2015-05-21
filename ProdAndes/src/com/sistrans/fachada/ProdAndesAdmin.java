@@ -2088,9 +2088,16 @@ public class ProdAndesAdmin {
 				}
 			}
 			ArrayList resultado2 = new ArrayList();
-			dao.enviarMensaje("P,13,"+tipo+","+fechaIn+","+fechaFin);
-			String ob = dao.recibirMensaje();
+			String msgEnviado = "P,13,"+tipo+","+fechaIn+","+fechaFin;
+			dao.enviarMensaje(msgEnviado);
+			String ob = "";
+			try {
+				ob = dao.recibirMensaje(msgEnviado);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 			String[] ob2= ob.split("]");
+			System.out.println(ob2[0]);
 			for(int i=0; i<ob2.length;i++)
 			{
 				String actual = ob2[i];
@@ -2112,11 +2119,11 @@ public class ProdAndesAdmin {
 				{
 					MateriaPrima actual1 = (MateriaPrima) resultado.get(i);
 					MateriaPrima actual2 = (MateriaPrima) resultado2.get(0);
-					int co1 = Integer.parseInt(actual1.id);
-					int co2 = Integer.parseInt(actual2.id);
+					int co1 = Integer.parseInt(actual1.getId());
+					int co2 = Integer.parseInt(actual2.getId());
 					if(co2>co1)
 					{
-						resultado.add(i,co2);
+						resultado.add(i,actual2);
 						resultado2.remove(0);
 					}
 				}
@@ -2124,11 +2131,11 @@ public class ProdAndesAdmin {
 				{
 					Componente actual1 = (Componente) resultado.get(i);
 					Componente actual2 = (Componente) resultado2.get(0);
-					int co1 = Integer.parseInt(actual1.id);
-					int co2 = Integer.parseInt(actual2.id);
+					int co1 = Integer.parseInt(actual1.getId());
+					int co2 = Integer.parseInt(actual2.getId());
 					if(co2>co1)
 					{
-						resultado.add(i,co2);
+						resultado.add(i,actual2);
 						resultado2.remove(0);
 					}
 				}

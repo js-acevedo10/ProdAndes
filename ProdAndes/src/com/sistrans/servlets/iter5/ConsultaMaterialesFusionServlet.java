@@ -114,7 +114,6 @@ public class ConsultaMaterialesFusionServlet extends HttpServlet {
 		salida.println("							<select class=\"form-control input-lg\" name=\"tipoMat\" required>");
 		salida.println("								<option value=\"MATERIAPRIMA\">Materia Prima</option>");
 		salida.println("								<option value=\"COMPONENTE\">Componente</option>");
-		salida.println("								<option value=\"PRODUCTO\">Producto</option>");
 		salida.println("							</select>");
 		salida.println("						</div>");
 		
@@ -154,17 +153,17 @@ public class ConsultaMaterialesFusionServlet extends HttpServlet {
 					salida.println("                    <thead>");
 					salida.println("                        <tr>");
 					salida.println("                            <th>ID</th>");
-					salida.println("                            <th>Nombre</th>");
 					salida.println("                            <th>Toneladas</th>");
+					salida.println("                            <th>Cantidad</th>");
 					salida.println("                        </tr>");
 					salida.println("                    </thead>");
 					salida.println("                    <tbody>");
 					
 					for(MateriaPrima et : etapas) {
 						salida.println("                        <tr>");
-						salida.println("							<td>" + et.getId() + "</td>");
 						salida.println("							<td>" + et.getNombre() + "</td>");
 						salida.println("							<td>" + et.getTonelada() + "</td>");
+						salida.println("							<td>" + et.getId() + "</td>");
 						salida.println("                        </tr>");
 					}
 					
@@ -182,19 +181,19 @@ public class ConsultaMaterialesFusionServlet extends HttpServlet {
 					salida.println("                    <thead>");
 					salida.println("                        <tr>");
 					salida.println("                            <th>ID</th>");
-					salida.println("                            <th>Nombre</th>");
 					salida.println("                            <th># Inventario</th>");
 					salida.println("                            <th>Unidad Medida</th>");
+					salida.println("                            <th>Cantidad</th>");
 					salida.println("                        </tr>");
 					salida.println("                    </thead>");
 					salida.println("                    <tbody>");
 					
 					for(Componente et : etapas) {
 						salida.println("                        <tr>");
-						salida.println("							<td>" + et.getId() + "</td>");
 						salida.println("							<td>" + et.getNombre() + "</td>");
 						salida.println("							<td>" + et.getNumInventario() + "</td>");
 						salida.println("							<td>" + et.getUnidadMedida() + "</td>");
+						salida.println("							<td>" + et.getId() + "</td>");
 						salida.println("                        </tr>");
 					}
 					

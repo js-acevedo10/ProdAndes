@@ -611,8 +611,14 @@ public class ProdAndesOperario {
 					int numInventario = c.getInt("TONELADAS");
 					if(numInventario<numero)
 					{
-						dao.enviarMensaje("P,18,MATERIAPRIMA,"+idMP+","+numInventario);
-						String respuesta = dao.recibirMensaje();
+						String msgEnviado = "P,18,MATERIAPRIMA,"+idMP+","+numInventario;
+						dao.enviarMensaje(msgEnviado);
+						String respuesta = "";
+						try {
+							respuesta = dao.recibirMensaje(msgEnviado);
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
 						if(respuesta.equals("FALSE"))
 						{
 							flag=false;	
@@ -639,9 +645,14 @@ public class ProdAndesOperario {
 					int numInventario = c.getInt("NUMINVENTARIO");
 					if(numInventario<numero)
 					{
-						
-						dao.enviarMensaje("P,18,COMPONENTE,"+idMP+","+numInventario);
-						String respuesta = dao.recibirMensaje();
+						String msgEnviado = "P,18,COMPONENTE,"+idMP+","+numInventario;
+						dao.enviarMensaje(msgEnviado);
+						String respuesta = "";
+						try {
+							respuesta = dao.recibirMensaje(msgEnviado);
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
 						if(respuesta.equals("FALSE"))
 						{
 							flag=false;	
@@ -668,8 +679,14 @@ public class ProdAndesOperario {
 					int numInventario = c.getInt("NUMINVENTARIO");
 					if(numInventario<numero)
 					{
-						dao.enviarMensaje("P,18,PRODUCTO,"+idMP+","+numInventario);
-						String respuesta = dao.recibirMensaje();
+						String msgEnviado = "P,18,PRODUCTO,"+idMP+","+numInventario;
+						dao.enviarMensaje(msgEnviado);
+						String respuesta = "";
+						try {
+							respuesta = dao.recibirMensaje(msgEnviado);
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
 						if(respuesta.equals("FALSE"))
 						{
 							flag=false;	

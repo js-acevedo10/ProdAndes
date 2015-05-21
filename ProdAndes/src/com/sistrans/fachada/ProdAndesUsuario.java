@@ -562,8 +562,14 @@ public class ProdAndesUsuario {
 						int requeridas=b.getInt("NUMMATERIAPRIMA");
 						if(requeridas>disponibles)
 						{
-							dao.enviarMensaje("P,18,MATERIAPRIMA,"+nombre+","+requeridas);
-							String respuesta = dao.recibirMensaje();
+							String msgEnviado = "P,18,MATERIAPRIMA,"+nombre+","+requeridas;
+							dao.enviarMensaje(msgEnviado);
+							String respuesta = "";
+							try {
+								respuesta = dao.recibirMensaje(msgEnviado);
+							} catch(Exception e) {
+								e.printStackTrace();
+							}
 							if(respuesta.equals("FALSE"))
 							{
 								flag2=false;	
@@ -580,8 +586,14 @@ public class ProdAndesUsuario {
 						int requeridas=b.getInt("NUMCOMPONENTE");
 						if(requeridas>disponibles)
 						{
-							dao.enviarMensaje("P,18,COMPONENTE,"+nombre+","+requeridas);
-							String respuesta = dao.recibirMensaje();
+							String msgEnviado = "P,18,COMPONENTE,"+nombre+","+requeridas;
+							dao.enviarMensaje(msgEnviado);
+							String respuesta = "";
+							try {
+								respuesta = dao.recibirMensaje(msgEnviado);
+							} catch(Exception e) {
+								e.printStackTrace();
+							}
 							if(respuesta.equals("FALSE"))
 							{
 								flag2=false;	
@@ -598,8 +610,14 @@ public class ProdAndesUsuario {
 						int requeridas=b.getInt("NUMPRODUCTO");
 						if(requeridas>disponibles)
 						{
-							dao.enviarMensaje("P,18,PRODUCTO,"+nombre+","+requeridas);
-							String respuesta = dao.recibirMensaje();
+							String msgEnviado = "P,18,PRODUCTO,"+nombre+","+requeridas;
+							dao.enviarMensaje(msgEnviado);
+							String respuesta = "";
+							try {
+								respuesta = dao.recibirMensaje(msgEnviado);
+							} catch(Exception e) {
+								e.printStackTrace();
+							}
 							if(respuesta.equals("FALSE"))
 							{
 								flag2=false;	

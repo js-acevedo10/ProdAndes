@@ -1,5 +1,6 @@
 package com.sistrans.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
@@ -19,9 +20,15 @@ public class ReceiveMessage implements MessageListener {
 	private Destination destination;
 	private String user;
 	private String pass;
+	public boolean newMessageHere;
+	public String lastMessage;
+	public ArrayList<String> msgArray;
 	
 	public ReceiveMessage(String user, String pass, String url, String cola) 
 	{
+		msgArray = new ArrayList<String>();
+		lastMessage = "";
+		newMessageHere = false;
 		this.user = user;
 		this.pass = pass;
 		PROVIDER_URL = url;
@@ -47,7 +54,6 @@ public class ReceiveMessage implements MessageListener {
 		try (JMSContext context = connectionFactory.createContext(user, pass);) {
 			consumer = context.createConsumer(destination);
 			consumer.setMessageListener(this);
-			System.out.println("Servicio asíncrono funcionando " + new Date());
 			System.in.read();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -59,6 +65,9 @@ public class ReceiveMessage implements MessageListener {
 		TextMessage msg = (TextMessage) message;
 		try {
 			System.out.println("Mensaje recibido: " + msg.getText() + " " + new Date());
+			newMessageHere = true;
+			lastMessage = msg.getText();
+			msgArray.add(lastMessage);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -67,6 +76,5 @@ public class ReceiveMessage implements MessageListener {
 	public void closeConnection() throws Exception {
 		consumer.close();
 		namingContext.close();
-		System.out.println("Servicio asíncrono detenido " + new Date());
 	}
 }
