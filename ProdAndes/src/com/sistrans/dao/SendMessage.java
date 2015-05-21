@@ -1,5 +1,6 @@
 package com.sistrans.dao;
 
+import java.util.Date;
 import java.util.Properties;
 
 import javax.jms.*;
@@ -42,11 +43,11 @@ public class SendMessage {
 	}
 	
 	public void sendMessage(String message) {
-		System.out.println("Por enviar..." + message);
+		System.out.println("Por enviar..." + message + " " + new Date());
 		try {
 			TextMessage msg = queueSession.createTextMessage(message);
 			queueSender.send(msg);
-			System.out.println("Mensaje enviado: " + msg.getText());
+			System.out.println("Mensaje enviado: " + msg.getText() + " " + new Date());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

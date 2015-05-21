@@ -1,5 +1,6 @@
 package com.sistrans.dao;
 
+import java.util.Date;
 import java.util.Properties;
 
 import javax.jms.*;
@@ -39,14 +40,14 @@ public class ReceiveMessage implements MessageListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Recibir mensajes listo.");
+		System.out.println("Recibir mensajes listo " + new Date());
 	}
 	
 	public void startReceiving() {
 		try (JMSContext context = connectionFactory.createContext(user, pass);) {
 			consumer = context.createConsumer(destination);
 			consumer.setMessageListener(this);
-			System.out.println("Servicio asíncrono funcionando.");
+			System.out.println("Servicio asíncrono funcionando " + new Date());
 			System.in.read();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -57,7 +58,7 @@ public class ReceiveMessage implements MessageListener {
 	public void onMessage(Message message) {
 		TextMessage msg = (TextMessage) message;
 		try {
-			System.out.println("Mensaje recibido: " + msg.getText());
+			System.out.println("Mensaje recibido: " + msg.getText() + " " + new Date());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -66,5 +67,6 @@ public class ReceiveMessage implements MessageListener {
 	public void closeConnection() throws Exception {
 		consumer.close();
 		namingContext.close();
+		System.out.println("Servicio asíncrono detenido " + new Date());
 	}
 }
