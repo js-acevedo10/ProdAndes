@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.management.timer.Timer;
 
 import com.sistrans.dao.ConsultaDAOUsuario;
+import com.sistrans.dao.ProdAndes3;
 import com.sistrans.mundo.Componente;
 import com.sistrans.mundo.EstaciondeProducto;
 import com.sistrans.mundo.EtapadeProduccion;
@@ -2092,6 +2093,7 @@ public class ProdAndesAdmin {
 			dao.enviarMensaje(msgEnviado);
 			String ob = "";
 			try {
+				ProdAndes3.main(msgEnviado);
 				ob = dao.recibirMensaje(msgEnviado);
 			} catch(Exception e) {
 				e.printStackTrace();
@@ -2250,6 +2252,7 @@ public class ProdAndesAdmin {
 		dao.enviarMensaje(msgEnviado);
 		String ob = "";
 		try {
+			ProdAndes3.main(msgEnviado);
 			ob = dao.recibirMensaje(msgEnviado);
 		} catch(Exception e) {
 			e.printStackTrace();

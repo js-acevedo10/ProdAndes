@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sistrans.fachada.ProdAndesAdmin;
+import com.sistrans.fachada.ProdAndesUsuario;
 import com.sistrans.mundo.Componente;
 import com.sistrans.mundo.MateriaPrima;
 import com.sistrans.mundo.Producto;
@@ -50,30 +51,44 @@ public class RegistroPedidoProductosFusionServlet extends HttpServlet {
 	private void procesarSolicitud(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		PrintWriter salida = response.getWriter();
-
+		int x = 0;
 		if(request.getParameter("prod1") != null) {
 			String prod2 = "", prod3 = "", cantidad2 = "", cantidad3 = "";
 			String prod1 = request.getParameter("prod1");
 			String cantidad1 = request.getParameter("cantidad1");
+			x++;
 			if(request.getParameter("prod2") != null)
 			{
 				prod2 = request.getParameter("prod2");
 				cantidad2 = request.getParameter("cantidad2");
+				x++;
 			}
 			if(request.getParameter("prod3") != null)
 			{
 				prod3 = request.getParameter("prod3");
 				cantidad3 = request.getParameter("cantidad3");
+				x++;
+			}
+			String fecha = request.getParameter("fechaEntrega");
+			
+			boolean id = false;
+			
+			for(int i = 0; i < x; i++) {
+				if(i == 0) {
+					id = ProdAndesUsuario.darInstancia().registrarPedido(prod1, x*12+"", fecha, cantidad1);
+				} else if(i == 1) {
+					id = ProdAndesUsuario.darInstancia().registrarPedido(prod2, x*12+"", fecha, cantidad2);
+				} else if(i == 2) {
+					id = ProdAndesUsuario.darInstancia().registrarPedido(prod3, x*12+"", fecha, cantidad3);
+				}
 			}
 			
-//			String id = ProdAndesAdmin.darInstancia().fusionPedido(prod1, cantidad1, prod2, cantidad2, prod3, cantidad3);
-//			
-//			if( id == null || id.equals("error") || id.equals("0")) {
-//				salida.println("<h1>ERROR</h1>");
-//			} else {
-//				salida.println("<h1>Su pedido se realizo con exito, este es el numero de guia: " + id + "</h1>");
-//			}
-			
+			if(!id) {
+				salida.println("<h1>ERROR</h1>");
+			} else {
+				int guia = (int) (Math.random()*99999);
+				salida.println("<h1>Su pedido se realizo con exito, este es el numero de guia: " + guia + "</h1>");
+			}
 		} else {
 			printHeader(salida);
 			printFooter(salida);
@@ -145,7 +160,11 @@ public class RegistroPedidoProductosFusionServlet extends HttpServlet {
 		salida.println("						<div class=\"col-md-4\">");
 		salida.println("							<label for=\"cantidad3\">Cantidad</label>");
 		salida.println("							<input type=\"number\" class=\"form-control input-lg\" name=\"cantidad3\" placeholder=\"Cantidad\">");
-		salida.println("						</div><br><br>");
+		salida.println("						</div>");
+		salida.println("						<div class=\"col-md-6\">");
+		salida.println("							<label for=\"cantidad3\">Fecha de Entrega:</label>");
+		salida.println("							<input type=\"date\" class=\"form-control input-lg\" name=\"fechaEntrega\">");
+		salida.println("						</div>");
 		
 		salida.println("                        <div class=\"col-md-12\">");
 		salida.println("            				<button type=\"submit\" class=\"btn btn-default btn-lg\" id=\"search-input\" placeholder= \"Buscar\">Buscar y Filtrar</button>");

@@ -10,13 +10,32 @@ public class ProdAndes3 {
 	
 	private ConsultaDAOUsuario dao;
 	
+	public ProdAndes3() {
+		
+	}
 	
-	public void enviarMensajeRF18()
+	public ProdAndes3(String message) {
+		String mensaje = recibirMensaje(message);
+		dao = new ConsultaDAOUsuario();
+		dao.inicializar();
+		dao.enviarMensajeTester(mensaje);
+	}
+	
+	public static void main(String message) throws Exception {
+		ProdAndes3 tres = new ProdAndes3();
+		String mensaje = tres.recibirMensaje(message);
+		tres.dao = new ConsultaDAOUsuario();
+		tres.dao.inicializar();
+		tres.dao.enviarMensajeTester(mensaje);
+	}
+	
+	
+	public void enviarMensajeTesterRF18()
 	{
 		String msgEnviado = "P,18,MATERIAPRIMA,BSEWKEDBBX,760";
 		System.out.println("Se esta enviando un mensaje que requiere 760 unidades de BSEWKEDBBX");
 		System.out.println("Se espera que la respuesta sea R,TRUE");
-		dao.enviarMensaje(msgEnviado);
+		dao.enviarMensajeTester(msgEnviado);
 		String respuesta = "";
 		try {
 			respuesta = dao.recibirMensaje(msgEnviado);
@@ -27,7 +46,7 @@ public class ProdAndes3 {
 		msgEnviado = "P,18,MATERIAPRIMA,IWWFKJHTAR,600";
 		System.out.println("Se esta enviando un mensaje que requiere 600 unidades de IWWFKJHTAR");
 		System.out.println("Se espera que la respuesta sea R,FALSE");
-		dao.enviarMensaje(msgEnviado);
+		dao.enviarMensajeTester(msgEnviado);
 		respuesta = "";
 		try {
 			respuesta = dao.recibirMensaje(msgEnviado);
@@ -36,12 +55,12 @@ public class ProdAndes3 {
 		}
 		System.out.println("Respuesta2:  "+respuesta);
 	}
-	public void enviarMensajeRF19()
+	public void enviarMensajeTesterRF19()
 	{
 		String msgEnviado = "P,19,";
 		System.out.println("Se esta enviando un mensaje que requiere un cambio de estado de la estacion 3");
 		System.out.println("Se espera que la respuesta sea R,ACTIVO o R,ERROR");
-		dao.enviarMensaje(msgEnviado);
+		dao.enviarMensajeTester(msgEnviado);
 		String respuesta = "";
 		try {
 			respuesta = dao.recibirMensaje(msgEnviado);
@@ -52,7 +71,7 @@ public class ProdAndes3 {
 		msgEnviado = "P,19,463";
 		System.out.println("Se esta enviando un mensaje que requiere un cambio de estado de la estacion 463");
 		System.out.println("Se espera que la respuesta sea R,DESACTIVO o R,ERROR");
-		dao.enviarMensaje(msgEnviado);
+		dao.enviarMensajeTester(msgEnviado);
 		respuesta = "";
 		try {
 			respuesta = dao.recibirMensaje(msgEnviado);
@@ -61,12 +80,12 @@ public class ProdAndes3 {
 		}
 		System.out.println("Respuesta2:  "+respuesta);
 	}
-	public void enviarMensajeRF12()
+	public void enviarMensajeTesterRF12()
 	{
 		String msgEnviado = "P,12,1900-01-01,9999-12-12,1,1,1";
 		System.out.println("Se esta enviando un mensaje que requiere estaciones");
 		System.out.println("Se espera que la respuesta sean muchos objetos JSON");
-		dao.enviarMensaje(msgEnviado);
+		dao.enviarMensajeTester(msgEnviado);
 		String respuesta = "";
 		try {
 			respuesta = dao.recibirMensaje(msgEnviado);
@@ -75,12 +94,12 @@ public class ProdAndes3 {
 		}
 		System.out.println("Respuesta1:  "+respuesta);
 	}
-	public void enviarMensajeRF13()
+	public void enviarMensajeTesterRF13()
 	{
 		String msgEnviado = "P,13,MATERIAPRIMA,1900-01-01,9999-12-12";
 		System.out.println("Se esta enviando un mensaje que requiere las materias primas mas usadas desde 1900-01-01 hasta 9999-12-12");
 		System.out.println("Se espera que la respuesta sean muchos objetos JSON");
-		dao.enviarMensaje(msgEnviado);
+		dao.enviarMensajeTester(msgEnviado);
 		String respuesta = "";
 		try {
 			respuesta = dao.recibirMensaje(msgEnviado);
@@ -91,7 +110,7 @@ public class ProdAndes3 {
 		msgEnviado = "P,13,COMPONENTE,1900-01-01,9999-12-12";
 		System.out.println("Se esta enviando un mensaje que requiere los componentes mas usadas desde 1900-01-01 hasta 9999-12-12");
 		System.out.println("Se espera que la respuesta sean objetos json");
-		dao.enviarMensaje(msgEnviado);
+		dao.enviarMensajeTester(msgEnviado);
 		respuesta = "";
 		try {
 			respuesta = dao.recibirMensaje(msgEnviado);

@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.sistrans.dao.ConsultaDAOUsuario;
+import com.sistrans.dao.ProdAndes3;
 import com.sistrans.mundo.Componente;
 import com.sistrans.mundo.EtapadeProduccion;
 import com.sistrans.mundo.MateriaPrima;
@@ -488,15 +489,14 @@ public class ProdAndesUsuario {
 	}
 	
 
-	public boolean registrarPedido(String id1, String id2, String id3,
-			String id32, String id4) {
+	public boolean registrarPedido(String id1, String id2, String id3, String id32) {
 		// TODO Auto-generated method stub
 		String idProducto = id1;
 		String idCliente = id2;
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat df = new SimpleDateFormat("YYYY-MM-DD");
 		Date dateCreacion = new Date();
 		String fechaCreacion = df.format(dateCreacion);
-		String deadline = id3.replace("/", "-");
+		String deadline = id3;
 		int cantidadRequerida = Integer.parseInt(id32);
 		String query ="SELECT* FROM PRODUCTO WHERE PRODUCTO.ID='"+idProducto+"'";
 		PreparedStatement a = null;
@@ -523,6 +523,7 @@ public class ProdAndesUsuario {
 			{
 				String query3 ="INSERT INTO PEDIDO (ID, IDCLIENTE, ESTADOPAGO,FECHACREACION, DEADLINE, IDPRODUCTO, NUMPRODUCTO)VALUES ('"+id1+id2+fechaCreacion+"','"+id2+"','no pago',to_date('"+fechaCreacion+"','YYYY-MM-DD'),to_date('"+fechaEntrega+"','YYYY-MM-DD'), '"+id1+"', '"+id32+"')";
 				a = dao.conexion.prepareStatement(query3);
+				System.out.println(query);
 				a.executeQuery();
 				flag = true;
 			}
@@ -566,6 +567,7 @@ public class ProdAndesUsuario {
 							dao.enviarMensaje(msgEnviado);
 							String respuesta = "";
 							try {
+								ProdAndes3.main(msgEnviado);
 								respuesta = dao.recibirMensaje(msgEnviado);
 							} catch(Exception e) {
 								e.printStackTrace();

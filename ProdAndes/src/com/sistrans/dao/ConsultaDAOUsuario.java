@@ -22,6 +22,8 @@ public class ConsultaDAOUsuario {
 	private ProdAndesAdmin proAdmin;
 
 	private ProdAndesGerente proGerente;
+	
+	ReceiveMessage receptor;
 
 	private static final String USUARIO = "juano";
 	private static final String CONTRASEÑA = "123456";
@@ -36,6 +38,7 @@ public class ConsultaDAOUsuario {
 	// Metodos
 
 	public void inicializar() {
+		receptor = new ReceiveMessage(USUARIO, CONTRASEÑA, URL, QUEUE_RECEIVE);
 		try {
 			cadenaConexion = "jdbc:oracle:thin:@prod.oracle.virtual.uniandes.edu.co:1531:prod";
 			usuario = "ISIS2304171510";
@@ -107,6 +110,7 @@ public class ConsultaDAOUsuario {
 		try {
 			SendMessage emisor = new SendMessage(USUARIO, CONTRASEÑA, URL,
 					QUEUE_SEND);
+			receptor.test = true;
 			emisor.sendMessage(mensaje);
 			emisor.closeSender();
 			return "TRUE";
@@ -117,22 +121,19 @@ public class ConsultaDAOUsuario {
 	}
 
 	public String recibirMensaje(String msg) throws Exception{
-		ReceiveMessage receptor = new ReceiveMessage(USUARIO, CONTRASEÑA, URL,
-				QUEUE_RECEIVE);
 		receptor.startReceiving();
 		System.out.println("Servicio Asíncrono funcionando...");
 		String message = "";
 		while (message.equals("")) {
+			receptor.startReceiving();
 			if(receptor.newMessageHere) {
 				if(!receptor.lastMessage.equals(msg))
 				{
 					message = receptor.lastMessage;
 					System.out.println("Mensaje recibido por RR: " + message);
 				}
-			} else {
-				receptor.closeConnection();
-				receptor.startReceiving();
 			}
+			receptor.closeConnection();
 		}
 		try {
 			receptor.closeConnection();
@@ -270,6 +271,17 @@ public class ConsultaDAOUsuario {
 
 			}
 			return "R,FALSE";
+		}
+	}
+
+	public void enviarMensajeTester(String mensaje) {
+		try {
+			SendMessage emisor = new SendMessage(USUARIO, CONTRASEÑA, URL,
+					QUEUE_RECEIVE);
+			emisor.sendMessage(mensaje);
+			emisor.closeSender();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

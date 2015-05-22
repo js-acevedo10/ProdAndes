@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.sistrans.dao.ConsultaDAOUsuario;
+import com.sistrans.dao.ProdAndes3;
 import com.sistrans.mundo.Componente;
 import com.sistrans.mundo.EtapadeProduccion;
 import com.sistrans.mundo.MateriaPrima;
@@ -615,6 +616,7 @@ public class ProdAndesOperario {
 						dao.enviarMensaje(msgEnviado);
 						String respuesta = "";
 						try {
+							ProdAndes3.main(msgEnviado);
 							respuesta = dao.recibirMensaje(msgEnviado);
 						} catch(Exception e) {
 							e.printStackTrace();

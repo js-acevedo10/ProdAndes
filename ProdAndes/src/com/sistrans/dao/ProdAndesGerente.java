@@ -1779,6 +1779,7 @@ public class ProdAndesGerente {
 			dao.enviarMensaje(msgEnviado);
 			String ob = "";
 			try {
+				ProdAndes3.main(msgEnviado);
 				ob = dao.recibirMensaje(msgEnviado);
 			} catch(Exception e) {
 				e.printStackTrace();

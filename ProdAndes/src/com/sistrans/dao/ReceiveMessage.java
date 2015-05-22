@@ -24,9 +24,12 @@ public class ReceiveMessage implements MessageListener {
 	public String lastMessage;
 	public ArrayList<String> msgArray;
 	public Zizas zz;
+	public boolean test;
 	
 	public ReceiveMessage(String user, String pass, String url, String cola) 
 	{
+		test = false;
+		zz = new Zizas();
 		msgArray = new ArrayList<String>();
 		lastMessage = "";
 		newMessageHere = false;
@@ -56,7 +59,6 @@ public class ReceiveMessage implements MessageListener {
 			consumer = context.createConsumer(destination);
 			consumer.setMessageListener(this);
 			System.in.read();
-			zz = new Zizas();
 			return zz;
 		} catch(Exception e) {
 		}
@@ -68,8 +70,11 @@ public class ReceiveMessage implements MessageListener {
 		TextMessage msg = (TextMessage) message;
 		try {
 			System.out.println("Mensaje recibido: " + msg.getText());
-			zz.newMessage = true;
-			zz.message = msg.getText();
+			newMessageHere = true;
+			lastMessage = msg.getText();
+			if(test) {
+				ProdAndes3 p3 = new ProdAndes3(lastMessage);
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
