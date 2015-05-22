@@ -150,7 +150,7 @@ public class ConsultaDAOUsuario {
 		PreparedStatement a = null;
 		String[] mensaje = f.split(",");
 
-		if (mensaje[0].equals("R")) {
+		if (!mensaje[0].equals("P")) {
 			return f;
 		} else {
 			String requerimiento = mensaje[1];
@@ -191,8 +191,10 @@ public class ConsultaDAOUsuario {
 				}
 			} else if (requerimiento.equals("C")) {
 				commit();
+				return "R,TRUE";
 			} else if (requerimiento.equals("R")) {
 				rollback();
+				return "R,TRUE";
 			}  else if (requerimiento.equals("D")) {
 				String tipo = mensaje[2];
 				String nombre = mensaje[3];
