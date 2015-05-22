@@ -221,7 +221,7 @@ public class ConsultaDAOUsuario {
 							return "R,FALSE";
 						}
 					} else if (requerimiento.equals("19")) {
-						idProducto = b.getString("IDPRODUCTO");
+						idProducto = b.getString("ID");
 						estado = b.getString("ESTADO");
 					}
 				}
@@ -231,7 +231,7 @@ public class ConsultaDAOUsuario {
 							boolean ff = proGerente
 									.desActivarEtapaProduccion(idProducto);
 							if (ff) {
-								return "R,ACTIVO";
+								return "R,DESACTIVO";
 							} else {
 								return "R,ERROR";
 							}
@@ -239,7 +239,7 @@ public class ConsultaDAOUsuario {
 							boolean ff = proGerente
 									.activarEtapaProduccion(idProducto);
 							if (ff) {
-								return "R,DESACTIVO";
+								return "R,ACTIVO";
 							} else {
 								return "R,ERROR";
 							}
