@@ -63,7 +63,7 @@ public class ProdAndes3 {
 	}
 	public void enviarMensajeRF12()
 	{
-		String msgEnviado = "P,12,01-01-1900,12-12-9999,1,1,1";
+		String msgEnviado = "P,12,1900-01-01,9999-12-12,1,1,1";
 		System.out.println("Se esta enviando un mensaje que requiere estaciones");
 		System.out.println("Se espera que la respuesta sean muchos objetos JSON");
 		dao.enviarMensaje(msgEnviado);
@@ -77,8 +77,8 @@ public class ProdAndes3 {
 	}
 	public void enviarMensajeRF13()
 	{
-		String msgEnviado = "P,13,MATERIAPRIMA,01-01-1999,12-12-9999";
-		System.out.println("Se esta enviando un mensaje que requiere las materias primas mas usadas desde 01-01-1999 hasta 12-12-9999");
+		String msgEnviado = "P,13,MATERIAPRIMA,1900-01-01,9999-12-12";
+		System.out.println("Se esta enviando un mensaje que requiere las materias primas mas usadas desde 1900-01-01 hasta 9999-12-12");
 		System.out.println("Se espera que la respuesta sean muchos objetos JSON");
 		dao.enviarMensaje(msgEnviado);
 		String respuesta = "";
@@ -88,9 +88,9 @@ public class ProdAndes3 {
 			e.printStackTrace();
 		}
 		System.out.println("Respuesta1:  "+respuesta);
-		msgEnviado = "P,13,COMPONENTE,01-01-1999,12-12-9999";
-		System.out.println("Se esta enviando un mensaje que requiere los componentes mas usadas desde 01-01-1999 hasta 12-12-9999");
-		System.out.println("Se espera que la respuesta sea R,DESACTIVO o R,ERROR");
+		msgEnviado = "P,13,COMPONENTE,1900-01-01,9999-12-12";
+		System.out.println("Se esta enviando un mensaje que requiere los componentes mas usadas desde 1900-01-01 hasta 9999-12-12");
+		System.out.println("Se espera que la respuesta sean objetos json");
 		dao.enviarMensaje(msgEnviado);
 		respuesta = "";
 		try {
